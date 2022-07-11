@@ -2,6 +2,14 @@
   font-family: "GT Walsheim Pro";
   src: url("../fonts/GT-Walsheim-Pro-Regular.ttf");
   font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim Pro";
+  src: url("../fonts/GT-Walsheim-Pro-Medium.ttf");
+  font-style: normal;
   font-weight: 500;
   font-display: swap;
 }
