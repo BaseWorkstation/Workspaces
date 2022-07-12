@@ -5,7 +5,6 @@ import {
   Center,
   Heading,
   HStack,
-  Link as ChakraLink,
   Stack,
   StackDivider,
   Text,
@@ -14,9 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { Logo } from "components/Logo";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { HiOutlineArrowRight } from "react-icons/hi";
+import useChoosePlanHook from "./useChoosePlanHook";
 
 export default function ChoosePaymentPlan() {
   const theme = useTheme();
+  const { subscriptionPlans } = useChoosePlanHook();
 
   return (
     <Center bg="gray.50" minH="100vh" py={[16, 20]}>
@@ -25,7 +27,6 @@ export default function ChoosePaymentPlan() {
 
         <VStack w="full" spacing={8}>
           <Stack
-            px={4}
             w="full"
             bg="white"
             border="1px solid"
@@ -47,10 +48,16 @@ export default function ChoosePaymentPlan() {
                 Select a plan
               </Heading>
 
-              <Stack w="full" direction="row" spacing={6}>
-                {["Silver", "Gold", "Platinum"].map((plan) => (
+              <Stack
+                px={[10, 20, 40, 10, 0]}
+                w="full"
+                direction={["column", "column", "column", "row"]}
+                pt={4}
+                spacing={6}
+              >
+                {subscriptionPlans.map(({ name, amount, ctaColor }) => (
                   <Stack
-                    key={plan}
+                    key={name}
                     w="full"
                     border="1px solid"
                     borderColor="gray.200"
@@ -60,10 +67,10 @@ export default function ChoosePaymentPlan() {
                   >
                     <Stack spacing={0} p={6} pb={3}>
                       <Heading color="blue.800" fontSize="3xl">
-                        {plan}
+                        {name}
                       </Heading>
                       <Text fontSize="xl" color="gray.400">
-                        10k p/month
+                        {amount} p/month
                       </Text>
                     </Stack>
                     <Stack spacing={6} p={6} pt={4}>
@@ -78,6 +85,20 @@ export default function ChoosePaymentPlan() {
                           </Text>
                         </HStack>
                       ))}
+
+                      <Box pt={7}>
+                        <Button
+                          fontWeight={500}
+                          iconSpacing={4}
+                          rightIcon={<HiOutlineArrowRight />}
+                          w="full"
+                          colorScheme="default"
+                          bg={ctaColor}
+                          size="lg"
+                        >
+                          Select Plan
+                        </Button>
+                      </Box>
                     </Stack>
                   </Stack>
                 ))}
