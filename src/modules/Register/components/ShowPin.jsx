@@ -33,7 +33,7 @@ export default function ShowPin({ basePin }) {
             py={8}
             letterSpacing={48}
           >
-            3333
+            {basePin}
           </Heading>
           <Text fontSize={[16, 18]} textAlign="center">
             This is your base pin, you'll use this anytime you are checking in

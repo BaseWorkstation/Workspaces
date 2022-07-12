@@ -14,7 +14,7 @@ import ShowPin from "./components/ShowPin";
 import useRegisterHook from "./useRegisterHook";
 
 export default function Register() {
-  const { handleSubmit, basePin, stage } = useRegisterHook();
+  const { handleSubmit, basePin, stage, ...rest } = useRegisterHook();
 
   return (
     <Center bg="gray.50" minH="100vh" py={[12, 20]}>
@@ -34,9 +34,7 @@ export default function Register() {
             pt={9}
             pb={6}
           >
-            {stage === "INPUT_DETAILS" && (
-              <InputDetails {...useRegisterHook()} />
-            )}
+            {stage === "INPUT_DETAILS" && <InputDetails {...rest} />}
 
             {stage === "SHOW_PIN" && <ShowPin basePin={basePin} />}
           </Stack>

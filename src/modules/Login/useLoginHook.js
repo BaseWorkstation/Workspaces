@@ -36,12 +36,11 @@ export default function useLoginHook() {
     event.preventDefault();
 
     setIsLoading(true);
-    Axios.post(BASE_API_URL + "/auth/login/", loginDetails)
+    Axios.post(BASE_API_URL + "/login", loginDetails)
       .then(({ data }) => {
         console.log(data);
-        localStorage.setItem("base_acccess_token", data?.access); // Save access token to localStorage
-        dispatch(setUserDetails(data.user_info)); // Then set the user details in the redux store
-
+        localStorage.setItem("base_acccess_token", data?.token); // Save access token to localStorage
+        dispatch(setUserDetails(data.user)); // Then set the user details in the redux store
         Router.push("/"); // And route to the dashboard
       })
       .catch(({ response }) => {

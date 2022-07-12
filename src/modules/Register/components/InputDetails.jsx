@@ -21,7 +21,8 @@ export default function InputDetails({
   showPassword,
   setShowPassword,
 }) {
-  const { name, phone, email, password, areTermsAgreed } = registerDetails;
+  const { first_name, last_name, phone, email, password, areTermsAgreed } =
+    registerDetails;
 
   return (
     <Stack divider={<StackDivider borderColor="gray.200" />} spacing={6}>
@@ -29,16 +30,29 @@ export default function InputDetails({
         Create your account
       </Heading>
       <Stack px={6} spacing={6}>
-        <Stack spacing={1}>
-          <Text>Full Name</Text>
-          <Input
-            size="lg"
-            placeholder="Enter full name"
-            isRequired
-            value={name}
-            name="name"
-            onChange={handleChange}
-          />
+        <Stack w="full" direction={["column", "row"]}>
+          <Stack w="full" spacing={1}>
+            <Text>First Name</Text>
+            <Input
+              size="lg"
+              placeholder="Enter first name"
+              isRequired
+              value={first_name}
+              name="first_name"
+              onChange={handleChange}
+            />
+          </Stack>
+          <Stack w="full" spacing={1}>
+            <Text>Last Name</Text>
+            <Input
+              size="lg"
+              placeholder="Enter last name"
+              isRequired
+              value={last_name}
+              name="last_name"
+              onChange={handleChange}
+            />
+          </Stack>
         </Stack>
         <Stack spacing={1}>
           <Text>Phone Number</Text>

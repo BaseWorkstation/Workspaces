@@ -74,7 +74,6 @@ export default function Login() {
                 <InputGroup size="lg">
                   <Input
                     size="lg"
-                    minLength={8}
                     type={showPassword ? "text" : "password"}
                     isRequired
                     value={password}

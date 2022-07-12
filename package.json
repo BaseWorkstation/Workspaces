@@ -20,6 +20,7 @@
     "next": "latest",
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-moment": "^1.1.2",

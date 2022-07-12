@@ -7,10 +7,6 @@ const options = [
     href: "/settings/payment/add/card",
   },
   {
-    name: "Pay with cash (P.A.Y.G)",
-    href: "/",
-  },
-  {
     name: "Subscribe to a plan",
     href: "/settings/payment/add/plan",
   },
