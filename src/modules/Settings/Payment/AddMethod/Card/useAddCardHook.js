@@ -1,10 +1,5 @@
-import Axios from "axios";
 import { useState } from "react";
-import { BASE_API_URL } from "utils/constants";
-import Router from "next/router";
 import { useDispatch } from "react-redux";
-import { setUserDetails } from "redux/slices/userSlice";
-import { toastError } from "utils/helpers";
 
 const initialCardDetails = {
   cardNumber: "",

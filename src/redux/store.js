@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import paymentReducer from "./slices/paymentSlice.js";
 import roleReducer from "./slices/roleSlice.js";
 import userReducer from "./slices/userSlice";
 
@@ -7,6 +8,7 @@ import userReducer from "./slices/userSlice";
 const combinedReducer = combineReducers({
   user: userReducer,
   roles: roleReducer,
+  payments: paymentReducer,
 });
 
 const rootReducer = (state, action) => {

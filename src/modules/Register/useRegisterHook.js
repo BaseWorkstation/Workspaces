@@ -49,7 +49,7 @@ export default function useRegisterHook() {
       .then(({ data }) => {
         localStorage.setItem("base_acccess_token", data?.token);
         dispatch(setUserDetails(data.user));
-        setBasePin(data.user.unique_pin);
+        setBasePin(data.user.unique_pin); // Save user base pin
         setStage("SHOW_PIN"); // Show the user his/her base pin
       })
       .catch(({ response }) => {
