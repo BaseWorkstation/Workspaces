@@ -1,6 +1,10 @@
+import Router from "next/router";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addPaymentMethod } from "redux/slices/paymentSlice";
+import { toastError, toastSuccess } from "utils/helpers";
 
+// Initialize card details
 const initialCardDetails = {
   cardNumber: "",
   name: "",
@@ -11,8 +15,10 @@ const initialCardDetails = {
 
 export default function useAddCardHook() {
   const [cardDetails, setCardDetails] = useState(initialCardDetails);
+  const { loading } = useSelector((state) => state.payments);
+
+  // This is used by the Card component to change the values on the card
   const [focusedInput, setFocusedInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -32,6 +38,7 @@ export default function useAddCardHook() {
     }); // onChange handler
   };
 
+  /** Separate the expiry date into month and year i.e. MM/YY */
   function formatExpirationDate(value) {
     const clearValue = value.replace(/\D+/g, "");
 
@@ -42,6 +49,7 @@ export default function useAddCardHook() {
     return clearValue;
   }
 
+  /** Format the number into card format (by adding spaces in between them) */
   function formatCreditCardNumber(value) {
     if (!value) {
       return value;
@@ -60,23 +68,42 @@ export default function useAddCardHook() {
     setFocusedInput(target.name);
   };
 
+  /** Save the card issuer */
   const handleCardCallback = ({ issuer }, isValid) => {
     if (isValid) {
       setCardDetails((prev) => ({ ...prev, issuer }));
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    setIsLoading(true);
+    const { payload, error } = await dispatch(
+      addPaymentMethod({
+        paymentable_model: "User",
+        paymentable_id: 1,
+        method_type: "PAYG_card",
+        card_number: cardDetails.cardNumber,
+        card_name: cardDetails.name,
+        card_expiry: cardDetails.expiry,
+        card_cvc: cardDetails.cvc,
+      })
+    );
+
+    if (payload?.data) {
+      toastSuccess("Card has been saved successfully!");
+      Router.push("/");
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
   };
 
   return {
     cardDetails,
     focusedInput,
     setCardDetails,
-    isLoading,
+    isLoading: loading === "ADD_PAYMENT_METHOD",
     handleSubmit,
     handleChange,
     handleInputFocus,
