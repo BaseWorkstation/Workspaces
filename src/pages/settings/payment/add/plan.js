@@ -2,8 +2,9 @@ import React from "react";
 import Head from "next/head";
 import { Box } from "@chakra-ui/react";
 import ChoosePaymentPlan from "modules/Settings/Payment/AddMethod/Plan/ChoosePlan";
+import { withAuth } from "utils/withAuth";
 
-export default function AddPaymentPlanPage() {
+function AddPaymentPlanPage() {
   return (
     <Box>
       <Head>
@@ -13,3 +14,5 @@ export default function AddPaymentPlanPage() {
     </Box>
   );
 }
+
+export default withAuth(AddPaymentPlanPage);

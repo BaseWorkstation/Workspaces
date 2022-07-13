@@ -1,5 +1,8 @@
 import React from "react";
+import { withAuth } from "utils/withAuth";
 
-export default function Index() {
+function Index() {
   return <div>Index</div>;
 }
+
+export default withAuth(Index);

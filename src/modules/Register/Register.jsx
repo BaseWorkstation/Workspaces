@@ -41,7 +41,7 @@ export default function Register() {
 
           <Text fontSize="sm" textAlign="center">
             Got an account?{" "}
-            <Link href="/register">
+            <Link href="/login">
               <ChakraLink fontWeight="semibold" color="primary.500">
                 Sign in
               </ChakraLink>

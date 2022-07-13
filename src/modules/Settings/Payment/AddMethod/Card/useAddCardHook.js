@@ -15,6 +15,7 @@ const initialCardDetails = {
 
 export default function useAddCardHook() {
   const [cardDetails, setCardDetails] = useState(initialCardDetails);
+  const { userDetails } = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.payments);
 
   // This is used by the Card component to change the values on the card
@@ -81,7 +82,7 @@ export default function useAddCardHook() {
     const { payload, error } = await dispatch(
       addPaymentMethod({
         paymentable_model: "User",
-        paymentable_id: 1,
+        paymentable_id: userDetails.id,
         method_type: "PAYG_card",
         card_number: cardDetails.cardNumber,
         card_name: cardDetails.name,

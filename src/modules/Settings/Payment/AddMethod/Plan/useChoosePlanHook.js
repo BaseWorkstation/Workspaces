@@ -7,6 +7,7 @@ import { toastError, toastSuccess } from "utils/helpers";
 const ctaColors = ["primary.500", "#9747FF", "gray.800"]; // Used for mapping bgColors to the CTA buttons
 
 export default function useChoosePlanHook() {
+  const { userDetails } = useSelector((state) => state.user);
   const { paymentPlans, loading } = useSelector((state) => state.payments);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export default function useChoosePlanHook() {
     const { payload, error } = await dispatch(
       addPaymentMethod({
         paymentable_model: "User",
+        paymentable_id: userDetails.id,
         method_type: "plan",
         plan_id: planId,
       })

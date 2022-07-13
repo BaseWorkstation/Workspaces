@@ -71,7 +71,7 @@ export const editOrganizationDetails = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    userDetails: {},
+    userDetails: null,
     usersList: [],
     loading: "",
     error: "",
@@ -95,7 +95,7 @@ const userSlice = createSlice({
   },
   extraReducers: {
     [fetchUserDetails.pending]: (state) => {
-      state.userDetails = {};
+      state.userDetails = null;
       delete state.error;
       delete state.success;
       state.loading = "FETCH_USER_DETAILS";
