@@ -53,7 +53,7 @@ export default function useRegisterHook() {
         setStage("SHOW_PIN"); // Show the user his/her base pin
       })
       .catch(({ response }) => {
-        toastError("Unable to sign up", response);
+        toastError("Unable to sign up", { errorMessage: response?.data });
         setIsLoading(false);
         console.log(response);
       });

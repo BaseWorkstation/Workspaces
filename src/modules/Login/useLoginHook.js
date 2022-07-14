@@ -46,7 +46,7 @@ export default function useLoginHook() {
       .catch(({ response }) => {
         setIsLoading(false);
         console.log(response);
-        toastError("Unable to log in", response);
+        toastError("Unable to log in", { errorMessage: response?.data });
       });
   };
 

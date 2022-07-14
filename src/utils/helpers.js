@@ -14,6 +14,7 @@ export const toastError = (title, error, description, stay) => {
     description:
       description ||
       (error?.errorMessage?.errors && error?.errorMessage?.errors[0][0]) ||
+      error?.errorMessage?.error ||
       error?.errorMessage?.message ||
       "Kindly try again later",
     duration: stay ? null : 4000,
