@@ -79,14 +79,22 @@ export default function useAddCardHook() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const [month, year] = cardDetails.expiry.split("/");
+    const expiryDateString = `20${year}-${month}-01`; // Format expiry date to YYYY-MM-DD format
+    const cardNumberWithoutWhitespace = cardDetails.cardNumber.replace(
+      /\s/g,
+      ""
+    );
+
     const { payload, error } = await dispatch(
       addPaymentMethod({
         paymentable_model: "User",
-        paymentable_id: userDetails.id,
+        paymentable_id: userDetails?.id,
         method_type: "PAYG_card",
-        card_number: cardDetails.cardNumber,
+        card_number: cardNumberWithoutWhitespace,
         card_name: cardDetails.name,
-        card_expiry: cardDetails.expiry,
+        card_expiry_month: expiryDateString,
+        card_expiry_year: expiryDateString,
         card_cvc: cardDetails.cvc,
       })
     );
