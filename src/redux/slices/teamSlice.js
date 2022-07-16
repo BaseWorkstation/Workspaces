@@ -26,9 +26,7 @@ export const fetchTeamMembers = createAsyncThunk(
   "teams/fetchTeamMembers",
   async (fetchPayload, thunkAPI) => {
     try {
-      const {
-        data: { data },
-      } = await Axios.get(`${BASE_API_URL}/teams/members/`, {
+      const { data } = await Axios.get(`${BASE_API_URL}/teams/members/`, {
         params: fetchPayload,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
@@ -132,12 +130,30 @@ export const deleteTeam = createAsyncThunk(
   }
 );
 
+export const deleteTeamMember = createAsyncThunk(
+  "teams/deleteTeamMember",
+  async (deletePayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.delete(`${BASE_API_URL}/teams/members/`, {
+        params: deletePayload,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return deletePayload.user_id;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 const teamSlice = createSlice({
   name: "teams",
   initialState: {
     teams: [],
-    teamActivities: [],
-    teamMembers: [],
+    teamActivities: { data: [] },
+    teamMembers: { data: [] },
     loading: "FETCH_TEAMS",
     error: "",
     success: "",
@@ -171,7 +187,7 @@ const teamSlice = createSlice({
     },
 
     [fetchTeamMembers.pending]: (state) => {
-      state.teamMembers = [];
+      state.teamMembers = { data: [] };
       delete state.error;
       delete state.success;
       state.loading = "FETCH_TEAM_MEMBERS";
@@ -216,7 +232,7 @@ const teamSlice = createSlice({
     },
     [addMemberToTeam.fulfilled]: (state, action) => {
       state.success = "ADD_TEAM_MEMBER";
-      state.teamMembers.push(action.payload?.data);
+      state.teamMembers.data.push(action.payload?.data);
       delete state.loading;
       delete state.error;
     },
@@ -271,6 +287,34 @@ const teamSlice = createSlice({
     [deleteTeam.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "DELETE_TEAM",
+        errorMessage: payload?.error,
+      };
+      delete state.backupPosition;
+      delete state.backupTeam;
+      delete state.loading;
+    },
+
+    [deleteTeamMember.pending]: (state, action) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "DELETE_TEAM_MEMBER";
+      const position = state.teamMembers.data.findIndex(
+        (team) => team.id === action.meta.arg
+      );
+      state.backupTeam = Object.assign({}, state.teamMembers.data[position]);
+      state.backupPosition = position;
+    },
+    [deleteTeamMember.fulfilled]: (state) => {
+      state.success = "DELETE_TEAM_MEMBER";
+      state.teamMembers.data.splice(state.backupPosition, 1);
+      delete state.backupTeam;
+      delete state.backupPosition;
+      delete state.loading;
+      delete state.error;
+    },
+    [deleteTeamMember.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "DELETE_TEAM_MEMBER",
         errorMessage: payload?.error,
       };
       delete state.backupPosition;

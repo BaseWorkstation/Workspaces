@@ -28,7 +28,7 @@ export default function AccountHeader() {
         <Heading fontSize="xl" fontWeight="500">
           Welcome,{" "}
           <Box textTransform="capitalize" as="span" color="primary.500">
-            {userDetails.first_name}
+            {userDetails?.first_name}
           </Box>
           &nbsp; &nbsp;👋
         </Heading>

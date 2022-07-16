@@ -22,7 +22,7 @@ export default function ViewTeam() {
           {data.teams.length && <AddMember {...data} />}
         </HStack>
 
-        <Box pt={12}>
+        <Box pt={8}>
           <MembersTable {...data} />
         </Box>
       </Stack>

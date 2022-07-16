@@ -16,21 +16,28 @@ import {
 import Spinner from "components/Spinner/Spinner";
 import Link from "next/link";
 import { AiOutlineDelete } from "react-icons/ai";
+import DeleteMemberModal from "./DeleteMemberModal";
 
-export default function MembersTable({ teamMembers, teams, teamLoading }) {
+export default function MembersTable({
+  teamMembers,
+  teams,
+  teamLoading,
+  openDeleteMemberConfirmation,
+  ...rest
+}) {
   if (teamLoading) return <Spinner />;
 
   if (!teams.length) return <NoTeamView />;
 
-  if (!teamMembers.length)
+  if (!teamMembers.data.length)
     return (
       <Text textAlign="center">
-        When your add members to your team, they will appear here
+        When you add members to your team, they will appear here
       </Text>
     );
 
   return (
-    <Box pt={8}>
+    <Box pt={0}>
       <TableContainer>
         <Table variant="simple">
           <Thead color="primary.500">
@@ -56,7 +63,7 @@ export default function MembersTable({ teamMembers, teams, teamLoading }) {
             </Tr>
           </Thead>
           <Tbody>
-            {teamMembers.map((index) => (
+            {teamMembers.data.map((index) => (
               <Tr key={index}>
                 <Td py={8} pl={0}>
                   Best Omotayo
@@ -71,6 +78,7 @@ export default function MembersTable({ teamMembers, teams, teamLoading }) {
                     variant="ghost"
                     iconSpacing={2}
                     leftIcon={<Icon as={AiOutlineDelete} fontSize={20} />}
+                    onClick={() => openDeleteMemberConfirmation(1)}
                   >
                     Remove User
                   </Button>
@@ -79,6 +87,7 @@ export default function MembersTable({ teamMembers, teams, teamLoading }) {
             ))}
           </Tbody>
         </Table>
+        <DeleteMemberModal {...rest} />
       </TableContainer>
     </Box>
   );

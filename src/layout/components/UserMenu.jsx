@@ -22,13 +22,13 @@ export default function UserMenu() {
     <Menu placement="bottom-end">
       <MenuButton textAlign="left">
         <HStack>
-          <Avatar name={userDetails.first_name} width={9} height={9} />
+          <Avatar name={userDetails?.first_name} width={9} height={9} />
           <Show above="md">
             <Box>
               <Text textTransform="capitalize" fontWeight="bold">
-                {userDetails.first_name} {userDetails.last_name}
+                {userDetails?.first_name} {userDetails?.last_name}
               </Text>
-              <Text fontSize="xs">{userDetails.email}</Text>
+              <Text fontSize="xs">{userDetails?.email}</Text>
             </Box>
           </Show>
         </HStack>

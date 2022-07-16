@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addMemberToTeam,
+  deleteTeamMember,
   fetchTeamMembers,
   fetchTeams,
 } from "redux/slices/teamSlice";
@@ -14,6 +15,7 @@ const initialMemberDetails = {
 
 export default function useViewTeamHook() {
   const [memberDetails, setMemberDetails] = useState(initialMemberDetails);
+  const [memberToRemove, setMemberToRemove] = useState(null);
   const { teams, teamMembers, loading } = useSelector((state) => state.teams);
   const addMemberModalState = useDisclosure();
   const deleteMemberModalState = useDisclosure();
@@ -62,6 +64,31 @@ export default function useViewTeamHook() {
     if (payload?.data) {
       toastSuccess("Team member has been successfully added");
       addMemberModalState.onClose();
+      setMemberDetails(initialMemberDetails);
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
+  };
+
+  const openDeleteMemberConfirmation = (memberId) => {
+    setMemberToRemove(memberId);
+    deleteMemberModalState.onOpen();
+  };
+
+  const handleRemoveMember = async (event) => {
+    event.preventDefault();
+
+    const { error } = await dispatch(
+      deleteTeamMember({
+        team_id: currentTeam.id,
+        user_id: memberToRemove,
+      })
+    );
+
+    if (!error) {
+      toastSuccess("Team member has been successfully removed");
+      deleteMemberModalState.onClose();
     } else {
       console.log(error);
       toastError(null, error);
@@ -71,11 +98,15 @@ export default function useViewTeamHook() {
   return {
     teamLoading: loading === "FETCH_TEAMS" || loading === "FETCH_TEAM_MEMBERS",
     isAddingMember: loading === "ADD_TEAM_MEMBER",
+    isDeletingMember: loading === "DELETE_TEAM_MEMBER",
     teams,
     teamMembers,
     memberDetails,
     handleChange,
     handleSubmitMember,
     addMemberModalState,
+    deleteMemberModalState,
+    openDeleteMemberConfirmation,
+    handleRemoveMember,
   };
 }
