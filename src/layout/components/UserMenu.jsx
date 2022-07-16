@@ -13,17 +13,22 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Router from "next/router";
+import { useSelector } from "react-redux";
 
 export default function UserMenu() {
+  const { userDetails } = useSelector((state) => state.user);
+
   return (
     <Menu placement="bottom-end">
       <MenuButton textAlign="left">
         <HStack>
-          <Avatar name="Best" width={9} height={9} />
+          <Avatar name={userDetails.first_name} width={9} height={9} />
           <Show above="md">
             <Box>
-              <Text fontWeight="bold">GTBank</Text>
-              <Text fontSize="xs">Bestomotayo@gtbank.com</Text>
+              <Text textTransform="capitalize" fontWeight="bold">
+                {userDetails.first_name} {userDetails.last_name}
+              </Text>
+              <Text fontSize="xs">{userDetails.email}</Text>
             </Box>
           </Show>
         </HStack>

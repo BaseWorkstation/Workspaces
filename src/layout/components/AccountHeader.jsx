@@ -9,8 +9,13 @@ import {
 } from "@chakra-ui/react";
 import UserMenu from "layout/components/UserMenu";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { useSelector } from "react-redux";
+import Moment from "react-moment";
+import "moment-timezone";
 
 export default function AccountHeader() {
+  const { userDetails } = useSelector((state) => state.user);
+
   return (
     <HStack
       color="blue.800"
@@ -22,14 +27,14 @@ export default function AccountHeader() {
       <Stack direction={["column", "column", "row"]} spacing={[2, 2, 8]}>
         <Heading fontSize="xl" fontWeight="500">
           Welcome,{" "}
-          <Box as="span" color="primary.500">
-            Best
+          <Box textTransform="capitalize" as="span" color="primary.500">
+            {userDetails.first_name}
           </Box>
           &nbsp; &nbsp;👋
         </Heading>
 
         <Text fontWeight={400} fontSize="md" color="gray.500">
-          Today, 24th March 2021
+          Today, <Moment format="Do MMMM YYYY">{new Date()}</Moment>
         </Text>
       </Stack>
       <HStack spacing={[4, 8]}>
