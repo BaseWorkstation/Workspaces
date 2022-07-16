@@ -28,8 +28,6 @@ export default function useCreateTeamHook() {
       createTeam({ name: teamDetails.name })
     );
 
-    console.log(payload);
-
     if (payload?.data) {
       toastSuccess("Team created successfully!");
       Router.push("/account/team");

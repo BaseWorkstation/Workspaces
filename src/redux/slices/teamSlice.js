@@ -22,6 +22,26 @@ export const fetchTeams = createAsyncThunk(
   }
 );
 
+export const fetchTeamMembers = createAsyncThunk(
+  "teams/fetchTeamMembers",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/teams/members/`, {
+        params: fetchPayload,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const createTeam = createAsyncThunk(
   "teams/createTeam",
   async (createPayload, thunkAPI) => {
@@ -29,6 +49,29 @@ export const createTeam = createAsyncThunk(
       const { data } = await Axios.post(
         `${BASE_API_URL}/teams`,
         createPayload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "base_acccess_token"
+            )}`,
+          },
+        }
+      );
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
+export const addMemberToTeam = createAsyncThunk(
+  "teams/addMemberToTeam",
+  async (addPayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.post(
+        `${BASE_API_URL}/teams/members/`,
+        addPayload,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -127,6 +170,26 @@ const teamSlice = createSlice({
       delete state.loading;
     },
 
+    [fetchTeamMembers.pending]: (state) => {
+      state.teamMembers = [];
+      delete state.error;
+      delete state.success;
+      state.loading = "FETCH_TEAM_MEMBERS";
+    },
+    [fetchTeamMembers.fulfilled]: (state, action) => {
+      state.success = "FETCH_TEAM_MEMBERS";
+      state.teamMembers = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchTeamMembers.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "FETCH_TEAM_MEMBERS",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
     [createTeam.pending]: (state) => {
       delete state.error;
       delete state.success;
@@ -141,6 +204,25 @@ const teamSlice = createSlice({
     [createTeam.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "CREATE_TEAM",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [addMemberToTeam.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "ADD_TEAM_MEMBER";
+    },
+    [addMemberToTeam.fulfilled]: (state, action) => {
+      state.success = "ADD_TEAM_MEMBER";
+      state.teamMembers.push(action.payload?.data);
+      delete state.loading;
+      delete state.error;
+    },
+    [addMemberToTeam.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "ADD_TEAM_MEMBER",
         errorMessage: payload?.error,
       };
       delete state.loading;

@@ -19,7 +19,7 @@ export default function ViewTeam() {
         <HStack justify="space-between" color="blue.800">
           <Heading fontSize="xl">Manage Users</Heading>
 
-          {data.teams.length && <AddMember />}
+          {data.teams.length && <AddMember {...data} />}
         </HStack>
 
         <Box pt={12}>
