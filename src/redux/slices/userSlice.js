@@ -6,13 +6,9 @@ export const fetchUserDetails = createAsyncThunk(
   "user/fetchUserDetails",
   async (query, thunkAPI) => {
     try {
-      const {
-        data: { data },
-      } = await Axios.get(`${BASE_API_URL}/user`, {
+      const { data } = await Axios.get(`${BASE_API_URL}/user`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "medispark_acccess_token"
-          )}`,
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
         },
       });
       return data;
@@ -32,7 +28,7 @@ export const editUserDetails = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
-              "medispark_acccess_token"
+              "base_acccess_token"
             )}`,
           },
         }
@@ -55,7 +51,7 @@ export const editOrganizationDetails = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
-              "medispark_acccess_token"
+              "base_acccess_token"
             )}`,
           },
         }

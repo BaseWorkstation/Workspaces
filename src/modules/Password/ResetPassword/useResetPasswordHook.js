@@ -39,6 +39,7 @@ export default function useResetPasswordHook() {
       password: password,
       password_confirmation: confirmPassword,
       token: query.token,
+      email: query.email,
     })
       .then(({ data }) => {
         console.log(data);

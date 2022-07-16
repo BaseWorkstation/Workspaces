@@ -41,7 +41,7 @@ export default function useLoginHook() {
         console.log(data);
         localStorage.setItem("base_acccess_token", data?.token); // Save access token to localStorage
         dispatch(setUserDetails(data.user)); // Then set the user details in the redux store
-        Router.push("/"); // And route to the dashboard
+        Router.replace("/"); // And route to the dashboard
       })
       .catch(({ response }) => {
         setIsLoading(false);

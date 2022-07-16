@@ -11,9 +11,7 @@ export const fetchRoles = createAsyncThunk(
       } = await Axios.get(`${BASE_API_URL}/gateway/branch/role/get-all`, {
         params: fetchPayload,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "medispark_acccess_token"
-          )}`,
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
         },
       });
       return data;
@@ -34,7 +32,7 @@ export const createRole = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
-              "medispark_acccess_token"
+              "base_acccess_token"
             )}`,
           },
         }
@@ -59,7 +57,7 @@ export const editRole = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
-              "medispark_acccess_token"
+              "base_acccess_token"
             )}`,
           },
         }
@@ -80,9 +78,7 @@ export const deleteRole = createAsyncThunk(
         data: { data },
       } = await Axios.delete(`${BASE_API_URL}/church/roles/${roleId}/`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "medispark_acccess_token"
-          )}`,
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
         },
       });
       return roleId;
