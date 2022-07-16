@@ -1,14 +1,16 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import paymentReducer from "./slices/paymentSlice.js";
 import roleReducer from "./slices/roleSlice.js";
+import teamReducer from "./slices/teamSlice.js";
 import userReducer from "./slices/userSlice";
 
 //Import individual slices and configure store
 
 const combinedReducer = combineReducers({
-  user: userReducer,
-  roles: roleReducer,
   payments: paymentReducer,
+  roles: roleReducer,
+  teams: teamReducer,
+  user: userReducer,
 });
 
 const rootReducer = (state, action) => {

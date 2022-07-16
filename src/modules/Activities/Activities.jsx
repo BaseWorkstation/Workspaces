@@ -25,7 +25,8 @@ import UserActivities from "./components/UserActivities";
 import useActivitiesHook from "./useActivitiesHook";
 
 export default function AccountActivities() {
-  const { selectedDay, setSelectedDay } = useActivitiesHook();
+  const { selectedDay, setSelectedDay, teamLoading, teams, teamActivities } =
+    useActivitiesHook();
 
   return (
     <AccountLayout>
@@ -96,7 +97,11 @@ export default function AccountActivities() {
               <UserActivities />
             </TabPanel>
             <TabPanel px={0} pt={[50, 8]}>
-              <TeamActivities />
+              <TeamActivities
+                teamLoading={teamLoading}
+                teams={teams}
+                teamActivities={teamActivities}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>

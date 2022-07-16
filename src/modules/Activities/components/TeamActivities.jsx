@@ -1,6 +1,8 @@
 import {
   Box,
+  Button,
   HStack,
+  Image,
   Table,
   TableContainer,
   Tbody,
@@ -9,9 +11,23 @@ import {
   Th,
   Thead,
   Tr,
+  VStack,
 } from "@chakra-ui/react";
+import Spinner from "components/Spinner/Spinner";
+import Link from "next/link";
 
-export default function TeamActivities() {
+export default function TeamActivities({ teamLoading, teams, teamActivities }) {
+  if (teamLoading) return <Spinner />;
+
+  if (!teams.length) return <NoTeamView />;
+
+  if (!teamActivities.length)
+    return (
+      <Text textAlign="center">
+        When your team members check in to workspaces, you will see it here
+      </Text>
+    );
+
   return (
     <Box>
       <TableContainer>
@@ -47,7 +63,7 @@ export default function TeamActivities() {
             </Tr>
           </Thead>
           <Tbody>
-            {[0, 1, 2, 3].map((index) => (
+            {teamActivities.map((index) => (
               <Tr key={index}>
                 <Td py={8} pl={0}>
                   Venia Business Hub
@@ -74,3 +90,17 @@ export default function TeamActivities() {
     </Box>
   );
 }
+
+const NoTeamView = () => (
+  <VStack my={20} spacing={8}>
+    <Image src="/illustrations/team.svg" boxSize={126} />
+    <Text fontWeight={500} textAlign="center">
+      Create a team to check their activities here
+    </Text>
+    <Link href="/account/team/new">
+      <Button colorScheme="primary" w={250} size="lg" h="56px">
+        Create team
+      </Button>
+    </Link>
+  </VStack>
+);
