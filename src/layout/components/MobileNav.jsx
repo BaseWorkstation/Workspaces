@@ -8,6 +8,7 @@ export default function MobileNav({ onToggle }) {
       <HStack
         w="full"
         pos="fixed"
+        zIndex={1}
         pt={5}
         pb={6}
         px="5%"

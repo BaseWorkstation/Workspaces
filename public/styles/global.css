@@ -24,6 +24,7 @@
 
 body {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 /* ::-webkit-scrollbar {
   width: 0px;
@@ -54,3 +55,42 @@ body {
 .container-body::-webkit-scrollbar-thumb:hover {
   background: #a0aec0;
 }
+
+/* ========================================================= */
+/* DayPicker styles start */
+/* ========================================================= */
+.DayPicker-Day {
+  border-radius: 20% !important;
+}
+
+.DayPicker-NavBar {
+  position: absolute;
+  right: 0;
+  top: -14px;
+}
+
+.DayPicker-Month {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.DayPicker-Day--disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.DayPicker-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.DayPicker-Day--today {
+  color: #00abe7 !important;
+}
+
+.DayPicker-Day.DayPicker-Day--selected {
+  border-radius: 20% !important;
+  color: white !important;
+}
+/* ========================================================= */
+/* DayPicker styles end */
+/* ========================================================= */

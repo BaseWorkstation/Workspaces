@@ -40,3 +40,21 @@ export const kConvert = (number) => {
   if (number < 1e3) return number;
   if (number >= 1e3) return +(number / 1e3).toFixed(1) + "k";
 };
+
+/**  To format a date string to dd-mm-yyyy or yyyy-mm-dd */
+export const formatDateToDDMMYY = (format, date) => {
+  var today = date ? new Date(date) : new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+
+  return format === "yyyy-mm-dd"
+    ? `${yyyy}-${mm}-${dd}`
+    : `${dd}-${mm}-${yyyy}`;
+};

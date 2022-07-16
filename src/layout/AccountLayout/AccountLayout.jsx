@@ -14,9 +14,17 @@ export default function AccountLayout({ children }) {
       <MobileNav onToggle={onToggle} />
       <MobileDrawer isOpen={isOpen} onToggle={onToggle} />
 
-      <Stack w="full" divider={<StackDivider />} spacing={0}>
+      <Stack
+        pl={[0, 0, 0, 224]}
+        pb={[32, 24]}
+        w="full"
+        divider={<StackDivider />}
+        spacing={0}
+      >
         <AccountHeader />
-        <Stack pt={12}>{children}</Stack>
+        <Stack pt={12} px={["5%", "5%", "5%", 12]}>
+          {children}
+        </Stack>
       </Stack>
     </HStack>
   );
