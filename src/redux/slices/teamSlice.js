@@ -27,7 +27,7 @@ export const createTeam = createAsyncThunk(
   async (createPayload, thunkAPI) => {
     try {
       const { data } = await Axios.post(
-        `${BASE_API_URL}/billing/team/new`,
+        `${BASE_API_URL}/teams`,
         createPayload,
         {
           headers: {
@@ -94,6 +94,7 @@ const teamSlice = createSlice({
   initialState: {
     teams: [],
     teamActivities: [],
+    teamMembers: [],
     loading: "FETCH_TEAMS",
     error: "",
     success: "",
@@ -133,7 +134,7 @@ const teamSlice = createSlice({
     },
     [createTeam.fulfilled]: (state, action) => {
       state.success = "CREATE_TEAM";
-      state.teams.push(action.payload);
+      state.teams.push(action.payload?.data);
       delete state.loading;
       delete state.error;
     },
