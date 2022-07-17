@@ -11,7 +11,7 @@ const initialLoginDetails = {
   password: "",
 };
 
-export default function useLoginHook() {
+export default function useLoginHook(previousRoute) {
   const [loginDetails, setLoginDetails] = useState(initialLoginDetails);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -38,10 +38,13 @@ export default function useLoginHook() {
     setIsLoading(true);
     Axios.post(BASE_API_URL + "/login", loginDetails)
       .then(({ data }) => {
-        console.log(data);
         localStorage.setItem("base_acccess_token", data?.token); // Save access token to localStorage
         dispatch(setUserDetails(data.user)); // Then set the user details in the redux store
-        Router.replace("/"); // And route to the dashboard
+        if (previousRoute) {
+          Router.back(); // go to the previous route
+        } else {
+          Router.replace("/"); // or route to the dashboard
+        }
       })
       .catch(({ response }) => {
         setIsLoading(false);

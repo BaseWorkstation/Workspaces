@@ -3,13 +3,17 @@ import Login from "modules/Login/Login";
 import Head from "next/head";
 import React from "react";
 
-export default function LoginPage() {
+export default function LoginPage({ previousRoute }) {
   return (
     <Box>
       <Head>
         <title>Welcome Back - Base</title>
       </Head>
-      <Login />
+      <Login previousRoute={previousRoute} />
     </Box>
   );
+}
+
+export async function getServerSideProps(context) {
+  return { props: { previousRoute: context.req.headers.referer || null } };
 }
