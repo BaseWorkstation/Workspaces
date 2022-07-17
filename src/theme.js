@@ -76,6 +76,18 @@ const theme = extendTheme({
         },
       },
     },
+    Textarea: {
+      variants: {
+        outline: (props) => ({
+          field: {
+            _placeholder: {
+              color: "gray.400",
+            },
+          },
+        }),
+      },
+      defaultProps: { focusBorderColor: "primary.500" },
+    },
   },
 });
 
