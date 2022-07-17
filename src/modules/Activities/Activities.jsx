@@ -35,6 +35,7 @@ export default function AccountActivities() {
         bg="white"
         borderColor="gray.200"
         rounded={16}
+        minH="lg"
         p={[5, 5, 8]}
       >
         <Tabs pos="relative" variant="soft-rounded">

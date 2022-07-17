@@ -22,7 +22,7 @@ export default function AccountLayout({ children }) {
         spacing={0}
       >
         <AccountHeader />
-        <Stack pt={12} px={["5%", "5%", "5%", 12]}>
+        <Stack pt={12} px={[0, 0, "5%", 12]}>
           {children}
         </Stack>
       </Stack>

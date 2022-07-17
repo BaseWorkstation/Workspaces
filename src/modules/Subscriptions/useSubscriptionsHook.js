@@ -1,10 +1,8 @@
-import Router from "next/router";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPaymentMethod } from "redux/slices/paymentSlice";
 import { toastError, toastSuccess } from "utils/helpers";
 
-export default function useChoosePlanHook() {
+export default function useSubscriptionsHook() {
   const { userDetails } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -22,7 +20,6 @@ export default function useChoosePlanHook() {
 
     if (payload?.data) {
       toastSuccess("Subscribed to plan successfully!");
-      Router.push("/");
     } else {
       console.log(error);
       toastError(null, error);

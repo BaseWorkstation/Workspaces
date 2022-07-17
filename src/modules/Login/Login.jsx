@@ -20,7 +20,7 @@ import React from "react";
 import Link from "next/link";
 import useLoginHook from "./useLoginHook";
 
-export default function Login() {
+export default function Login({ previousRoute }) {
   const {
     loginDetails,
     handleSubmit,
@@ -28,7 +28,7 @@ export default function Login() {
     handleChange,
     showPassword,
     setShowPassword,
-  } = useLoginHook();
+  } = useLoginHook(previousRoute);
 
   const { email, password } = loginDetails;
 

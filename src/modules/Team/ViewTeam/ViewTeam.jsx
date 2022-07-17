@@ -14,6 +14,7 @@ export default function ViewTeam() {
         bg="white"
         borderColor="gray.200"
         rounded={16}
+        minH="lg"
         p={[5, 5, 8]}
       >
         <HStack justify="space-between" color="blue.800">
