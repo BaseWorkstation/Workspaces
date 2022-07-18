@@ -12,9 +12,9 @@ import Link from "next/link";
 import Router from "next/router";
 import { accountMenuOptions } from "utils/constants";
 import AccountHeader from "./AccountHeader";
-import MobileNav from "./MobileNav";
+import MobileNav from "../../shared/MobileNav";
 
-export default function MobileDrawer({ isOpen, onToggle }) {
+export default function MobileAccountDrawer({ isOpen, onToggle }) {
   return (
     <Drawer size="full" isOpen={isOpen} placement="right">
       <DrawerOverlay />

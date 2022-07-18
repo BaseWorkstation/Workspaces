@@ -45,7 +45,7 @@ export default function AccountActivities() {
             w={["full", "full", "fit-content"]}
             rounded={8}
           >
-            <Flex pos={"absolute"} right={[0, 0, 10]} top={[20, 4]}>
+            <Flex pos="absolute" right={[0, 0, 10]} top={[58, 4]}>
               <Menu placement="bottom-end" gutter={4}>
                 <MenuButton as={HStack} cursor="pointer">
                   <HStack>

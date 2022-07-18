@@ -1,8 +1,8 @@
 import { HStack, Stack, StackDivider, useDisclosure } from "@chakra-ui/react";
-import AccountHeader from "layout/components/AccountHeader";
-import DesktopAccountNav from "layout/components/DesktopAccountNav";
-import MobileDrawer from "layout/components/MobileDrawer";
-import MobileNav from "layout/components/MobileNav";
+import AccountHeader from "./components/AccountHeader";
+import DesktopAccountNav from "./components/DesktopAccountNav";
+import MobileAccountDrawer from "./components/MobileAccountDrawer";
+import MobileNav from "../shared/MobileNav";
 
 export default function AccountLayout({ children }) {
   const { isOpen, onToggle } = useDisclosure();
@@ -12,7 +12,7 @@ export default function AccountLayout({ children }) {
       <DesktopAccountNav />
 
       <MobileNav onToggle={onToggle} />
-      <MobileDrawer isOpen={isOpen} onToggle={onToggle} />
+      <MobileAccountDrawer isOpen={isOpen} onToggle={onToggle} />
 
       <Stack
         pl={[0, 0, 0, 224]}

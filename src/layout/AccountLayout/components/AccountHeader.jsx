@@ -7,11 +7,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import UserMenu from "layout/components/UserMenu";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 import Moment from "react-moment";
 import "moment-timezone";
+import UserMenu from "../../shared/UserMenu";
 
 export default function AccountHeader() {
   const { userDetails } = useSelector((state) => state.user);

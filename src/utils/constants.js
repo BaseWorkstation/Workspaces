@@ -45,3 +45,27 @@ export const accountMenuOptions = [
     filledIcon: IoHeadsetSharp,
   },
 ];
+
+export const exploreMenuOptions = [
+  {
+    name: "Account",
+    href: "/account",
+  },
+  {
+    name: "Explore spaces",
+    href: "/",
+  },
+  {
+    name: "For teams",
+    href: "https://trybase.co/teams",
+  },
+  {
+    name: "Check in to a space",
+    href: "/check-in",
+  },
+
+  {
+    name: "Support",
+    href: "/account/support",
+  },
+];
