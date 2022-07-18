@@ -30,7 +30,12 @@ export default function useForgotPasswordHook() {
     Axios.post(BASE_API_URL + "/forgot-password", forgotPasswordDetails)
       .then(({ data }) => {
         console.log(data);
-        toastSuccess("A confirmation link has been sent to your email");
+        toastSuccess(
+          "A confirmation link has been sent to your email",
+          "Kindly follow the instructions to change your password"
+        );
+        setIsLoading(false);
+        setForgotPasswordDetails(initialForgotPasswordDetails);
       })
       .catch(({ response }) => {
         setIsLoading(false);

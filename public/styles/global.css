@@ -94,3 +94,16 @@ body {
 /* ========================================================= */
 /* DayPicker styles end */
 /* ========================================================= */
+
+.gradientText {
+  background: linear-gradient(
+    90deg,
+    #77dcff 3%,
+    #ff64ff 28.85%,
+    #303030 47.32%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}

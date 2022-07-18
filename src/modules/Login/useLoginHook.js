@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_API_URL } from "../../utils/constants";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logoutUser, setUserDetails } from "../../redux/slices/userSlice";
 import { toastError } from "utils/helpers";
@@ -15,6 +15,7 @@ export default function useLoginHook(previousRoute) {
   const [loginDetails, setLoginDetails] = useState(initialLoginDetails);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const { query } = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function useLoginHook(previousRoute) {
       .then(({ data }) => {
         localStorage.setItem("base_acccess_token", data?.token); // Save access token to localStorage
         dispatch(setUserDetails(data.user)); // Then set the user details in the redux store
-        if (previousRoute) {
+        if (query.redirect == "true") {
           Router.back(); // go to the previous route
         } else {
           Router.replace("/"); // or route to the dashboard

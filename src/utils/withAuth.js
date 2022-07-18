@@ -17,7 +17,7 @@ export const withAuth = (Component) => {
 
     useEffect(() => {
       if (error && error.errorType === "FETCH_USER_DETAILS") {
-        Router.push("/login");
+        Router.push("/login?redirect=true");
         dispatch(clearStates());
       }
     }, [error]);
@@ -27,7 +27,7 @@ export const withAuth = (Component) => {
         // Check if token exists in localStorage
         !userDetails && dispatch(fetchUserDetails());
       } else {
-        Router.push("/login"); // Otherwise, if token doesn't exist, re-route to login
+        Router.push("/login?redirect=true"); // Otherwise, if token doesn't exist, re-route to login
       }
     }, []);
     return isAuthorized ? <Component {...props} /> : <PageLoadingAnimation />; // While waiting, show loading animation

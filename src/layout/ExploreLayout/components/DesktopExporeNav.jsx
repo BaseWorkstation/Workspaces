@@ -12,6 +12,7 @@ export default function DesktopExporeNav() {
         bg="white"
         px="5%"
         py={4}
+        zIndex={10}
         justify="center"
         w="full"
       >

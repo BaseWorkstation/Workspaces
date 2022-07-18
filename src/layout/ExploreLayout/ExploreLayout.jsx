@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Stack, useDisclosure } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import MobileNav from "layout/shared/MobileNav";
 import DesktopExporeNav from "./components/DesktopExporeNav";
 import MobileExploreDrawer from "./components/MobileExploreDrawer";
@@ -13,9 +12,7 @@ export default function ExploreLayout({ children }) {
       <MobileNav onToggle={onToggle} />
       <MobileExploreDrawer isOpen={isOpen} onToggle={onToggle} />
 
-      <Stack pl={[0, 0, 0, 224]} pb={[32, 24]} w="full" spacing={0}>
-        {children}
-      </Stack>
+      <Box w="full">{children}</Box>
     </Box>
   );
 }
