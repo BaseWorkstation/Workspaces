@@ -27,17 +27,22 @@ export default function ShowAttendant() {
           Show Attendant
         </Heading>
       </Stack>
-      <VStack spacing={105} pt={8} px={4}>
-        <VStack>
+      <VStack spacing={99} pt={8} px={4}>
+        <VStack color="blue.800">
           <Avatar boxSize={128} size="2xl" name={userDetails.first_name}>
             <AvatarBadge borderWidth={3} boxSize={12} bg="green.400">
               <Icon fontSize={32} as={BsCheck2} />
             </AvatarBadge>
           </Avatar>
 
-          <Heading textTransform="capitalize">
+          <Heading pt={6} mb={2} textTransform="capitalize" fontSize="2xl">
             {userDetails.first_name} {userDetails.last_name}
           </Heading>
+
+          <Text textAlign="center">
+            Kindly show the attendant to allow you complete your chck in and
+            start working
+          </Text>
         </VStack>
         <Button
           size="lg"

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { toastError } from "utils/helpers";
 
 export default function useCheckInHook() {
-  const [stage, setStage] = useState("CHOOSE_SERVICE");
+  const [stage, setStage] = useState("SCAN_QR");
   const [workspace, setWorkspace] = useState(null);
   const [workspaceServices, setWorkspaceServices] = useState([]);
   const { userDetails } = useSelector((state) => state.user);
