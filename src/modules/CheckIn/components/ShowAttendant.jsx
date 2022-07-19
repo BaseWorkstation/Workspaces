@@ -1,0 +1,56 @@
+import {
+  Avatar,
+  AvatarBadge,
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  Heading,
+  Icon,
+  Image,
+  Stack,
+  StackDivider,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import Router from "next/router";
+import { BsCheck2 } from "react-icons/bs";
+import { useSelector } from "react-redux";
+
+export default function ShowAttendant() {
+  const { userDetails } = useSelector((state) => state.user);
+
+  return (
+    <Stack divider={<StackDivider />} pb={6} spacing={0}>
+      <Stack color="blue.800" pb={4} px={6}>
+        <Heading textAlign="center" fontSize="2xl">
+          Show Attendant
+        </Heading>
+      </Stack>
+      <VStack spacing={105} pt={8} px={4}>
+        <VStack>
+          <Avatar boxSize={128} size="2xl" name={userDetails.first_name}>
+            <AvatarBadge borderWidth={3} boxSize={12} bg="green.400">
+              <Icon fontSize={32} as={BsCheck2} />
+            </AvatarBadge>
+          </Avatar>
+
+          <Heading textTransform="capitalize">
+            {userDetails.first_name} {userDetails.last_name}
+          </Heading>
+        </VStack>
+        <Button
+          size="lg"
+          colorScheme="primary"
+          fontWeight={500}
+          w={250}
+          onClick={() => Router.back()}
+          h={57}
+          type="submit"
+        >
+          Done
+        </Button>
+      </VStack>
+    </Stack>
+  );
+}

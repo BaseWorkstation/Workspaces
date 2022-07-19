@@ -1,33 +1,25 @@
-import React, { useState } from "react";
-import { QrReader } from "react-qr-reader";
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Link as ChakraLink,
-  Link,
-  Stack,
-  StackDivider,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Center, Stack, VStack } from "@chakra-ui/react";
 import { Logo } from "components/Logo";
-import { MdCropFree } from "react-icons/md";
+import ChooseService from "./components/ChooseService";
+import ConfirmPin from "./components/ConfirmPin";
+import ScanQR from "./components/ScanQR";
+import ShowAttendant from "./components/ShowAttendant";
+import useCheckInHook from "./useCheckInHook";
 
 export default function CheckIn() {
-  const [data, setData] = useState("No result");
+  const {
+    stage,
+    handleScanResult,
+    workspace,
+    handleSubmitPin,
+    workspaceServices,
+    handleSubmitService,
+  } = useCheckInHook();
 
   return (
     <Center bg="gray.50" minH="100vh" py={[16, 20]}>
       <VStack w="full" spacing={16}>
-        <Logo notLinked />
+        <Logo />
 
         <VStack w="full" spacing={8}>
           <Stack
@@ -37,62 +29,28 @@ export default function CheckIn() {
             border="1px solid"
             borderColor="gray.100"
             rounded={20}
-            spacing={0}
             pt={9}
             pb={6}
           >
-            <Stack pb={8} px={6}>
-              <Heading fontSize="xl">Check-in</Heading>
-              <Text>
-                Scan the QR Code at the entrance of your current workspace to
-                check-in
-              </Text>
-            </Stack>
-            <Stack px={0} spacing={6}>
-              <Box w="full">
-                <QrReader
-                  constraints={{ facingMode: "environment" }}
-                  scanDelay={1000}
-                  onResult={(result, error) => {
-                    if (!!result) {
-                      alert(result?.text);
+            {stage === "SCAN_QR" && (
+              <ScanQR handleScanResult={handleScanResult} />
+            )}
 
-                      setData(result?.text);
-                    }
+            {stage === "CONFIRM_PIN" && (
+              <ConfirmPin
+                workspace={workspace}
+                handleSubmitPin={handleSubmitPin}
+              />
+            )}
 
-                    if (!!error) {
-                      console.log(error);
-                    }
-                  }}
-                  //   facingMode="environment"
-                  //   delay={500}
-                  //   onError={handleError}
-                  //   onScan={handleScan}
-                  //   // chooseDeviceId={()=>selected}
-                  //   ViewFinder={(props) => (
-                  //     <Center
-                  //       w="full"
-                  //       zIndex={9999}
-                  //       top={0}
-                  //       h="full"
-                  //       pos="absolute"
-                  //     >
-                  //       <Icon fontSize={340} color="white" as={MdCropFree} />
-                  //     </Center>
-                  //   )}
-                  videoContainerStyle={{ paddingTop: "76%" }}
-                  containerStyle={{ width: "100%", height: "fit-content" }}
-                />
-              </Box>
-              <Text fontSize="xs" textAlign="center">
-                Unable to scan?{" "}
-                <Link href="/account/support">
-                  <ChakraLink fontWeight="semibold" color="primary.500">
-                    Get support
-                  </ChakraLink>
-                </Link>
-              </Text>
-            </Stack>
+            {stage === "CHOOSE_SERVICE" && (
+              <ChooseService
+                workspaceServices={workspaceServices}
+                handleSubmitService={handleSubmitService}
+              />
+            )}
+
+            {stage === "SHOW_ATTENDANT" && <ShowAttendant />}
           </Stack>
         </VStack>
       </VStack>

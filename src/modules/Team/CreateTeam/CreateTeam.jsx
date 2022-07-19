@@ -20,7 +20,7 @@ export default function CreateTeam() {
   return (
     <Center bg="gray.50" minH="100vh" py={[16, 20]}>
       <VStack w="full" spacing={16}>
-        <Logo notLinked />
+        <Logo />
 
         <VStack w="full" spacing={8}>
           <Stack
