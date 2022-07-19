@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { toastError } from "utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { checkInToSpace } from "redux/slices/spaceSlice";
+import { toastError, toastSuccess } from "utils/helpers";
 
 export default function useCheckInHook() {
   const [stage, setStage] = useState("SCAN_QR");
   const [workspace, setWorkspace] = useState(null);
   const [workspaceServices, setWorkspaceServices] = useState([]);
   const { userDetails } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.spaces);
+
+  const dispatch = useDispatch();
 
   const getWorkspaceDetailsFromUrl = (url) => {
     const { searchParams } = new URL(url);
@@ -42,8 +46,22 @@ export default function useCheckInHook() {
     setStage("CHOOSE_SERVICE");
   };
 
-  const handleSubmitService = (service) => {
-    setStage("SHOW_ATTENDANT");
+  const handleSubmitService = async (service) => {
+    const { payload, error } = await dispatch(
+      checkInToSpace({
+        user_id: userDetails.id,
+        workstation_id: workspace.id,
+        unique_pin: userDetails.unique_pin,
+      })
+    );
+
+    if (payload?.data) {
+      toastSuccess("Checked in successfully!");
+      setStage("SHOW_ATTENDANT");
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
   };
 
   return {
@@ -53,5 +71,6 @@ export default function useCheckInHook() {
     handleSubmitPin,
     workspaceServices,
     handleSubmitService,
+    isCheckingIn: loading === "CHECK_IN_TO_SPACE",
   };
 }

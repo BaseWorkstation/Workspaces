@@ -15,6 +15,7 @@ import { useState } from "react";
 export default function ChooseService({
   workspaceServices,
   handleSubmitService,
+  isCheckingIn,
 }) {
   const [selectedService, setSelectedService] = useState(null);
 
@@ -69,6 +70,7 @@ export default function ChooseService({
           colorScheme="primary"
           fontWeight={500}
           isDisabled={!selectedService}
+          isLoading={isCheckingIn}
           w={250}
           onClick={() => handleSubmitService(selectedService)}
           h={57}

@@ -14,6 +14,7 @@ export default function CheckIn() {
     handleSubmitPin,
     workspaceServices,
     handleSubmitService,
+    isCheckingIn,
   } = useCheckInHook();
 
   return (
@@ -47,6 +48,7 @@ export default function CheckIn() {
               <ChooseService
                 workspaceServices={workspaceServices}
                 handleSubmitService={handleSubmitService}
+                isCheckingIn={isCheckingIn}
               />
             )}
 

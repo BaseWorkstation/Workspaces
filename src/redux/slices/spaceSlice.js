@@ -45,6 +45,29 @@ export const createSpace = createAsyncThunk(
   }
 );
 
+export const checkInToSpace = createAsyncThunk(
+  "spaces/checkInToSpace",
+  async (createPayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.post(
+        `${BASE_API_URL}/visits/check-in`,
+        createPayload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "base_acccess_token"
+            )}`,
+          },
+        }
+      );
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const editSpace = createAsyncThunk(
   "spaces/editSpace",
   async (editPayload, thunkAPI) => {
@@ -144,6 +167,24 @@ const spaceSlice = createSlice({
       delete state.loading;
     },
 
+    [checkInToSpace.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "CHECK_IN_TO_SPACE";
+    },
+    [checkInToSpace.fulfilled]: (state, action) => {
+      state.success = "CHECK_IN_TO_SPACE";
+      delete state.loading;
+      delete state.error;
+    },
+    [checkInToSpace.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "CHECK_IN_TO_SPACE",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
     [editSpace.pending]: (state) => {
       delete state.error;
       delete state.success;
@@ -151,7 +192,9 @@ const spaceSlice = createSlice({
     },
     [editSpace.fulfilled]: (state, action) => {
       state.success = "EDIT_SPACE";
-      const space = state.spaces.find((space) => space.id === action.payload.id);
+      const space = state.spaces.find(
+        (space) => space.id === action.payload.id
+      );
       // delete state.tempNote;
       Object.assign(space, action.payload);
       // state.spaces = action.payload;
