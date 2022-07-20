@@ -1,9 +1,24 @@
 import { Box, Circle, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
-export default function SpaceCard() {
+export default function SpaceCard({ space }) {
+  const {
+    id,
+    name,
+    city,
+    state,
+    country_iso,
+    country_name,
+    phone,
+    email,
+    currency_code,
+    default_service,
+    logo,
+    qr_code_path,
+  } = space;
+
   return (
-    <Link href="/spaces/1">
+    <Link href={`/spaces/${id}`}>
       <HStack
         cursor="pointer"
         bg="white"
@@ -14,28 +29,34 @@ export default function SpaceCard() {
         spacing={[4, 6]}
         rounded={["xl", "xl", "2xl"]}
       >
-        <Image
+        <Box
           w={[131, 151, 210]}
           h={["full"]}
-          objectFit="cover"
+          bgSize={logo ? "cover" : "60%"}
           rounded={["xl", "xl", "2xl"]}
-          src="/images/space.png"
+          bgRepeat="no-repeat"
+          bgPos="center"
+          bgImage={logo || "/images/spaceholder.png"}
         />
         <Box py={[3, 3, 3, 0]} pr={2}>
           <Text fontSize={["md", "md", "lg"]} color="primary.900">
-            Venia Business Hub
+            {name}
           </Text>
           <HStack spacing={0} color="primary.900" align="baseline">
-            <Text>₦200/</Text>
-            <Text fontSize={10}>HR</Text>
+            <Text>
+              {default_service?.price_per_minute?.amount} {currency_code}/
+            </Text>
+            <Text fontSize={10}>MIN</Text>
           </HStack>
           <Stack fontSize={["xs", "xs", "md"]} spacing={1} mt={[1, 1, 3]}>
             <HStack spacing={2}>
               <Circle size={2} bg="green.400" />
               <Text color="gray.500">OPEN</Text>
             </HStack>
-            <Text fontWeight={500}>09:00 AM - 06: 00 PM</Text>
-            <Text fontWeight={500}>12, Adeniyi jones Av, Ikeja, Lagos</Text>
+            <Text fontWeight={500}>09:00 AM - 06:00 PM</Text>
+            <Text textTransform="capitalize" fontWeight={500}>
+              {city}, {state}
+            </Text>
           </Stack>
         </Box>
       </HStack>

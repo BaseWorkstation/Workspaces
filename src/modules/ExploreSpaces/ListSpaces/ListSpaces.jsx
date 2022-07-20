@@ -14,8 +14,10 @@ import ExploreLayout from "layout/ExploreLayout/ExploreLayout";
 import Link from "next/link";
 import SearchSpaces from "./components/SearchSpaces";
 import SpaceCard from "./components/SpaceCard";
+import useListSpacesHook from "./useListSpacesHook";
 
 export default function ListSpaces() {
+  const { spaces, isLoading } = useListSpacesHook();
   return (
     <ExploreLayout>
       <Stack spacing={[8, 10, 12, 70]}>
@@ -92,8 +94,8 @@ export default function ListSpaces() {
               </HStack>
 
               <Stack spacing={8}>
-                {[0, 1, 2, 3].map((index) => (
-                  <SpaceCard key={index} />
+                {spaces.data.map((space) => (
+                  <SpaceCard key={space.id} space={space} />
                 ))}
               </Stack>
             </Stack>

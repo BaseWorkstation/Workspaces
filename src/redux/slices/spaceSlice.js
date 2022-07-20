@@ -6,9 +6,7 @@ export const fetchSpaces = createAsyncThunk(
   "spaces/fetchSpaces",
   async (fetchPayload, thunkAPI) => {
     try {
-      const {
-        data: { data },
-      } = await Axios.get(`${BASE_API_URL}/gateway/branch/space/get-all`, {
+      const { data } = await Axios.get(`${BASE_API_URL}/workstations/`, {
         params: fetchPayload,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
@@ -115,7 +113,7 @@ export const deleteSpace = createAsyncThunk(
 const spaceSlice = createSlice({
   name: "spaces",
   initialState: {
-    spaces: [],
+    spaces: { data: [] },
     loading: "FETCH_SPACES",
     error: "",
     success: "",
@@ -129,7 +127,7 @@ const spaceSlice = createSlice({
   },
   extraReducers: {
     [fetchSpaces.pending]: (state) => {
-      state.spaces = [];
+      state.spaces = { data: [] };
       delete state.error;
       delete state.success;
       state.loading = "FETCH_SPACES";
