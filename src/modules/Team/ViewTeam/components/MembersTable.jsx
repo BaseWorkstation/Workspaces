@@ -63,13 +63,13 @@ export default function MembersTable({
             </Tr>
           </Thead>
           <Tbody>
-            {teamMembers.data.map((index) => (
-              <Tr key={index}>
-                <Td py={8} pl={0}>
-                  Best Omotayo
+            {teamMembers.data.map((member) => (
+              <Tr key={member.id}>
+                <Td textTransform="capitalize" py={8} pl={0}>
+                  {member.first_name} {member.last_name}
                 </Td>
-                <Td py={8}>bestomotayo@gmail.com</Td>
-                <Td py={8}>2 min ago</Td>
+                <Td py={8}>{member.email}</Td>
+                <Td py={8}>{member.last_active}</Td>
                 <Td py={8}>
                   <Button
                     fontWeight={500}

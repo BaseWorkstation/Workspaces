@@ -13,7 +13,9 @@ export default function TeamSubscription({ handleChoosePlan }) {
         Plan. To change your plan select from an option below
       </Text>
 
-      <SubscriptionPlans onSelect={handleChoosePlan} />
+      <SubscriptionPlans
+        onSelect={(planId) => handleChoosePlan(planId, "Team")}
+      />
     </Stack>
   );
 }

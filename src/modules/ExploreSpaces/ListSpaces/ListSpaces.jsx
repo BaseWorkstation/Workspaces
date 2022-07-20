@@ -10,6 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import Spinner from "components/Spinner/Spinner";
 import ExploreLayout from "layout/ExploreLayout/ExploreLayout";
 import Link from "next/link";
 import SearchSpaces from "./components/SearchSpaces";
@@ -97,6 +98,8 @@ export default function ListSpaces() {
                 {spaces.data.map((space) => (
                   <SpaceCard key={space.id} space={space} />
                 ))}
+
+                {isLoading && <Spinner />}
               </Stack>
             </Stack>
             <Show above="lg">

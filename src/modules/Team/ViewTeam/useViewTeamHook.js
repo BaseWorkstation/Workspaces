@@ -100,6 +100,7 @@ export default function useViewTeamHook() {
     isAddingMember: loading === "ADD_TEAM_MEMBER",
     isDeletingMember: loading === "DELETE_TEAM_MEMBER",
     teams,
+    currentTeam,
     teamMembers,
     memberDetails,
     handleChange,

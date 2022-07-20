@@ -12,7 +12,7 @@ import UserSubscription from "./components/UserSubscription";
 import useSubscriptionsHook from "./useSubscriptionsHook";
 
 export default function Subscriptions() {
-  const { handleChoosePlan } = useSubscriptionsHook();
+  const { currentUserPlan, handleChoosePlan } = useSubscriptionsHook();
   return (
     <AccountLayout>
       <Stack
@@ -52,7 +52,10 @@ export default function Subscriptions() {
 
           <TabPanels>
             <TabPanel px={0} pt={[5, 5]}>
-              <UserSubscription handleChoosePlan={handleChoosePlan} />
+              <UserSubscription
+                currentPlan={currentUserPlan}
+                handleChoosePlan={handleChoosePlan}
+              />
             </TabPanel>
             <TabPanel px={0} pt={[5, 5]}>
               <TeamSubscription handleChoosePlan={handleChoosePlan} />
