@@ -8,7 +8,9 @@ import {
   StackDivider,
   Text,
   VStack,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function ConfirmPin({ workspace, handleSubmitPin }) {
@@ -26,7 +28,7 @@ export default function ConfirmPin({ workspace, handleSubmitPin }) {
           Check in to {workspace?.name}
         </Heading>
       </Stack>
-      <VStack as="form" onSubmit={handleSubmit} spacing={106} pt={8} px={0}>
+      <VStack as="form" onSubmit={handleSubmit} pt={8} px={0}>
         <VStack>
           <Text fontSize="xl" fontWeight={700}>
             Enter PIN
@@ -36,7 +38,7 @@ export default function ConfirmPin({ workspace, handleSubmitPin }) {
           </Text>
         </VStack>
 
-        <HStack spacing={10}>
+        <HStack pt={97} pb={20} spacing={10}>
           <PinInput
             value={pin}
             onChange={setPin}
@@ -69,6 +71,14 @@ export default function ConfirmPin({ workspace, handleSubmitPin }) {
         >
           Check In
         </Button>
+        <Text pt={8} fontSize="xs" textAlign="center">
+          Don't have a pin?{" "}
+          <Link href="/register">
+            <ChakraLink fontWeight="semibold" color="primary.500">
+              Create a Base account now
+            </ChakraLink>
+          </Link>
+        </Text>
       </VStack>
     </Stack>
   );

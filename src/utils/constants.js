@@ -50,22 +50,27 @@ export const exploreMenuOptions = [
   {
     name: "Account",
     href: "/account",
+    isProtected: true,
   },
   {
     name: "Explore spaces",
     href: "/",
+    isProtected: false,
   },
   {
     name: "For teams",
     href: "https://trybase.co/teams",
+    isProtected: false,
   },
   {
     name: "Check in to a space",
     href: "/check-in",
+    isProtected: false,
   },
 
   {
     name: "Support",
     href: "/account/support",
+    isProtected: true,
   },
 ];

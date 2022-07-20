@@ -4,7 +4,7 @@ import { checkInToSpace } from "redux/slices/spaceSlice";
 import { toastError, toastSuccess } from "utils/helpers";
 
 export default function useCheckInHook() {
-  const [stage, setStage] = useState("SCAN_QR");
+  const [stage, setStage] = useState("CONFIRM_PIN");
   const [workspace, setWorkspace] = useState(null);
   const [workspaceServices, setWorkspaceServices] = useState([]);
   const { userDetails } = useSelector((state) => state.user);
@@ -38,7 +38,16 @@ export default function useCheckInHook() {
   };
 
   const handleSubmitPin = (pin) => {
-    if (pin !== userDetails.unique_pin) {
+    if (!userDetails) {
+      toastError(
+        "Kindly login or create an account to be enabled to use this pin",
+        null,
+        " "
+      );
+      return;
+    }
+
+    if (pin !== userDetails?.unique_pin) {
       toastError("Incorrect pin", null, " ");
       return;
     }
@@ -49,9 +58,9 @@ export default function useCheckInHook() {
   const handleSubmitService = async (service) => {
     const { payload, error } = await dispatch(
       checkInToSpace({
-        user_id: userDetails.id,
+        user_id: userDetails?.id,
         workstation_id: workspace.id,
-        unique_pin: userDetails.unique_pin,
+        unique_pin: userDetails?.unique_pin,
       })
     );
 

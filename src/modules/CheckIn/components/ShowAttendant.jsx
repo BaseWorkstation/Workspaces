@@ -40,7 +40,7 @@ export default function ShowAttendant() {
           </Heading>
 
           <Text textAlign="center">
-            Kindly show the attendant to allow you complete your chck in and
+            Kindly show the attendant to allow you complete your check in and
             start working
           </Text>
         </VStack>

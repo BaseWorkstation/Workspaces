@@ -1,9 +1,12 @@
-import { HStack, Link as ChakraLink, Show } from "@chakra-ui/react";
+import { Button, HStack, Link as ChakraLink, Show } from "@chakra-ui/react";
 import { Logo } from "components/Logo";
 import UserMenu from "layout/shared/UserMenu";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 export default function DesktopExporeNav() {
+  const { userDetails } = useSelector((state) => state.user);
+
   return (
     <Show above="lg">
       <HStack
@@ -31,7 +34,27 @@ export default function DesktopExporeNav() {
             </Link>
           </HStack>
 
-          <UserMenu />
+          {userDetails && <UserMenu />}
+          {!userDetails && (
+            <HStack spacing={10}>
+              <Link href="/login">
+                <Button fontWeight={500} variant="link">
+                  Log in
+                </Button>
+              </Link>
+              <Link href="/register">
+                <Button
+                  fontWeight={500}
+                  shadow="xl"
+                  colorScheme="primary"
+                  w={176}
+                  h={55}
+                >
+                  Try for free
+                </Button>
+              </Link>
+            </HStack>
+          )}
         </HStack>
       </HStack>
     </Show>

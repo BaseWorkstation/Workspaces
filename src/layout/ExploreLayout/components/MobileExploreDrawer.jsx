@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -10,6 +11,7 @@ import {
   HStack,
   Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import MobileNav from "layout/shared/MobileNav";
 import Link from "next/link";
@@ -25,15 +27,37 @@ export default function MobileExploreDrawer({ isOpen, onToggle }) {
       <DrawerOverlay />
       <DrawerContent p={0}>
         <DrawerHeader px={5} pt={10}>
-          <HStack>
-            <Avatar name={userDetails?.first_name} width={9} height={9} />
-            <Box>
-              <Text textTransform="capitalize" fontWeight="bold">
-                {userDetails?.first_name} {userDetails?.last_name}
-              </Text>
-              <Text fontSize="xs">{userDetails?.email}</Text>
-            </Box>
-          </HStack>
+          {userDetails && (
+            <HStack>
+              <Avatar name={userDetails?.first_name} width={9} height={9} />
+              <Box>
+                <Text textTransform="capitalize" fontWeight="bold">
+                  {userDetails?.first_name} {userDetails?.last_name}
+                </Text>
+                <Text fontSize="xs">{userDetails?.email}</Text>
+              </Box>
+            </HStack>
+          )}
+          {!userDetails && (
+            <VStack spacing={8} mt={8}>
+              <Link href="/login">
+                <Button fontWeight={500} variant="link">
+                  Log in
+                </Button>
+              </Link>
+              <Link href="/register">
+                <Button
+                  fontWeight={500}
+                  shadow="xl"
+                  colorScheme="primary"
+                  w={176}
+                  h={55}
+                >
+                  Try for free
+                </Button>
+              </Link>
+            </VStack>
+          )}
         </DrawerHeader>
 
         <DrawerBody pb={24}>
@@ -46,19 +70,25 @@ export default function MobileExploreDrawer({ isOpen, onToggle }) {
             spacing={12}
             pb={10}
           >
-            {exploreMenuOptions.map(({ name, href }) => (
-              <Link key={href} href={href}>
-                <Text w="fit-content">{name}</Text>
-              </Link>
-            ))}
+            {exploreMenuOptions.map(({ name, href, isProtected }) => {
+              if (isProtected && !userDetails) return null;
 
-            <Text
-              cursor="pointer"
-              onClick={() => Router.push("/login")}
-              color="red.500"
-            >
-              Logout
-            </Text>
+              return (
+                <Link key={href} href={href}>
+                  <Text w="fit-content">{name}</Text>
+                </Link>
+              );
+            })}
+
+            {userDetails && (
+              <Text
+                cursor="pointer"
+                onClick={() => Router.push("/login")}
+                color="red.500"
+              >
+                Logout
+              </Text>
+            )}
           </Stack>
         </DrawerBody>
 

@@ -2,7 +2,6 @@ import React from "react";
 import CheckIn from "modules/CheckIn/CheckIn";
 import Head from "next/head";
 import { Box } from "@chakra-ui/react";
-import { withAuth } from "utils/withAuth";
 
 function CheckInPage() {
   return (
@@ -15,4 +14,4 @@ function CheckInPage() {
   );
 }
 
-export default withAuth(CheckInPage);
+export default CheckInPage;
