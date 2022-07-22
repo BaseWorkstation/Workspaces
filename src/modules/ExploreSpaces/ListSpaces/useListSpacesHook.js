@@ -5,6 +5,7 @@ import debounce from "lodash.debounce";
 
 export default function useListSpacesHook() {
   const [searchValue, setSearchValue] = useState("");
+  const [selectedSpace, setSelectedSpace] = useState(null);
   const { spaces, loading } = useSelector((state) => state.spaces);
   const dispatch = useDispatch();
 
@@ -51,5 +52,7 @@ export default function useListSpacesHook() {
     searchValue,
     setSearchValue,
     resultCount: meta?.total,
+    selectedSpace,
+    setSelectedSpace,
   };
 }

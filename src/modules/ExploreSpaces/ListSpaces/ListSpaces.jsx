@@ -16,6 +16,7 @@ import ExploreLayout from "layout/ExploreLayout/ExploreLayout";
 import Link from "next/link";
 import SearchSpaces from "./components/SearchSpaces";
 import SpaceCard from "./components/SpaceCard";
+import SpacesMap from "./components/SpacesMap";
 import useListSpacesHook from "./useListSpacesHook";
 
 export default function ListSpaces() {
@@ -28,6 +29,8 @@ export default function ListSpaces() {
     setSearchValue,
     debouncedOnChange,
     resultCount,
+    selectedSpace,
+    setSelectedSpace,
   } = useListSpacesHook();
 
   return (
@@ -147,21 +150,11 @@ export default function ListSpaces() {
               </Stack>
             </Box>
             <Show above="lg">
-              <Box
-                pos="sticky"
-                top="5.5rem"
-                h="calc(100vh - 7rem)"
-                borderRadius={20}
-                w="full"
-              >
-                <Image
-                  h="full"
-                  w="full"
-                  borderRadius={20}
-                  objectFit="cover"
-                  src="/images/map.png"
-                />
-              </Box>
+              <SpacesMap
+                spaces={spaces}
+                selectedSpace={selectedSpace}
+                setSelectedSpace={setSelectedSpace}
+              />
             </Show>
           </Stack>
         </HStack>
