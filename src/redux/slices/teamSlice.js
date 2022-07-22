@@ -22,6 +22,24 @@ export const fetchTeams = createAsyncThunk(
   }
 );
 
+export const fetchTeamActivities = createAsyncThunk(
+  "teams/fetchTeamActivities",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.get(`${BASE_API_URL}/visits/`, {
+        params: fetchPayload,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const fetchTeamMembers = createAsyncThunk(
   "teams/fetchTeamMembers",
   async (fetchPayload, thunkAPI) => {
@@ -181,6 +199,26 @@ const teamSlice = createSlice({
     [fetchTeams.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_TEAMS",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [fetchTeamActivities.pending]: (state) => {
+      state.teamActivities = { data: [] };
+      delete state.error;
+      delete state.success;
+      state.loading = "FETCH_TEAM_ACTIVITIES";
+    },
+    [fetchTeamActivities.fulfilled]: (state, action) => {
+      state.success = "FETCH_TEAM_ACTIVITIES";
+      state.teamActivities = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchTeamActivities.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "FETCH_TEAM_ACTIVITIES",
         errorMessage: payload?.error,
       };
       delete state.loading;

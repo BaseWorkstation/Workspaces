@@ -5,13 +5,15 @@ import SubscriptionPlans from "components/SubscriptionPlans/SubscriptionPlans";
 export default function UserSubscription({ currentPlan, handleChoosePlan }) {
   return (
     <Stack spacing={[4, 8]} divider={<StackDivider />}>
-      <Text>
-        You're currently subscribed to the{" "}
-        <Box as="span" fontWeight="bold" color="primary.500">
-          {currentPlan.name}
-        </Box>{" "}
-        Plan. To change your plan select from an option below
-      </Text>
+      {currentPlan && (
+        <Text>
+          You're currently subscribed to the{" "}
+          <Box as="span" fontWeight="bold" color="primary.500">
+            {currentPlan?.name}
+          </Box>{" "}
+          Plan. To change your plan select from an option below
+        </Text>
+      )}
 
       <SubscriptionPlans
         currentPlanId={currentPlan?.id}

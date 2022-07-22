@@ -21,7 +21,31 @@ export default function useSubscriptionsHook() {
     ({ method }) => method === "plan"
   )?.plan;
 
-  const handleChoosePlan = async (planId, model) => {
+  const currentTeamPlan = currentTeam?.payment_methods.find(
+    ({ method }) => method === "plan"
+  )?.plan;
+
+  const handleChooseUserPlan = async (planId, model) => {
+    const { payload, error } = await dispatch(
+      addPaymentMethod({
+        paymentable_model: model,
+        paymentable_id: userDetails.id,
+        method_type: "plan",
+        plan_id: planId,
+      })
+    );
+
+    console.log(payload);
+
+    if (payload?.data) {
+      toastSuccess("Subscribed to plan successfully!");
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
+  };
+
+  const handleChooseTeamPlan = async (planId, model) => {
     const { payload, error } = await dispatch(
       addPaymentMethod({
         paymentable_model: model,
@@ -43,6 +67,8 @@ export default function useSubscriptionsHook() {
 
   return {
     currentUserPlan,
-    handleChoosePlan,
+    handleChooseUserPlan,
+    currentTeamPlan,
+    handleChooseTeamPlan,
   };
 }

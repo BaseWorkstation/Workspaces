@@ -21,7 +21,7 @@ export default function TeamActivities({ teamLoading, teams, teamActivities }) {
 
   if (!teams.length) return <NoTeamView />;
 
-  if (!teamActivities.length)
+  if (!teamActivities.data.length)
     return (
       <Text textAlign="center">
         When your team members check in to workspaces, you will see it here
@@ -63,12 +63,14 @@ export default function TeamActivities({ teamLoading, teams, teamActivities }) {
             </Tr>
           </Thead>
           <Tbody>
-            {teamActivities.map((index) => (
-              <Tr key={index}>
+            {teamActivities.data.map(({ id, user, workstation }) => (
+              <Tr key={id}>
                 <Td py={8} pl={0}>
-                  Venia Business Hub
+                  {workstation.name}
                 </Td>
-                <Td py={8}>Best Omotayo</Td>
+                <Td textTransform="capitalize" py={8}>
+                  {user.first_name} {user.last_name}
+                </Td>
                 <Td py={8}>09:00 am</Td>
                 <Td py={8}>05:00pm</Td>
                 <Td py={8} isNumeric>

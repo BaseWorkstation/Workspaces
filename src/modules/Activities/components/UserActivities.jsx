@@ -10,8 +10,18 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import Spinner from "components/Spinner/Spinner";
 
-export default function UserActivities() {
+export default function UserActivities({ userActivities, userLoading }) {
+  if (userLoading) return <Spinner />;
+
+  if (!userActivities.data.length)
+    return (
+      <Text textAlign="center">
+        When you start checking in to workspaces, you will see them here
+      </Text>
+    );
+
   return (
     <Box>
       <TableContainer>
@@ -43,10 +53,10 @@ export default function UserActivities() {
             </Tr>
           </Thead>
           <Tbody>
-            {[0, 1, 2, 3].map((index) => (
-              <Tr key={index}>
+            {userActivities.data.map(({ id, workstation }) => (
+              <Tr key={id}>
                 <Td py={8} pl={0}>
-                  Venia Business Hub
+                  {workstation.name}
                 </Td>
                 <Td py={8}>09:00 am</Td>
                 <Td py={8}>05:00pm</Td>

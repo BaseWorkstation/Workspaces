@@ -20,6 +20,24 @@ export const fetchUserDetails = createAsyncThunk(
   }
 );
 
+export const fetchUserActivities = createAsyncThunk(
+  "teams/fetchUserActivities",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.get(`${BASE_API_URL}/visits/`, {
+        params: fetchPayload,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const editUserDetails = createAsyncThunk(
   "user/editUserDetails",
   async (editPayload, thunkAPI) => {
@@ -70,6 +88,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     userDetails: null,
+    userActivities: { data: [] },
     usersList: [],
     loading: "",
     error: "",
@@ -111,6 +130,27 @@ const userSlice = createSlice({
       };
       delete state.loading;
     },
+
+    [fetchUserActivities.pending]: (state) => {
+      state.userActivities = { data: [] };
+      delete state.error;
+      delete state.success;
+      state.loading = "FETCH_USER_ACTIVITIES";
+    },
+    [fetchUserActivities.fulfilled]: (state, action) => {
+      state.success = "FETCH_USER_ACTIVITIES";
+      state.userActivities = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchUserActivities.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "FETCH_USER_ACTIVITIES",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
     [editUserDetails.pending]: (state) => {
       delete state.error;
       delete state.success;
