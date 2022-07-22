@@ -20,6 +20,29 @@ export const fetchSpaces = createAsyncThunk(
   }
 );
 
+export const fetchMoreSpaces = createAsyncThunk(
+  "spaces/fetchMoreSpaces",
+  async ({ page, fetchPayload }, thunkAPI) => {
+    try {
+      const { data } = await Axios.get(
+        `${BASE_API_URL}/workstations/?page=${page}`,
+        {
+          params: fetchPayload,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "base_acccess_token"
+            )}`,
+          },
+        }
+      );
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const createSpace = createAsyncThunk(
   "spaces/createSpace",
   async (createPayload, thunkAPI) => {
@@ -139,6 +162,27 @@ const spaceSlice = createSlice({
       delete state.error;
     },
     [fetchSpaces.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "FETCH_SPACES",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [fetchMoreSpaces.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "FETCH_SPACES";
+    },
+    [fetchMoreSpaces.fulfilled]: (state, action) => {
+      state.success = "FETCH_SPACES";
+      state.spaces.data.push(...action.payload?.data);
+      state.spaces.meta = action.payload?.meta;
+      state.spaces.links = action.payload?.links;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchMoreSpaces.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_SPACES",
         errorMessage: payload?.error,

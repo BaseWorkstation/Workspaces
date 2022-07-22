@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   Heading,
   HStack,
   Image,
@@ -18,7 +19,17 @@ import SpaceCard from "./components/SpaceCard";
 import useListSpacesHook from "./useListSpacesHook";
 
 export default function ListSpaces() {
-  const { spaces, isLoading } = useListSpacesHook();
+  const {
+    spaces,
+    isLoading,
+    handleFetchMoreSpaces,
+    hasMore,
+    searchValue,
+    setSearchValue,
+    debouncedOnChange,
+    resultCount,
+  } = useListSpacesHook();
+
   return (
     <ExploreLayout>
       <Stack spacing={[8, 10, 12, 70]}>
@@ -71,7 +82,13 @@ export default function ListSpaces() {
 
           <Show below="md">
             <Box w="full" pt={4}>
-              <SearchSpaces />
+              <SearchSpaces
+                value={searchValue}
+                onChange={(value) => {
+                  debouncedOnChange(value);
+                  setSearchValue(value);
+                }}
+              />
             </Box>
           </Show>
         </VStack>
@@ -84,24 +101,51 @@ export default function ListSpaces() {
             maxW="6xl"
             spacing={5}
           >
-            <Stack pb={8} spacing={12} w="full">
-              <HStack justify="space-between">
-                <Text fontSize={["sm", "md"]} fontWeight={500}>
-                  74 results matching your search entries
-                </Text>
+            <Box pb={8} w="full">
+              <HStack
+                align={["flex-start", "flex-start", "center"]}
+                justify="space-between"
+              >
+                <Flex>
+                  {searchValue && !isLoading && (
+                    <Text mb={12} fontSize={["sm", "md"]} fontWeight={500}>
+                      {resultCount} results matching your search entries
+                    </Text>
+                  )}
+                </Flex>
                 <Show above="md">
-                  <SearchSpaces />
+                  <Flex pb={12}>
+                    <SearchSpaces
+                      value={searchValue}
+                      onChange={(value) => {
+                        debouncedOnChange(value);
+                        setSearchValue(value);
+                      }}
+                    />
+                  </Flex>
                 </Show>
               </HStack>
 
               <Stack spacing={8}>
-                {spaces.data.map((space) => (
+                {spaces.map((space) => (
                   <SpaceCard key={space.id} space={space} />
                 ))}
 
                 {isLoading && <Spinner />}
+
+                {hasMore && (
+                  <Button
+                    fontWeight={500}
+                    colorScheme="primary"
+                    variant="link"
+                    isLoading={isLoading}
+                    onClick={handleFetchMoreSpaces}
+                  >
+                    Load more
+                  </Button>
+                )}
               </Stack>
-            </Stack>
+            </Box>
             <Show above="lg">
               <Box
                 pos="sticky"

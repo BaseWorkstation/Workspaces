@@ -1,5 +1,8 @@
 import { Box, Circle, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
+import Moment from "react-moment";
+import moment from "moment";
+import "moment-timezone";
 
 export default function SpaceCard({ space }) {
   const {
@@ -11,6 +14,8 @@ export default function SpaceCard({ space }) {
     country_name,
     phone,
     email,
+    open_time,
+    close_time,
     currency_code,
     default_service,
     logo,
@@ -26,19 +31,19 @@ export default function SpaceCard({ space }) {
         borderColor="gray.200"
         fontWeight={700}
         minH={[134, 154, 215]}
+        align="stretch"
         spacing={[4, 6]}
         rounded={["xl", "xl", "2xl"]}
       >
         <Box
           w={[131, 151, 210]}
-          h={["full"]}
           bgSize={logo ? "cover" : "60%"}
           rounded={["xl", "xl", "2xl"]}
           bgRepeat="no-repeat"
           bgPos="center"
           bgImage={logo || "/images/spaceholder.png"}
         />
-        <Box py={[3, 3, 3, 0]} pr={2}>
+        <Stack justify="center" py={[3, 3, 3, 0]} pr={2}>
           <Text fontSize={["md", "md", "lg"]} color="primary.900">
             {name}
           </Text>
@@ -53,12 +58,15 @@ export default function SpaceCard({ space }) {
               <Circle size={2} bg="green.400" />
               <Text color="gray.500">OPEN</Text>
             </HStack>
-            <Text fontWeight={500}>09:00 AM - 06:00 PM</Text>
+            <Text fontWeight={500}>
+              {moment(open_time, "hh:mm:ss").format("hh:mm A")} -{" "}
+              {moment(close_time, "hh:mm:ss").format("hh:mm A")}
+            </Text>
             <Text textTransform="capitalize" fontWeight={500}>
               {city}, {state}
             </Text>
           </Stack>
-        </Box>
+        </Stack>
       </HStack>
     </Link>
   );
