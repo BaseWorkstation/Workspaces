@@ -52,32 +52,44 @@ export default function AccountActivities() {
             w={["full", "full", "fit-content"]}
             rounded={8}
           >
-            <Flex pos="absolute" right={[0, 0, 10]} top={[58, 4]}>
-              <Menu placement="bottom-end" gutter={4}>
-                <MenuButton as={HStack} cursor="pointer">
-                  <HStack>
-                    <Icon
-                      color="primary.500"
-                      size="sm"
-                      variant="default"
-                      as={AiOutlineCalendar}
-                      fontSize="lg"
-                    />
-                    <Text fontWeight={500} fontSize="sm">
-                      <Moment format="MMMM D, YYYY ">{selectedDay}</Moment>
-                    </Text>
-                  </HStack>
-                </MenuButton>
-                <MenuList p={4}>
-                  <DayPicker
-                    onDayClick={setSelectedDay}
-                    selectedDays={selectedDay}
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    disabledDays={{ after: new Date() }}
-                    hideOnDayClick={true}
-                  />
-                </MenuList>
+            <Flex
+              pos="absolute"
+              right={[0, 0, 10]}
+              top={[73, 4]}
+              left={[0, "auto"]}
+            >
+              <Menu isLazy placement="bottom-end" gutter={4}>
+                {({ onClose }) => (
+                  <>
+                    <MenuButton as={HStack} cursor="pointer">
+                      <HStack>
+                        <Icon
+                          color="primary.500"
+                          size="sm"
+                          variant="default"
+                          as={AiOutlineCalendar}
+                          fontSize="lg"
+                        />
+                        <Text fontWeight={500} fontSize="sm">
+                          <Moment format="MMMM D, YYYY ">{selectedDay}</Moment>
+                        </Text>
+                      </HStack>
+                    </MenuButton>
+                    <MenuList p={4}>
+                      <DayPicker
+                        onDayClick={(day) => {
+                          setSelectedDay(day);
+                          onClose();
+                        }}
+                        selectedDays={selectedDay}
+                        formatDate={formatDate}
+                        parseDate={parseDate}
+                        disabledDays={{ after: new Date() }}
+                        hideOnDayClick={true}
+                      />
+                    </MenuList>
+                  </>
+                )}
               </Menu>
             </Flex>
             <Tab

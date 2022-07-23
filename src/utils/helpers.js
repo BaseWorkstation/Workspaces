@@ -13,9 +13,9 @@ export const toastError = (title, error, description, stay) => {
     title: title || "Could not connect to the Base servers",
     description:
       description ||
+      error?.errorMessage?.message ||
       (error?.errorMessage?.errors && error?.errorMessage?.errors[0][0]) ||
       error?.errorMessage?.error ||
-      error?.errorMessage?.message ||
       "Kindly try again later",
     duration: stay ? null : 4000,
     position: "top",
@@ -42,7 +42,7 @@ export const kConvert = (number) => {
 };
 
 /**  To format a date string to dd-mm-yyyy or yyyy-mm-dd */
-export const formatDateToDDMMYY = (format, date) => {
+export const formatDateToYYYYMMDD = (date, format) => {
   var today = date ? new Date(date) : new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1; //January is 0!
@@ -54,7 +54,7 @@ export const formatDateToDDMMYY = (format, date) => {
     mm = "0" + mm;
   }
 
-  return format === "yyyy-mm-dd"
-    ? `${yyyy}-${mm}-${dd}`
-    : `${dd}-${mm}-${yyyy}`;
+  return format === "dd-mm-yyyy"
+    ? `${dd}-${mm}-${yyyy}`
+    : `${yyyy}-${mm}-${dd}`;
 };
