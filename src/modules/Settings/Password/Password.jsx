@@ -7,11 +7,21 @@ import {
 } from "@chakra-ui/react";
 import SettingsLayout from "layout/SettingsLayout/SettingsLayout";
 import Link from "next/link";
+import usePasswordHook from "./usePasswordHook";
 
 export default function AccountPasswordSettings() {
+  const { passwordDetails, handleChange, handleSubmit, isLoading } =
+    usePasswordHook();
+
   return (
     <SettingsLayout>
-      <Stack as="form" px={[4, 4, 16]} py={[4, 4, 24]} spacing={10}>
+      <Stack
+        as="form"
+        onSubmit={handleSubmit}
+        px={[4, 4, 16]}
+        py={[4, 4, 24]}
+        spacing={10}
+      >
         <Stack w="full">
           <Text>Enter old password</Text>
           <Input
@@ -19,6 +29,9 @@ export default function AccountPasswordSettings() {
             maxW={278}
             size="lg"
             type="password"
+            value={passwordDetails.oldPassword}
+            name="oldPassword"
+            onChange={handleChange}
             isRequired
             placeholder="Enter old password"
           />
@@ -30,6 +43,9 @@ export default function AccountPasswordSettings() {
             maxW={278}
             size="lg"
             type="password"
+            value={passwordDetails.newPassword}
+            name="newPassword"
+            onChange={handleChange}
             isRequired
             placeholder="Enter new password"
           />
@@ -41,6 +57,9 @@ export default function AccountPasswordSettings() {
             maxW={278}
             size="lg"
             type="password"
+            value={passwordDetails.confirmNewPassword}
+            name="confirmNewPassword"
+            onChange={handleChange}
             isRequired
             placeholder="Verify new password"
           />
@@ -51,6 +70,8 @@ export default function AccountPasswordSettings() {
             colorScheme="primary"
             h={57}
             type="submit"
+            isLoading={isLoading}
+            loadingText="Updating..."
             size="lg"
           >
             Update

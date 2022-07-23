@@ -61,6 +61,29 @@ export const editUserDetails = createAsyncThunk(
   }
 );
 
+export const changeUserPassword = createAsyncThunk(
+  "user/changeUserPassword",
+  async (changePayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.put(
+        `${BASE_API_URL}/users/admin/me/`,
+        changePayload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "base_acccess_token"
+            )}`,
+          },
+        }
+      );
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const editOrganizationDetails = createAsyncThunk(
   "user/editOrganizationDetails",
   async (editPayload, thunkAPI) => {
@@ -170,6 +193,24 @@ const userSlice = createSlice({
     [editUserDetails.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "EDIT_USER_DETAILS",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [changeUserPassword.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "CHANGE_USER_PASSWORD";
+    },
+    [changeUserPassword.fulfilled]: (state, action) => {
+      state.success = "CHANGE_USER_PASSWORD";
+      delete state.loading;
+      delete state.error;
+    },
+    [changeUserPassword.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "CHANGE_USER_PASSWORD",
         errorMessage: payload?.error,
       };
       delete state.loading;

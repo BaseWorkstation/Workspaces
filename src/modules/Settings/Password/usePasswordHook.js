@@ -1,0 +1,55 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeUserPassword } from "redux/slices/userSlice";
+import { toastError, toastSuccess } from "utils/helpers";
+
+const initialPasswordDetails = {
+  oldPassword: "",
+  newPassword: "",
+  confirmNewPassword: "",
+};
+
+export default function usePasswordHook() {
+  const [passwordDetails, setPasswordDetails] = useState(
+    initialPasswordDetails
+  );
+  const { loading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setPasswordDetails({
+      ...passwordDetails,
+      [name]: value,
+    }); // onChange handler
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { payload, error } = await dispatch(
+      changeUserPassword({
+        old_password: passwordDetails.oldPassword,
+        new_password: passwordDetails.newPassword,
+        new_password_confirmation: passwordDetails.confirmNewPassword,
+      })
+    );
+
+    if (payload?.data) {
+      toastSuccess(
+        "Your password has been successfully changed",
+        "Use this new password the next time you want to log in"
+      );
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
+  };
+
+  return {
+    passwordDetails,
+    handleChange,
+    handleSubmit,
+    isLoading: loading === "CHANGE_USER_PASSWORD",
+  };
+}
