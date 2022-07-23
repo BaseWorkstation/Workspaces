@@ -105,7 +105,7 @@ export default function InputDetails({
             </InputRightElement>
           </InputGroup>
         </Stack>
-        <Flex>
+        {/* <Flex>
           <Checkbox
             isChecked={areTermsAgreed}
             onChange={(event) => {
@@ -119,12 +119,12 @@ export default function InputDetails({
           >
             I agree to the terms and condtions
           </Checkbox>
-        </Flex>
+        </Flex> */}
         <Box w="full" pt={9}>
           <Button
             type="submit"
             width="full"
-            isDisabled={!areTermsAgreed}
+            // isDisabled={!areTermsAgreed}
             size="lg"
             isLoading={isLoading}
             loadingText="Loading..."

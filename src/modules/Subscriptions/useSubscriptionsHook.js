@@ -17,11 +17,11 @@ export default function useSubscriptionsHook() {
     }
   }, []);
 
-  const currentUserPlan = userDetails.payment_methods.find(
+  const currentUserPlan = userDetails.payment_methods?.find(
     ({ method }) => method === "plan"
   )?.plan;
 
-  const currentTeamPlan = currentTeam?.payment_methods.find(
+  const currentTeamPlan = currentTeam?.payment_methods?.find(
     ({ method }) => method === "plan"
   )?.plan;
 
