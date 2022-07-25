@@ -25,6 +25,7 @@ export default function ScanQR({ handleScanResult }) {
             scanDelay={1000}
             onResult={handleScanResult}
             videoContainerStyle={{ paddingTop: "76%" }}
+            videoStyle={{ objectFit: "cover", objectFill: "cover" }}
             containerStyle={{ width: "100%", height: "fit-content" }}
           />
         </Box>

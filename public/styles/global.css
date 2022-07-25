@@ -107,3 +107,7 @@ body {
   background-clip: text;
   text-fill-color: transparent;
 }
+
+.slick-dots .slick-active div {
+  background-color: #00abe7 !important;
+}
