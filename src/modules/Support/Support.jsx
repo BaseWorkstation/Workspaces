@@ -70,8 +70,8 @@ export default function AccountSupport() {
                   <Icon as={AiOutlineMail} color="primary.500" />
                   <Text>
                     Email:{" "}
-                    <ChakraLink href="mailto:support@trybase.com">
-                      support@base.com
+                    <ChakraLink href="mailto:support@trybase.co">
+                      support@trybase.co
                     </ChakraLink>
                   </Text>
                 </HStack>

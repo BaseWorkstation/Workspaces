@@ -70,8 +70,8 @@ export default function SettingsLayout({ children }) {
                 {settingsLinks.map(({ name, href }) => {
                   const isSelected = asPath === href;
                   return (
-                    <Stack>
-                      <Link key={href} href={href}>
+                    <Stack key={href}>
+                      <Link href={href}>
                         <Button
                           px={0}
                           justifyContent="left"

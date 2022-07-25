@@ -1,27 +1,45 @@
 import {
-  Box,
+  Avatar,
   Button,
   Flex,
-  Image,
   Input,
   Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Text,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import UploadImage from "./UploadImage";
 
-export default function UserInfo() {
+export default function UserInfo({
+  basicInfoDetails,
+  handleChange,
+  handleSubmit,
+  isLoading,
+  uploadImageFile,
+}) {
+  const { userDetails } = useSelector((state) => state.user);
+  const { firstName, lastName, address, phone } = basicInfoDetails;
+
+  const isEditingDetails = isLoading === "EDIT_USER_DETAILS";
+  const isEditingLogo = isLoading === "UPLOAD_USER_AVATAR";
+
   return (
-    <Stack as="form" pt={12} spacing={54}>
+    <Stack onSubmit={handleSubmit} as="form" pt={12} spacing={54}>
       <Stack spacing={6}>
-        <Image rounded="full" src="/images/space.png" boxSize={109} />
-        <Flex>
-          <Button variant="link" fontWeight={500}>
+        <Avatar
+          rounded="full"
+          src={userDetails.avatar?.file_path}
+          boxSize={109}
+        />
+        <Flex w="fit-content" pos="relative">
+          <UploadImage uploadImageFile={uploadImageFile} />
+          <Button
+            isLoading={isEditingLogo}
+            loadingText="Updating..."
+            variant="link"
+            fontWeight={500}
+          >
             Change Picture
           </Button>
         </Flex>
@@ -35,6 +53,9 @@ export default function UserInfo() {
               w="full"
               size="lg"
               isRequired
+              onChange={handleChange}
+              name="firstName"
+              value={firstName}
               placeholder="Enter First name"
             />
           </Stack>
@@ -46,6 +67,9 @@ export default function UserInfo() {
               w="full"
               size="lg"
               isRequired
+              onChange={handleChange}
+              name="lastName"
+              value={lastName}
               placeholder="Enter Last name"
             />
           </Stack>
@@ -53,7 +77,14 @@ export default function UserInfo() {
         <WrapItem>
           <Stack w={278}>
             <Text>Address</Text>
-            <Input w="full" size="lg" placeholder="Enter Address" />
+            <Input
+              w="full"
+              size="lg"
+              name="address"
+              value={address}
+              onChange={handleChange}
+              placeholder="Enter Address"
+            />
           </Stack>
         </WrapItem>
 
@@ -64,13 +95,24 @@ export default function UserInfo() {
               w="full"
               type="tel"
               size="lg"
+              onChange={handleChange}
+              name="phone"
+              value={phone}
               placeholder="Enter Phone Number"
             />
           </Stack>
         </WrapItem>
       </Wrap>
 
-      <Button maxW={176} colorScheme="primary" h={57} type="submit" size="lg">
+      <Button
+        isLoading={isEditingDetails}
+        loadingText="Updating..."
+        maxW={176}
+        colorScheme="primary"
+        h={57}
+        type="submit"
+        size="lg"
+      >
         Update
       </Button>
     </Stack>

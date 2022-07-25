@@ -107,6 +107,24 @@ export const editOrganizationDetails = createAsyncThunk(
   }
 );
 
+export const uploadUserAvatar = createAsyncThunk(
+  "user/uploadUserAvatar",
+  async (formData, thunkAPI) => {
+    try {
+      const { data } = await Axios.post(`${BASE_API_URL}/files`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -193,6 +211,25 @@ const userSlice = createSlice({
     [editUserDetails.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "EDIT_USER_DETAILS",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [uploadUserAvatar.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "UPLOAD_USER_AVATAR";
+    },
+    [uploadUserAvatar.fulfilled]: (state, action) => {
+      state.success = "UPLOAD_USER_AVATAR";
+      state.userDetails.avatar = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [uploadUserAvatar.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "UPLOAD_USER_AVATAR",
         errorMessage: payload?.error,
       };
       delete state.loading;

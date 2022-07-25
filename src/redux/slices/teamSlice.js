@@ -108,10 +108,8 @@ export const editTeam = createAsyncThunk(
   "teams/editTeam",
   async (editPayload, thunkAPI) => {
     try {
-      const {
-        data: { data },
-      } = await Axios.put(
-        `${BASE_API_URL}/church/teams/${editPayload.id}/`,
+      const { data } = await Axios.put(
+        `${BASE_API_URL}/teams/${editPayload.id}/`,
         editPayload,
         {
           headers: {
@@ -121,6 +119,24 @@ export const editTeam = createAsyncThunk(
           },
         }
       );
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
+export const uploadTeamImage = createAsyncThunk(
+  "teams/uploadTeamImage",
+  async (formData, thunkAPI) => {
+    try {
+      const { data } = await Axios.post(`${BASE_API_URL}/files`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
       return data;
     } catch ({ response }) {
       console.log(response);
@@ -299,6 +315,29 @@ const teamSlice = createSlice({
     [editTeam.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "EDIT_TEAM",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [uploadTeamImage.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "UPLOAD_TEAM_IMAGE";
+    },
+    [uploadTeamImage.fulfilled]: (state, action) => {
+      state.success = "UPLOAD_TEAM_IMAGE";
+      const team = state.teams.find(
+        (team) => team.id === action.payload.fileable_id
+      );
+
+      team.logo = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [uploadTeamImage.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "UPLOAD_TEAM_IMAGE",
         errorMessage: payload?.error,
       };
       delete state.loading;
