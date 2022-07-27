@@ -10,10 +10,10 @@ function Map({ space }) {
   return (
     <GoogleMap
       defaultZoom={13}
-      center={{ lat: 6.431178170451378, lng: 3.4626540917945148 }}
-      defaultCenter={{ lat: 6.431178170451378, lng: 3.4626540917945148 }}
+      center={{ lat: 6.4309596, lng: 3.4604976 }}
+      defaultCenter={{ lat: 6.4309596, lng: 3.4604976 }}
     >
-      <Marker position={{ lat: 6.431178170451378, lng: 3.4626540917945148 }} />
+      <Marker position={{ lat: 6.4309596, lng: 3.4604976 }} />
     </GoogleMap>
   );
 }

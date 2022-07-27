@@ -18,19 +18,12 @@ function Map({ spaces, selectedSpace, setSelectedSpace }) {
   return (
     <GoogleMap
       defaultZoom={14}
-      center={
-        selectedSpace || { lat: 6.431178170451378, lng: 3.4626540917945148 }
-      }
-      defaultCenter={{ lat: 6.431178170451378, lng: 3.4626540917945148 }}
+      center={selectedSpace || { lat: 6.4309596, lng: 3.4604976 }}
+      defaultCenter={{ lat: 6.4309596, lng: 3.4604976 }}
     >
       <Marker
-        position={{ lat: 6.431178170451378, lng: 3.4626540917945148 }}
-        onClick={() =>
-          setSelectedSpace({
-            lat: 6.431178170451378,
-            lng: 3.4626540917945148,
-          })
-        }
+        position={{ lat: 6.4309596, lng: 3.4604976 }}
+        onClick={() => setSelectedSpace({ lat: 6.4309596, lng: 3.4604976 })}
       />
 
       {selectedSpace && (
