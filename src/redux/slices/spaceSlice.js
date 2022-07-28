@@ -70,6 +70,25 @@ export const checkInToSpace = createAsyncThunk(
   "spaces/checkInToSpace",
   async (createPayload, thunkAPI) => {
     try {
+      const {
+        data: { data },
+      } = await Axios.post(`${BASE_API_URL}/visits/check-in`, createPayload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
+export const checkOutOfSpace = createAsyncThunk(
+  "spaces/checkOutOfSpace",
+  async (createPayload, thunkAPI) => {
+    try {
       const { data } = await Axios.post(
         `${BASE_API_URL}/visits/check-in`,
         createPayload,
@@ -137,6 +156,7 @@ const spaceSlice = createSlice({
   name: "spaces",
   initialState: {
     spaces: { data: [] },
+    currentCheckIn: null,
     loading: "FETCH_SPACES",
     error: "",
     success: "",
@@ -216,6 +236,7 @@ const spaceSlice = createSlice({
     },
     [checkInToSpace.fulfilled]: (state, action) => {
       state.success = "CHECK_IN_TO_SPACE";
+      state.currentCheckIn = action.payload.workspace;
       delete state.loading;
       delete state.error;
     },

@@ -9,8 +9,11 @@ import CheckInInstructions from "./components/CheckInInstructions";
 import Hero from "./components/Hero";
 import Ratings from "./components/Ratings";
 import SpaceOnMap from "./components/SpaceOnMap";
+import useViewSpaceHook from "./useViewSpaceHook";
 
 export default function ViewSpace() {
+  const { currentCheckIn } = useViewSpaceHook();
+
   return (
     <ExploreLayout>
       <Head>
@@ -59,15 +62,17 @@ export default function ViewSpace() {
         </Stack>
 
         <Show below="md">
-          <HStack pos="fixed" bottom={28} left={0} w="full" justify="center">
-            <Flex w="fit-content">
-              <Link href="/check-in">
-                <Button w={250} h={57} colorScheme="primary">
-                  Check In
-                </Button>
-              </Link>
-            </Flex>
-          </HStack>
+          {!currentCheckIn && (
+            <HStack pos="fixed" bottom={28} left={0} w="full" justify="center">
+              <Flex w="fit-content">
+                <Link href="/check-in">
+                  <Button w={250} h={57} colorScheme="primary">
+                    Check In
+                  </Button>
+                </Link>
+              </Flex>
+            </HStack>
+          )}
         </Show>
       </Box>
     </ExploreLayout>

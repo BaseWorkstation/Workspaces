@@ -29,7 +29,12 @@ export default function ShowAttendant() {
       </Stack>
       <VStack spacing={99} pt={8} px={4}>
         <VStack color="blue.800">
-          <Avatar boxSize={128} size="2xl" name={userDetails.first_name}>
+          <Avatar
+            boxSize={128}
+            size="2xl"
+            src={userDetails?.avatar?.file_path}
+            name={userDetails?.first_name}
+          >
             <AvatarBadge borderWidth={3} boxSize={12} bg="green.400">
               <Icon fontSize={32} as={BsCheck2} />
             </AvatarBadge>

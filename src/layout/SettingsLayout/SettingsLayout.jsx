@@ -7,6 +7,7 @@ import {
   Stack,
   StackDivider,
 } from "@chakra-ui/react";
+import CheckInStatus from "components/CheckInStatus/CheckInStatus";
 import AccountLayout from "layout/AccountLayout/AccountLayout";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -36,6 +37,8 @@ export default function SettingsLayout({ children }) {
           <StackDivider display={["none", "none", "none", "none", "block"]} />
         }
       >
+        <CheckInStatus />
+
         <Show above="xl">
           <Stack w={247} spacing={24} p={[5, 5, 8]}>
             <Heading fontSize="xl">Settings</Heading>

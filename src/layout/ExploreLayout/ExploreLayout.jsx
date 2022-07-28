@@ -1,4 +1,5 @@
 import { Box, useDisclosure } from "@chakra-ui/react";
+import CheckInStatus from "components/CheckInStatus/CheckInStatus";
 import MobileNav from "layout/shared/MobileNav";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +21,7 @@ export default function ExploreLayout({ children }) {
       <DesktopExporeNav />
       <MobileNav onToggle={onToggle} />
       <MobileExploreDrawer isOpen={isOpen} onToggle={onToggle} />
-
+      <CheckInStatus />
       <Box w="full">{children}</Box>
     </Box>
   );
