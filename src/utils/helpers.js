@@ -1,5 +1,7 @@
 import { createStandaloneToast } from "@chakra-ui/toast";
 const { toast } = createStandaloneToast();
+import moment from "moment";
+import "moment-timezone";
 
 export const separateWithComma = (number) => {
   // Separate number with commas
@@ -57,4 +59,21 @@ export const formatDateToYYYYMMDD = (date, format) => {
   return format === "dd-mm-yyyy"
     ? `${dd}-${mm}-${yyyy}`
     : `${yyyy}-${mm}-${dd}`;
+};
+
+/** Accepts two timestamps in hh:mm:ss format and returns whether the current user's time is within
+ * the range of the timestamps
+ *
+ * @param {string} startTime
+ * @param {string} endTime
+ *
+ * @returns {boolean} result
+ */
+export const checkIfCurrentTimeIsBetweenRange = (startTime, endTime) => {
+  const isAfterStartTime = moment().isSameOrAfter(
+    moment(startTime, "hh:mm:ss")
+  );
+  const isBeforeEndTime = moment().isSameOrBefore(moment(endTime, "hh:mm:ss"));
+
+  return isAfterStartTime && isBeforeEndTime;
 };

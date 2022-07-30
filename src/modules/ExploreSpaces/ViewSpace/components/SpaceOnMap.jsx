@@ -6,21 +6,25 @@ import {
   withScriptjs,
 } from "react-google-maps";
 
-function Map({ space }) {
+function Map({ coordinates }) {
+  const [lat, lng] = coordinates.split(", ").map((str) => {
+    return Number(str);
+  });
+
   return (
     <GoogleMap
       defaultZoom={13}
-      center={{ lat: 6.4309596, lng: 3.4604976 }}
-      defaultCenter={{ lat: 6.4309596, lng: 3.4604976 }}
+      center={{ lat, lng }}
+      defaultCenter={{ lat, lng }}
     >
-      <Marker position={{ lat: 6.4309596, lng: 3.4604976 }} />
+      <Marker position={{ lat, lng }} />
     </GoogleMap>
   );
 }
 
 const WrappedMap = withScriptjs(withGoogleMap(Map));
 
-export default function SpaceOnMap({ space }) {
+export default function SpaceOnMap({ coordinates }) {
   const MAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
 
   return (
@@ -33,7 +37,7 @@ export default function SpaceOnMap({ space }) {
       rounded={20}
     >
       <WrappedMap
-        space={space}
+        coordinates={coordinates}
         googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${MAPS_KEY}`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100%`, borderRadius: 20 }} />}

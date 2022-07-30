@@ -52,10 +52,13 @@ export default function useBasicInfoHook() {
 
     const { payload, error } = await dispatch(
       editUserDetails({
-        first_name: basicInfoDetails.firstName,
-        last_name: basicInfoDetails.lastName,
-        address: basicInfoDetails.address,
-        phone: basicInfoDetails.phone,
+        userId: userDetails.id,
+        payload: {
+          first_name: basicInfoDetails.firstName,
+          last_name: basicInfoDetails.lastName,
+          address: basicInfoDetails.address,
+          phone: basicInfoDetails.phone,
+        },
       })
     );
 

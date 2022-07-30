@@ -43,8 +43,17 @@ export default function useListSpacesHook() {
     );
   };
 
+  const spacesWithFormattedCoordinates = data.map((space) => {
+    const { coordinates } = space;
+    const [lat, lng] = coordinates.split(", ").map((str) => {
+      return Number(str);
+    });
+
+    return { ...space, coordinates: { lat, lng } };
+  });
+
   return {
-    spaces: data,
+    spaces: spacesWithFormattedCoordinates,
     isLoading: loading === "FETCH_SPACES",
     handleFetchMoreSpaces,
     hasMore: links?.next,

@@ -11,30 +11,35 @@ import theme from "theme";
 import Router from "next/router";
 
 function Map({ spaces, selectedSpace, setSelectedSpace }) {
-  const viewSpaceDetails = () => {
-    Router.push(`spaces/${1}`);
+  const viewSpaceDetails = (spaceId) => {
+    Router.push(`spaces/${spaceId}`);
   };
+
+  const defaultSpace = spaces[0]?.coordinates;
 
   return (
     <GoogleMap
       defaultZoom={14}
-      center={selectedSpace || { lat: 6.4309596, lng: 3.4604976 }}
-      defaultCenter={{ lat: 6.4309596, lng: 3.4604976 }}
+      center={selectedSpace || defaultSpace}
+      defaultCenter={defaultSpace}
     >
-      <Marker
-        position={{ lat: 6.4309596, lng: 3.4604976 }}
-        onClick={() => setSelectedSpace({ lat: 6.4309596, lng: 3.4604976 })}
-      />
+      {spaces.map((space) => (
+        <Marker
+          key={space.id}
+          position={space.coordinates}
+          onClick={() => setSelectedSpace(space)}
+        />
+      ))}
 
       {selectedSpace && (
         <InfoWindow
-          position={selectedSpace}
+          position={selectedSpace.coordinates}
           onCloseClick={() => setSelectedSpace(null)}
         >
           <Box spacing={4}>
             <HStack>
               <Text fontWeight={700} color="blue.800" fontSize="xl">
-                Venia Business Hub
+                {selectedSpace.name}
               </Text>
             </HStack>
             <Image
@@ -43,11 +48,11 @@ function Map({ spaces, selectedSpace, setSelectedSpace }) {
               h={120}
               borderRadius={12}
               objectFit="cover"
-              src="/images/space.png"
+              src={selectedSpace.logo || "/images/spaceholder.png"}
             />
 
             <Button
-              onClick={viewSpaceDetails}
+              onClick={() => viewSpaceDetails(selectedSpace.id)}
               color={theme.colors.primary[500]}
               variant="link"
               colorScheme="primary"

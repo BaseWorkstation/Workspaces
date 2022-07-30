@@ -11,9 +11,10 @@ import {
 } from "@chakra-ui/react";
 import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 import Slider from "react-slick";
+import { checkIfCurrentTimeIsBetweenRange } from "utils/helpers";
 import BillingRate from "./Billing";
 
-export default function Hero() {
+export default function Hero({ currentSpace, spaceServices }) {
   function SampleNextArrow(props) {
     const { onClick } = props;
     return (
@@ -131,6 +132,11 @@ export default function Hero() {
     ],
   };
 
+  const isOpen = checkIfCurrentTimeIsBetweenRange(
+    currentSpace.open_time,
+    currentSpace.close_time
+  );
+
   return (
     <>
       <Box pt={[0, 0, 20, 185, 185]} bg="white">
@@ -141,16 +147,21 @@ export default function Hero() {
               textAlign="center"
               fontSize={[36, 36, 50, 64]}
             >
-              Venia Business Hub
+              {currentSpace.name}
             </Heading>
             <HStack spacing={4}>
-              <Text textAlign="center" color="gray.600" fontWeight={500}>
-                12, Adeniyi jones Av, Ikeja, Lagos
+              <Text
+                textAlign="center"
+                textTransform="capitalize"
+                color="gray.600"
+                fontWeight={500}
+              >
+                {currentSpace.street} {currentSpace.city}, {currentSpace.state}
               </Text>
               <HStack spacing={1}>
-                <Circle size={1.5} bg="green.400" />
+                <Circle size={1.5} bg={isOpen ? "green.400" : "red.600"} />
                 <Text fontSize="xs" fontWeight="bold" color="gray.500">
-                  OPEN
+                  {isOpen ? "OPEN" : "CLOSED"}
                 </Text>
               </HStack>
             </HStack>
@@ -190,17 +201,19 @@ export default function Hero() {
         <Stack bg="white" mt={12} rounded={20} px={4} py={8} spacing={8}>
           <Stack spacing={1}>
             <Heading fontSize="2xl" color="blue.800">
-              Venia Business Hub
+              {currentSpace.name}
             </Heading>
-            <Text fontSize="xs">12, Adeniyi jones Av, Ikeja, Lagos</Text>
+            <Text textTransform="capitalize" fontSize="xs">
+              {currentSpace.street} {currentSpace.city}, {currentSpace.state}
+            </Text>
             <HStack spacing={1}>
-              <Circle size={1.5} bg="green.400" />
+              <Circle size={1.5} bg={isOpen ? "green.400" : "red.600"} />
               <Text fontSize="xs" fontWeight="bold" color="gray.500">
-                OPEN
+                {isOpen ? "OPEN" : "CLOSED"}
               </Text>
             </HStack>
           </Stack>
-          <BillingRate />
+          <BillingRate rate={currentSpace.default_service} />
         </Stack>
       </Show>
     </>

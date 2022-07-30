@@ -108,7 +108,7 @@ export const editTeam = createAsyncThunk(
   "teams/editTeam",
   async (editPayload, thunkAPI) => {
     try {
-      const { data } = await Axios.put(
+      const { data } = await Axios.patch(
         `${BASE_API_URL}/teams/${editPayload.id}/`,
         editPayload,
         {

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineBulb } from "react-icons/ai";
 
-export default function Amenities() {
+export default function Amenities({ amenities }) {
   return (
     <Stack spacing={8} rounded={20} px={[5, 8]} py={8} bg="white">
       <Heading fontSize="xl" color="blue.800">
@@ -21,8 +21,8 @@ export default function Amenities() {
         pb={4}
         gap={6}
       >
-        {[0, 1, 2, 3, 4, 5, 6, 7].map((index) => (
-          <GridItem key={index} w="100%">
+        {amenities.map(({ name, id }) => (
+          <GridItem key={id} w="100%">
             <VStack>
               <Icon
                 as={AiOutlineBulb}
@@ -32,10 +32,11 @@ export default function Amenities() {
               <Text
                 fontSize="sm"
                 textAlign="center"
+                textTransform="capitalize"
                 fontWeight={500}
                 color="gray.600"
               >
-                Adequate Lighting
+                {name}
               </Text>
             </VStack>
           </GridItem>

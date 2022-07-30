@@ -43,6 +43,45 @@ export const fetchMoreSpaces = createAsyncThunk(
   }
 );
 
+export const fetchSpaceDetails = createAsyncThunk(
+  "spaces/fetchSpaceDetails",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/workstations/${fetchPayload.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
+export const fetchSpaceServices = createAsyncThunk(
+  "spaces/fetchSpaceServices",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/services/`, {
+        params: fetchPayload,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const createSpace = createAsyncThunk(
   "spaces/createSpace",
   async (createPayload, thunkAPI) => {
@@ -156,6 +195,8 @@ const spaceSlice = createSlice({
   name: "spaces",
   initialState: {
     spaces: { data: [] },
+    currentSpace: null,
+    spaceServices: [],
     currentCheckIn: null,
     loading: "FETCH_SPACES",
     error: "",
@@ -205,6 +246,46 @@ const spaceSlice = createSlice({
     [fetchMoreSpaces.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_SPACES",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [fetchSpaceDetails.pending]: (state) => {
+      state.currentSpace = null;
+      delete state.error;
+      delete state.success;
+      state.loading = "VIEW_SPACE";
+    },
+    [fetchSpaceDetails.fulfilled]: (state, action) => {
+      state.success = "VIEW_SPACE";
+      state.currentSpace = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchSpaceDetails.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "VIEW_SPACE",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [fetchSpaceServices.pending]: (state) => {
+      state.spaceServices = [];
+      delete state.error;
+      delete state.success;
+      state.loading = "FETCH_SPACE_SERVICES";
+    },
+    [fetchSpaceServices.fulfilled]: (state, action) => {
+      state.success = "FETCH_SPACE_SERVICES";
+      state.spaceServices = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchSpaceServices.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "FETCH_SPACE_SERVICES",
         errorMessage: payload?.error,
       };
       delete state.loading;

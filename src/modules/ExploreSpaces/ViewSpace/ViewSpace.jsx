@@ -1,4 +1,13 @@
-import { Box, Button, Flex, HStack, Show, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  HStack,
+  Show,
+  Stack,
+} from "@chakra-ui/react";
+import Spinner from "components/Spinner/Spinner";
 import ExploreLayout from "layout/ExploreLayout/ExploreLayout";
 import Head from "next/head";
 import Link from "next/link";
@@ -12,15 +21,22 @@ import SpaceOnMap from "./components/SpaceOnMap";
 import useViewSpaceHook from "./useViewSpaceHook";
 
 export default function ViewSpace() {
-  const { currentCheckIn } = useViewSpaceHook();
+  const { currentCheckIn, currentSpace, spaceServices } = useViewSpaceHook();
+
+  if (!currentSpace || !spaceServices)
+    return (
+      <Center w="full" minH="100vh">
+        <Spinner />
+      </Center>
+    );
 
   return (
     <ExploreLayout>
       <Head>
-        <title>Venia Business Hub - Base</title>
+        <title>{currentSpace.name} - Base</title>
       </Head>
       <Box pb={[48, 48, 40, 12]}>
-        <Hero />
+        <Hero currentSpace={currentSpace} spaceServices={spaceServices} />
 
         <Stack
           spacing={[6, 6, 12]}
@@ -38,13 +54,16 @@ export default function ViewSpace() {
             align="stretch"
           >
             <Stack w="full" spacing={[6, 6, 12]}>
-              <Amenities />
-              <AboutBase />
+              <Amenities amenities={currentSpace.amenities} />
+              <AboutBase
+                about={currentSpace.about}
+                policies={currentSpace.other_policies}
+              />
             </Stack>
             <Stack w="full" rounded={20} bg="white" spacing={8}>
               <Show above="md">
                 <Stack spacing={12} p={8}>
-                  <BillingRate />
+                  <BillingRate rate={currentSpace.default_service} />
 
                   <CheckInInstructions />
 
@@ -58,7 +77,7 @@ export default function ViewSpace() {
             </Stack>
           </Stack>
 
-          <SpaceOnMap />
+          <SpaceOnMap coordinates={currentSpace.coordinates} />
         </Stack>
 
         <Show below="md">

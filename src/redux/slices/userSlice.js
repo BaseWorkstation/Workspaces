@@ -40,11 +40,11 @@ export const fetchUserActivities = createAsyncThunk(
 
 export const editUserDetails = createAsyncThunk(
   "user/editUserDetails",
-  async (editPayload, thunkAPI) => {
+  async ({ userId, payload }, thunkAPI) => {
     try {
-      const { data } = await Axios.put(
-        `${BASE_API_URL}/users/admin/me/`,
-        editPayload,
+      const { data } = await Axios.patch(
+        `${BASE_API_URL}/users/${userId}`,
+        payload,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -65,8 +65,8 @@ export const changeUserPassword = createAsyncThunk(
   "user/changeUserPassword",
   async (changePayload, thunkAPI) => {
     try {
-      const { data } = await Axios.put(
-        `${BASE_API_URL}/users/admin/me/`,
+      const { data } = await Axios.post(
+        `${BASE_API_URL}/change-password`,
         changePayload,
         {
           headers: {

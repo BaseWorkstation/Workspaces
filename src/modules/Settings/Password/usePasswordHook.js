@@ -30,8 +30,8 @@ export default function usePasswordHook() {
     const { payload, error } = await dispatch(
       changeUserPassword({
         old_password: passwordDetails.oldPassword,
-        new_password: passwordDetails.newPassword,
-        new_password_confirmation: passwordDetails.confirmNewPassword,
+        password: passwordDetails.newPassword,
+        password_confirmation: passwordDetails.confirmNewPassword,
       })
     );
 
