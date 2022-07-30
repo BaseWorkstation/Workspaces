@@ -88,6 +88,11 @@ export default function useViewTeamHook() {
 
     if (!error) {
       toastSuccess("Team member has been successfully removed");
+      dispatch(
+        fetchTeamMembers({
+          team_id: currentTeam.id,
+        })
+      );
       deleteMemberModalState.onClose();
     } else {
       console.log(error);

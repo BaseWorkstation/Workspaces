@@ -27,7 +27,8 @@ export default function useActivitiesHook() {
   useEffect(() => {
     dispatch(
       fetchUserActivities({
-        date: formatDateToYYYYMMDD(selectedDay),
+        from_date: formatDateToYYYYMMDD(selectedDay),
+        to_date: formatDateToYYYYMMDD(selectedDay),
         user_id: userDetails.id,
       })
     );

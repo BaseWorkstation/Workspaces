@@ -35,7 +35,7 @@ export default function usePasswordHook() {
       })
     );
 
-    if (payload?.data) {
+    if (payload?.message) {
       toastSuccess(
         "Your password has been successfully changed",
         "Use this new password the next time you want to log in"

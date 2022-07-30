@@ -41,6 +41,7 @@ export default function AccountPasswordSettings() {
           <Input
             w="full"
             maxW={278}
+            minLength={8}
             size="lg"
             type="password"
             value={passwordDetails.newPassword}
@@ -55,6 +56,7 @@ export default function AccountPasswordSettings() {
           <Input
             w="full"
             maxW={278}
+            minLength={8}
             size="lg"
             type="password"
             value={passwordDetails.confirmNewPassword}

@@ -42,17 +42,13 @@ export const editUserDetails = createAsyncThunk(
   "user/editUserDetails",
   async ({ userId, payload }, thunkAPI) => {
     try {
-      const { data } = await Axios.patch(
-        `${BASE_API_URL}/users/${userId}`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "base_acccess_token"
-            )}`,
-          },
-        }
-      );
+      const {
+        data: { data },
+      } = await Axios.patch(`${BASE_API_URL}/users/${userId}`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
       return data;
     } catch ({ response }) {
       console.log(response);
@@ -204,7 +200,7 @@ const userSlice = createSlice({
       // );
       // delete state.tempNote;
       // Object.assign(state.userDetails, action.payload);
-      state.userDetails = action.payload;
+      state.userDetails = { ...state.userDetails, ...action.payload };
       delete state.loading;
       delete state.error;
     },

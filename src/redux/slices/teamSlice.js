@@ -108,7 +108,9 @@ export const editTeam = createAsyncThunk(
   "teams/editTeam",
   async (editPayload, thunkAPI) => {
     try {
-      const { data } = await Axios.patch(
+      const {
+        data: { data },
+      } = await Axios.patch(
         `${BASE_API_URL}/teams/${editPayload.id}/`,
         editPayload,
         {
@@ -187,7 +189,7 @@ const teamSlice = createSlice({
   initialState: {
     teams: [],
     teamActivities: { data: [] },
-    teamMembers: { data: [] },
+    teamMembers: { data: [], unregistered_members: [] },
     loading: "FETCH_TEAMS",
     error: "",
     success: "",
@@ -286,7 +288,7 @@ const teamSlice = createSlice({
     },
     [addMemberToTeam.fulfilled]: (state, action) => {
       state.success = "ADD_TEAM_MEMBER";
-      state.teamMembers.data.push(action.payload?.data);
+      state.teamMembers = action.payload;
       delete state.loading;
       delete state.error;
     },
@@ -375,17 +377,17 @@ const teamSlice = createSlice({
       delete state.error;
       delete state.success;
       state.loading = "DELETE_TEAM_MEMBER";
-      const position = state.teamMembers.data.findIndex(
-        (team) => team.id === action.meta.arg
-      );
-      state.backupTeam = Object.assign({}, state.teamMembers.data[position]);
-      state.backupPosition = position;
+      // const position = state.teamMembers.data.findIndex(
+      //   (team) => team.id === action.meta.arg
+      // );
+      // state.backupTeam = Object.assign({}, state.teamMembers.data[position]);
+      // state.backupPosition = position;
     },
     [deleteTeamMember.fulfilled]: (state) => {
       state.success = "DELETE_TEAM_MEMBER";
-      state.teamMembers.data.splice(state.backupPosition, 1);
-      delete state.backupTeam;
-      delete state.backupPosition;
+      // state.teamMembers.data.splice(state.backupPosition, 1);
+      // delete state.backupTeam;
+      // delete state.backupPosition;
       delete state.loading;
       delete state.error;
     },
@@ -394,8 +396,8 @@ const teamSlice = createSlice({
         errorType: "DELETE_TEAM_MEMBER",
         errorMessage: payload?.error,
       };
-      delete state.backupPosition;
-      delete state.backupTeam;
+      // delete state.backupPosition;
+      // delete state.backupTeam;
       delete state.loading;
     },
   },

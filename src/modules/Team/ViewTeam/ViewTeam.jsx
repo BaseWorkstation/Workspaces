@@ -19,7 +19,8 @@ export default function ViewTeam() {
       >
         <HStack justify="space-between" color="blue.800">
           <Heading fontSize="xl">
-            Manage Users - {data.currentTeam.name}{" "}
+            Manage Users {data.currentTeam?.name ? "-" : ""}{" "}
+            {data.currentTeam?.name}
           </Heading>
 
           {data.teams.length && <AddMember {...data} />}

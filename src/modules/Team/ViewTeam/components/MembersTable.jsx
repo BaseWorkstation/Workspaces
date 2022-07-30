@@ -29,7 +29,7 @@ export default function MembersTable({
 
   if (!teams.length) return <NoTeamView />;
 
-  if (!teamMembers.data.length)
+  if (!teamMembers.data.length && !teamMembers.unregistered_members.length)
     return (
       <Text textAlign="center">
         When you add members to your team, they will appear here
@@ -70,6 +70,26 @@ export default function MembersTable({
                 </Td>
                 <Td py={8}>{member.email}</Td>
                 <Td py={8}>{member.last_active}</Td>
+                <Td py={8}>
+                  <Button
+                    fontWeight={500}
+                    colorScheme="default"
+                    color="red.400"
+                    variant="ghost"
+                    iconSpacing={2}
+                    leftIcon={<Icon as={AiOutlineDelete} fontSize={20} />}
+                    onClick={() => openDeleteMemberConfirmation(1)}
+                  >
+                    Remove User
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
+            {teamMembers.unregistered_members.map((member) => (
+              <Tr key={member.id}>
+                <Td textTransform="capitalize" py={8} pl={0}></Td>
+                <Td py={8}>{member.email}</Td>
+                <Td py={8}>Pending Invite</Td>
                 <Td py={8}>
                   <Button
                     fontWeight={500}

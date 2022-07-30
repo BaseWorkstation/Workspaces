@@ -62,7 +62,7 @@ export default function useBasicInfoHook() {
       })
     );
 
-    if (payload?.data) {
+    if (payload?.id) {
       toastSuccess("Saved successfully");
     } else {
       console.log(error);
@@ -83,7 +83,7 @@ export default function useBasicInfoHook() {
       })
     );
 
-    if (payload?.data) {
+    if (payload?.id) {
       toastSuccess("Saved successfully");
     } else {
       console.log(error);
