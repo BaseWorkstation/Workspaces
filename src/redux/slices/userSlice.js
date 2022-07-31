@@ -20,6 +20,25 @@ export const fetchUserDetails = createAsyncThunk(
   }
 );
 
+export const fetchUserByPin = createAsyncThunk(
+  "user/fetchUserByPin",
+  async (queryParams, thunkAPI) => {
+    try {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/user/get-by-unique-pin`, {
+        params: queryParams,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const fetchUserActivities = createAsyncThunk(
   "teams/fetchUserActivities",
   async (fetchPayload, thunkAPI) => {
@@ -161,6 +180,25 @@ const userSlice = createSlice({
       delete state.error;
     },
     [fetchUserDetails.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "FETCH_USER_DETAILS",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [fetchUserByPin.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "FETCH_USER_DETAILS";
+    },
+    [fetchUserByPin.fulfilled]: (state, action) => {
+      state.success = "FETCH_USER_DETAILS";
+      state.userDetails = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchUserByPin.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_USER_DETAILS",
         errorMessage: payload?.error,

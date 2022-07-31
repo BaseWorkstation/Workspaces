@@ -11,16 +11,13 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useState } from "react";
 
-export default function ConfirmPin({ workspace, handleSubmitPin }) {
-  const [pin, setPin] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    handleSubmitPin(pin);
-  };
-
+export default function ConfirmPin({
+  workspace,
+  pin,
+  setPin,
+  handleSubmitPin,
+}) {
   return (
     <Stack divider={<StackDivider />} pb={6} spacing={0}>
       <Stack color="blue.800" pb={4} px={6}>
@@ -28,7 +25,7 @@ export default function ConfirmPin({ workspace, handleSubmitPin }) {
           Check in to {workspace?.name}
         </Heading>
       </Stack>
-      <VStack as="form" onSubmit={handleSubmit} pt={8} px={0}>
+      <VStack as="form" onSubmit={handleSubmitPin} pt={8} px={0}>
         <VStack>
           <Text fontSize="xl" fontWeight={700}>
             Enter PIN

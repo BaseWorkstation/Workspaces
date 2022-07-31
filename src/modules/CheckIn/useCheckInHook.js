@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { checkInToSpace } from "redux/slices/spaceSlice";
+import { checkInToSpace, fetchSpaceServices } from "redux/slices/spaceSlice";
+import { fetchUserByPin } from "redux/slices/userSlice";
 import { toastError, toastSuccess } from "utils/helpers";
 
 export default function useCheckInHook() {
   const [stage, setStage] = useState("SCAN_QR");
+  const [pin, setPin] = useState("");
   const [workspace, setWorkspace] = useState(null);
-  const [workspaceServices, setWorkspaceServices] = useState([]);
-  const { userDetails } = useSelector((state) => state.user);
-  const { loading } = useSelector((state) => state.spaces);
+  const { spaceServices: workspaceServices, loading } = useSelector(
+    (state) => state.spaces
+  );
 
   const dispatch = useDispatch();
 
@@ -22,13 +24,17 @@ export default function useCheckInHook() {
     return { id: workspaceId, name: workspaceName };
   };
 
+  const fetchWorkspaceServices = (workspace) => {
+    dispatch(fetchSpaceServices({ workstation_id: workspace.id }));
+  };
+
   const handleScanResult = (result, error) => {
     if (!!result) {
-      console.log(result?.text);
       const workspace = getWorkspaceDetailsFromUrl(result?.text);
 
       if (workspace) {
         setWorkspace(workspace);
+        fetchWorkspaceServices(workspace);
         setStage("CONFIRM_PIN");
       }
     }
@@ -37,34 +43,32 @@ export default function useCheckInHook() {
     }
   };
 
-  const handleSubmitPin = (pin) => {
-    if (!userDetails) {
-      toastError(
-        "Kindly login or create an account to be enabled to use this pin",
-        null,
-        " "
-      );
-      return;
-    }
+  const handleSubmitPin = async (event) => {
+    event.preventDefault();
 
-    if (pin !== userDetails?.unique_pin) {
-      toastError("Incorrect pin", null, " ");
-      return;
-    }
-
-    setStage("CHOOSE_SERVICE");
-  };
-
-  const handleSubmitService = async (service) => {
     const { payload, error } = await dispatch(
-      checkInToSpace({
-        user_id: userDetails?.id,
-        workstation_id: workspace.id,
-        unique_pin: userDetails?.unique_pin,
+      fetchUserByPin({
+        unique_pin: pin,
       })
     );
 
-    if (payload?.data) {
+    if (payload?.id) {
+      setStage("CHOOSE_SERVICE");
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
+  };
+
+  const handleSubmitService = async (serviceId) => {
+    const { payload, error } = await dispatch(
+      checkInToSpace({
+        service_id: serviceId,
+        unique_pin: pin,
+      })
+    );
+
+    if (payload?.id) {
       toastSuccess("Checked in successfully!");
       setStage("SHOW_ATTENDANT");
     } else {
@@ -77,6 +81,8 @@ export default function useCheckInHook() {
     stage,
     handleScanResult,
     workspace,
+    pin,
+    setPin,
     handleSubmitPin,
     workspaceServices,
     handleSubmitService,

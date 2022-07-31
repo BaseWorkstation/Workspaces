@@ -11,6 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { separateWithComma } from "utils/helpers";
 
 export default function ChooseService({
   workspaceServices,
@@ -34,15 +35,15 @@ export default function ChooseService({
           columnGap={5}
           rowGap={8}
         >
-          {[0, 1, 2, 3, 4].map((index) => {
-            const isSelected = selectedService === index;
+          {workspaceServices.map(({ id, name, price_per_minute }) => {
+            const isSelected = selectedService === id;
 
             return (
-              <GridItem key={index} w="100%">
+              <GridItem key={id} w="100%">
                 <Box
                   border="1px solid"
                   borderColor={isSelected ? "primary.500" : "transparent"}
-                  onClick={() => setSelectedService(index)}
+                  onClick={() => setSelectedService(id)}
                   rounded={8}
                   cursor="pointer"
                   fontWeight={500}
@@ -55,10 +56,17 @@ export default function ChooseService({
                     src="/images/space.png"
                   />
                   <Box pl={2} pb={2}>
-                    <Text color="blue.800" fontSize="lg" mt={3}>
-                      Executive spaces
+                    <Text
+                      textTransform="capitalize"
+                      color="blue.800"
+                      fontSize="lg"
+                      mt={3}
+                    >
+                      {name}
                     </Text>
-                    <Text fontSize="md">N50/min</Text>
+                    <Text fontSize="md">
+                      N{separateWithComma(price_per_minute?.amount)}/min
+                    </Text>
                   </Box>
                 </Box>
               </GridItem>

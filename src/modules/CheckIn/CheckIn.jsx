@@ -11,6 +11,8 @@ export default function CheckIn() {
     stage,
     handleScanResult,
     workspace,
+    pin,
+    setPin,
     handleSubmitPin,
     workspaceServices,
     handleSubmitService,
@@ -40,6 +42,8 @@ export default function CheckIn() {
             {stage === "CONFIRM_PIN" && (
               <ConfirmPin
                 workspace={workspace}
+                pin={pin}
+                setPin={setPin}
                 handleSubmitPin={handleSubmitPin}
               />
             )}
