@@ -11,8 +11,10 @@ import {
 import { useState } from "react";
 import { BsChevronRight } from "react-icons/bs";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
+import Moment from "react-moment";
+import "moment-timezone";
 
-export default function Ratings() {
+export default function Ratings({ spaceReviews }) {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const mobileFeedbackDisplay = showFeedback ? "flex" : "none";
@@ -31,17 +33,31 @@ export default function Ratings() {
           </Heading>
           <HStack>
             <HStack>
-              {[0, 1, 2, 3].map((index) => (
-                <Icon
-                  as={IoStarSharp}
-                  color="#FFCE31"
-                  fontSize={22}
-                  key={index}
-                />
-              ))}
-              <Icon as={IoStarOutline} fontSize={18} color="gray.300" />
+              {Array.from(Array(spaceReviews.total_no_of_ratings)).map(
+                (index) => (
+                  <Icon
+                    as={IoStarSharp}
+                    color="#FFCE31"
+                    fontSize={22}
+                    key={index}
+                  />
+                )
+              )}
+              {Array.from(Array(5 - spaceReviews.total_no_of_ratings)).map(
+                (index) => (
+                  <Icon
+                    key={index}
+                    as={IoStarOutline}
+                    fontSize={18}
+                    color="gray.300"
+                  />
+                )
+              )}
             </HStack>
-            <Text>4.0 202 reviews</Text>
+            <Text>
+              {spaceReviews.average_rating}.0 {spaceReviews.total_no_of_reviews}{" "}
+              reviews
+            </Text>
           </HStack>
         </Stack>
         <Show below="md">
@@ -61,8 +77,8 @@ export default function Ratings() {
         spacing={8}
         pb={[12, 12, 0]}
       >
-        {[0, 1, 2].map((index) => (
-          <Stack key={index}>
+        {spaceReviews.reviews?.map(({ id, rating, review, created_at }) => (
+          <Stack key={id}>
             <HStack justify="space-between">
               <HStack spacing={3}>
                 <Avatar
@@ -76,7 +92,7 @@ export default function Ratings() {
                 >
                   <Text>Best Omotayo</Text>
                   <HStack>
-                    {[0, 1, 2, 3].map((index) => (
+                    {Array.from(Array(rating)).map((index) => (
                       <Icon
                         as={IoStarSharp}
                         color="#FFCE31"
@@ -84,16 +100,22 @@ export default function Ratings() {
                         key={index}
                       />
                     ))}
-                    <Icon as={IoStarOutline} fontSize={16} color="gray.300" />
+                    {Array.from(Array(5 - rating)).map((index) => (
+                      <Icon
+                        key={index}
+                        as={IoStarOutline}
+                        fontSize={16}
+                        color="gray.300"
+                      />
+                    ))}
                   </HStack>
                 </Stack>
               </HStack>
-              <Text color="gray.600">7th June, 2022</Text>
+              <Text color="gray.600">
+                <Moment format="Do MMMM, YYYY">{created_at}</Moment>
+              </Text>
             </HStack>
-            <Text color="gray.700">
-              Amazing facility, front desk officer was also very courteous, food
-              is great as well
-            </Text>
+            <Text color="gray.700">{review}</Text>
           </Stack>
         ))}
       </Stack>

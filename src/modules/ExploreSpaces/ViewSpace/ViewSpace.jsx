@@ -21,7 +21,8 @@ import SpaceOnMap from "./components/SpaceOnMap";
 import useViewSpaceHook from "./useViewSpaceHook";
 
 export default function ViewSpace() {
-  const { currentCheckIn, currentSpace, spaceServices } = useViewSpaceHook();
+  const { currentCheckIn, currentSpace, spaceServices, spaceReviews } =
+    useViewSpaceHook();
 
   if (!currentSpace || !spaceServices)
     return (
@@ -57,6 +58,7 @@ export default function ViewSpace() {
               <Amenities amenities={currentSpace.amenities} />
               <AboutBase
                 about={currentSpace.about}
+                schedule={currentSpace.schedule}
                 policies={currentSpace.other_policies}
               />
             </Stack>
@@ -67,12 +69,12 @@ export default function ViewSpace() {
 
                   <CheckInInstructions />
 
-                  <Ratings />
+                  <Ratings spaceReviews={spaceReviews} />
                 </Stack>
               </Show>
 
               <Show below="md">
-                <Ratings />
+                <Ratings spaceReviews={spaceReviews} />
               </Show>
             </Stack>
           </Stack>

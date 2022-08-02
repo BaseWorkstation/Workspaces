@@ -170,7 +170,7 @@ export default function Hero({ currentSpace, spaceServices }) {
 
         <Box mt={[0, 0, 69]} pb={[0, 0, 132]} w="full" align="center">
           <Slider {...settings}>
-            {[0, 1, 2, 3, 4, 5].map((index) => (
+            {currentSpace.images?.map((image, index) => (
               <Box
                 w={[
                   "100% !important",
@@ -189,7 +189,7 @@ export default function Hero({ currentSpace, spaceServices }) {
                     objectFit="cover"
                     w="full"
                     h={[338, 338, 230, 280, 308, 308, 338]}
-                    src="/images/space.png"
+                    src={image.file_path}
                   />
                 </Box>
               </Box>

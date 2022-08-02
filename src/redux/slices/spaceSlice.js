@@ -82,6 +82,28 @@ export const fetchSpaceServices = createAsyncThunk(
   }
 );
 
+export const fetchSpaceReviews = createAsyncThunk(
+  "spaces/fetchSpaceReviews",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.get(
+        `${BASE_API_URL}/workstations/${fetchPayload.workstation_id}/reviews`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "base_acccess_token"
+            )}`,
+          },
+        }
+      );
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const createSpace = createAsyncThunk(
   "spaces/createSpace",
   async (createPayload, thunkAPI) => {
@@ -197,6 +219,7 @@ const spaceSlice = createSlice({
     spaces: { data: [] },
     currentSpace: null,
     spaceServices: [],
+    spaceReviews: { reviews: [] },
     currentCheckIn: null,
     loading: "FETCH_SPACES",
     error: "",
@@ -286,6 +309,26 @@ const spaceSlice = createSlice({
     [fetchSpaceServices.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_SPACE_SERVICES",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [fetchSpaceReviews.pending]: (state) => {
+      state.spaceReviews = { reviews: [] };
+      delete state.error;
+      delete state.success;
+      state.loading = "FETCH_SPACE_REVIEWS";
+    },
+    [fetchSpaceReviews.fulfilled]: (state, action) => {
+      state.success = "FETCH_SPACE_REVIEWS";
+      state.spaceReviews = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [fetchSpaceReviews.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "FETCH_SPACE_REVIEWS",
         errorMessage: payload?.error,
       };
       delete state.loading;

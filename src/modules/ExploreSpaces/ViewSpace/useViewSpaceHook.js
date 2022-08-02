@@ -1,12 +1,15 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSpaceDetails, fetchSpaceServices } from "redux/slices/spaceSlice";
+import {
+  fetchSpaceDetails,
+  fetchSpaceReviews,
+  fetchSpaceServices,
+} from "redux/slices/spaceSlice";
 
 export default function useViewSpaceHook() {
-  const { currentCheckIn, currentSpace, spaceServices, loading } = useSelector(
-    (state) => state.spaces
-  );
+  const { currentCheckIn, currentSpace, spaceServices, spaceReviews, loading } =
+    useSelector((state) => state.spaces);
   const dispatch = useDispatch();
   const { query } = useRouter();
 
@@ -14,6 +17,7 @@ export default function useViewSpaceHook() {
     if (query.id) {
       dispatch(fetchSpaceDetails({ id: query.id }));
       dispatch(fetchSpaceServices({ workstation_id: query.id }));
+      dispatch(fetchSpaceReviews({ workstation_id: query.id }));
     }
   }, [query]);
 
@@ -22,5 +26,6 @@ export default function useViewSpaceHook() {
     currentSpace,
     isLoading: loading === "VIEW_SPACE",
     spaceServices,
+    spaceReviews,
   };
 }
