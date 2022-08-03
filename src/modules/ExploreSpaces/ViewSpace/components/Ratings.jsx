@@ -77,47 +77,51 @@ export default function Ratings({ spaceReviews }) {
         spacing={8}
         pb={[12, 12, 0]}
       >
-        {spaceReviews.reviews?.map(({ id, rating, review, created_at }) => (
-          <Stack key={id}>
-            <HStack justify="space-between">
-              <HStack spacing={3}>
-                <Avatar
-                  size="sm"
-                  name="Segun Adebayo"
-                  src="https://bit.ly/sage-adebayo"
-                />
-                <Stack
-                  spacing={[0, 0, 3]}
-                  direction={["column", "column", "row"]}
-                >
-                  <Text>Best Omotayo</Text>
-                  <HStack>
-                    {Array.from(Array(rating)).map((index) => (
-                      <Icon
-                        as={IoStarSharp}
-                        color="#FFCE31"
-                        fontSize={18}
-                        key={index}
-                      />
-                    ))}
-                    {Array.from(Array(5 - rating)).map((index) => (
-                      <Icon
-                        key={index}
-                        as={IoStarOutline}
-                        fontSize={16}
-                        color="gray.300"
-                      />
-                    ))}
-                  </HStack>
-                </Stack>
+        {spaceReviews.reviews?.map(
+          ({ id, rating, author, review, created_at }) => (
+            <Stack key={id}>
+              <HStack justify="space-between">
+                <HStack spacing={3}>
+                  <Avatar
+                    size="sm"
+                    name={`${author?.first_name} ${author?.last_name}`}
+                    src={author?.avatar?.file_path}
+                  />
+                  <Stack
+                    spacing={[0, 0, 3]}
+                    direction={["column", "column", "row"]}
+                  >
+                    <Text textTransform="capitalize">
+                      {author?.first_name} {author?.last_name}
+                    </Text>
+                    <HStack>
+                      {Array.from(Array(rating)).map((index) => (
+                        <Icon
+                          as={IoStarSharp}
+                          color="#FFCE31"
+                          fontSize={18}
+                          key={index}
+                        />
+                      ))}
+                      {Array.from(Array(5 - rating)).map((index) => (
+                        <Icon
+                          key={index}
+                          as={IoStarOutline}
+                          fontSize={16}
+                          color="gray.300"
+                        />
+                      ))}
+                    </HStack>
+                  </Stack>
+                </HStack>
+                <Text color="gray.600">
+                  <Moment format="Do MMMM, YYYY">{created_at}</Moment>
+                </Text>
               </HStack>
-              <Text color="gray.600">
-                <Moment format="Do MMMM, YYYY">{created_at}</Moment>
-              </Text>
-            </HStack>
-            <Text color="gray.700">{review}</Text>
-          </Stack>
-        ))}
+              <Text color="gray.700">{review}</Text>
+            </Stack>
+          )
+        )}
       </Stack>
     </>
   );
