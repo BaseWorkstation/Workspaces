@@ -16,15 +16,19 @@ import {
 import Spinner from "components/Spinner/Spinner";
 import Link from "next/link";
 
-export default function TeamActivities({ teamLoading, teams, teamActivities }) {
-  if (teamLoading) return <Spinner />;
+export default function WorkspaceActivities({
+  workspaceLoading,
+  workspace,
+  workspaceActivities,
+}) {
+  if (workspaceLoading) return <Spinner />;
 
-  if (!teams.length) return <NoTeamView />;
+  if (!workspace) return <NoWorkspaceView />;
 
-  if (!teamActivities.data.length)
+  if (!workspaceActivities.data.length)
     return (
       <Text textAlign="center">
-        When your team members check in to workspaces, you will see it here
+        When users check in to your workspace, you will see them here
       </Text>
     );
 
@@ -34,15 +38,6 @@ export default function TeamActivities({ teamLoading, teams, teamActivities }) {
         <Table variant="simple">
           <Thead color="primary.500">
             <Tr>
-              <Th
-                textTransform="capitalize"
-                fontSize="md"
-                color="primary.500"
-                pl={0}
-              >
-                Workspace
-              </Th>
-
               <Th textTransform="capitalize" fontSize="md" color="primary.500">
                 User
               </Th>
@@ -63,11 +58,8 @@ export default function TeamActivities({ teamLoading, teams, teamActivities }) {
             </Tr>
           </Thead>
           <Tbody>
-            {teamActivities.data.map(({ id, user, workstation }) => (
+            {workspaceActivities.data.map(({ id, user, workstation }) => (
               <Tr key={id}>
-                <Td py={8} pl={0}>
-                  {workstation.name}
-                </Td>
                 <Td textTransform="capitalize" py={8}>
                   {user.first_name} {user.last_name}
                 </Td>
@@ -93,15 +85,15 @@ export default function TeamActivities({ teamLoading, teams, teamActivities }) {
   );
 }
 
-const NoTeamView = () => (
+const NoWorkspaceView = () => (
   <VStack my={20} spacing={8}>
-    <Image src="/illustrations/team.svg" boxSize={126} />
+    <Image src="/images/spaceholder.png" objectFit="cover" boxSize={126} />
     <Text fontWeight={500} textAlign="center">
-      Create a team to check their activities here
+      Create a workspace to check its activities here
     </Text>
-    <Link href="/account/team/new">
+    <Link href="/details">
       <Button colorScheme="primary" w={250} size="lg" h="56px">
-        Create team
+        Create workspace
       </Button>
     </Link>
   </VStack>

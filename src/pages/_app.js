@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <div>
       <Head>
-        <title>Base</title>
+        <title>Base Workspaces</title>
       </Head>
       <ChakraProvider theme={theme}>
         <Provider store={store}>

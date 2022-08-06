@@ -1,17 +1,18 @@
 import React from "react";
 import Head from "next/head";
 import { Box } from "@chakra-ui/react";
-import ListSpaces from "modules/ExploreSpaces/ListSpaces/ListSpaces";
+import { withAuth } from "utils/withAuth";
+import AccountActivities from "modules/Activities/Activities";
 
-function ListSpacesPage() {
+function AccountActivitiesPage() {
   return (
     <Box>
       <Head>
-        <title>Explore Spaces - Base</title>
+        <title>Workspace activities - Base</title>
       </Head>
-      <ListSpaces />
+      <AccountActivities />
     </Box>
   );
 }
 
-export default ListSpacesPage;
+export default withAuth(AccountActivitiesPage);

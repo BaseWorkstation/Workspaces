@@ -13,11 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsChevronDown, BsChevronRight } from "react-icons/bs";
 
-const settingsLinks = [
-  { name: "Basic information", href: "/account/settings" },
-  { name: "Manage card", href: "/account/settings/card" },
-  { name: "Change password", href: "/account/settings/password" },
-];
+const settingsLinks = [{ name: "Change password", href: "/settings/password" }];
 
 export default function SettingsLayout({ children }) {
   const { asPath } = useRouter();

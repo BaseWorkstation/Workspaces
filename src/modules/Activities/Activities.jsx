@@ -20,19 +20,16 @@ import "react-day-picker/lib/style.css";
 import { formatDate, parseDate } from "react-day-picker/moment";
 import { AiOutlineCalendar } from "react-icons/ai";
 import Moment from "react-moment";
-import TeamActivities from "./components/TeamActivities";
-import UserActivities from "./components/UserActivities";
+import WorkspaceActivities from "./components/WorkspaceActivities";
 import useActivitiesHook from "./useActivitiesHook";
 
 export default function AccountActivities() {
   const {
     selectedDay,
     setSelectedDay,
-    teamLoading,
-    teams,
-    teamActivities,
-    userActivities,
-    userLoading,
+    workstationLoading,
+    workstation,
+    workstationActivities,
   } = useActivitiesHook();
 
   return (
@@ -92,6 +89,7 @@ export default function AccountActivities() {
                 )}
               </Menu>
             </Flex>
+
             <Tab
               rounded={8}
               color="gray.500"
@@ -99,31 +97,16 @@ export default function AccountActivities() {
               px={[3, 8]}
               _selected={{ bg: "rgba(0, 171, 231, 0.15);", color: "blue.800" }}
             >
-              My Recent Activity
-            </Tab>
-            <Tab
-              rounded={8}
-              color="gray.500"
-              fontSize={["md", "md", "lg"]}
-              px={[3, 8]}
-              _selected={{ bg: "rgba(0, 171, 231, 0.15);", color: "blue.800" }}
-            >
-              My Team Activity
+              Workspace Activity
             </Tab>
           </TabList>
 
           <TabPanels>
             <TabPanel px={0} pt={[50, 8]}>
-              <UserActivities
-                userLoading={userLoading}
-                userActivities={userActivities}
-              />
-            </TabPanel>
-            <TabPanel px={0} pt={[50, 8]}>
-              <TeamActivities
-                teamLoading={teamLoading}
-                teams={teams}
-                teamActivities={teamActivities}
+              <WorkspaceActivities
+                workspaceLoading={workstationLoading}
+                workspace={workstation}
+                workspaceActivities={workstationActivities}
               />
             </TabPanel>
           </TabPanels>

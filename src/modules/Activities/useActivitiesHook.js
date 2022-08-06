@@ -1,58 +1,45 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTeamActivities, fetchTeams } from "redux/slices/teamSlice";
-import { fetchUserActivities } from "redux/slices/userSlice";
+import {
+  fetchWorkstation,
+  fetchWorkstationActivities,
+} from "redux/slices/workstationSlice";
 import { formatDateToYYYYMMDD } from "utils/helpers";
 
 export default function useActivitiesHook() {
   const [selectedDay, setSelectedDay] = useState(new Date());
-  const {
-    userDetails,
-    userActivities,
-    loading: userLoading,
-  } = useSelector((state) => state.user);
-  const { teams, teamActivities, loading } = useSelector(
-    (state) => state.teams
+  const { userDetails } = useSelector((state) => state.user);
+  const { workstation, workstationActivities, loading } = useSelector(
+    (state) => state.workstations
   );
   const dispatch = useDispatch();
 
-  const currentTeam = teams[0];
+  const currentWorkspaceId = userDetails.workstations?.[0];
 
   useEffect(() => {
-    if (!teams.length) {
-      dispatch(fetchTeams());
+    if (!workstation) {
+      dispatch(fetchWorkstation({ id: currentWorkspaceId }));
     }
   }, []);
 
   useEffect(() => {
-    dispatch(
-      fetchUserActivities({
-        from_date: formatDateToYYYYMMDD(selectedDay),
-        to_date: formatDateToYYYYMMDD(selectedDay),
-        user_id: userDetails.id,
-      })
-    );
-  }, [selectedDay]);
-
-  useEffect(() => {
-    if (teams.length) {
+    if (currentWorkspaceId) {
       dispatch(
-        fetchTeamActivities({
+        fetchWorkstationActivities({
           date: formatDateToYYYYMMDD(selectedDay),
-          user_id: currentTeam.id,
+          workstation_id: currentWorkspaceId,
         })
       );
     }
-  }, [!!teams.length, selectedDay]);
+  }, [!!workstation, selectedDay]);
 
   return {
     selectedDay,
     setSelectedDay,
-    teamLoading:
-      loading === "FETCH_TEAMS" || loading === "FETCH_TEAM_ACTIVITIES",
-    teams,
-    teamActivities,
-    userActivities,
-    userLoading: userLoading === "FETCH_USER_ACTIVITIES",
+    workstationLoading:
+      loading === "FETCH_WORKSTATION" ||
+      loading === "FETCH_WORKSTATION_ACTIVITIES",
+    workstation,
+    workstationActivities,
   };
 }

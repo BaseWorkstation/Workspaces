@@ -28,7 +28,7 @@ export default function DesktopAccountNav() {
           <Logo w={68} />
           <Stack spacing={43}>
             {accountMenuOptions
-              .slice(0, 4)
+              .slice(0, 3)
               .map(({ name, href, lineIcon, filledIcon }) => {
                 const isSelected = asPath === href;
                 return (

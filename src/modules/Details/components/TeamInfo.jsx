@@ -2,34 +2,36 @@ import {
   Avatar,
   Button,
   Flex,
+  Image,
   Input,
   Stack,
   Text,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { RiTeamLine } from "react-icons/ri";
 import UploadImage from "./UploadImage";
 
-export default function UserInfo({
+export default function TeamInfo({
   basicInfoDetails,
   handleChange,
   handleSubmit,
   isLoading,
   uploadImageFile,
+  currentTeam,
 }) {
-  const { userDetails } = useSelector((state) => state.user);
-  const { firstName, lastName, address, phone } = basicInfoDetails;
+  const { teamName, teamAddress, teamEmail, teamPhone } = basicInfoDetails;
 
-  const isEditingDetails = isLoading === "EDIT_USER_DETAILS";
-  const isEditingLogo = isLoading === "UPLOAD_USER_AVATAR";
+  const isEditingDetails = isLoading === "EDIT_TEAM";
+  const isEditingLogo = isLoading === "UPLOAD_TEAM_IMAGE";
 
   return (
     <Stack onSubmit={handleSubmit} as="form" pt={12} spacing={54}>
       <Stack spacing={6}>
         <Avatar
+          src={currentTeam?.logo?.file_path}
+          icon={<RiTeamLine fontSize={60} color="white" />}
           rounded="full"
-          src={userDetails.avatar?.file_path}
           boxSize={109}
         />
         <Flex w="fit-content" pos="relative">
@@ -48,56 +50,55 @@ export default function UserInfo({
       <Wrap spacingX={12} spacingY={30}>
         <WrapItem>
           <Stack w={278}>
-            <Text>First Name</Text>
+            <Text>Team Name</Text>
             <Input
               w="full"
+              onChange={handleChange}
+              name="teamName"
+              value={teamName}
               size="lg"
               isRequired
-              onChange={handleChange}
-              name="firstName"
-              value={firstName}
-              placeholder="Enter First name"
+              placeholder="Enter Team name"
             />
           </Stack>
         </WrapItem>
         <WrapItem>
           <Stack w={278}>
-            <Text>Last Name</Text>
+            <Text>Team Address</Text>
             <Input
               w="full"
-              size="lg"
-              isRequired
               onChange={handleChange}
-              name="lastName"
-              value={lastName}
-              placeholder="Enter Last name"
+              name="teamAddress"
+              value={teamAddress}
+              size="lg"
+              placeholder="Enter Team Address"
             />
           </Stack>
         </WrapItem>
         <WrapItem>
           <Stack w={278}>
-            <Text>Address</Text>
+            <Text>Team Email Address</Text>
             <Input
               w="full"
-              size="lg"
-              name="address"
-              value={address}
+              type="email"
               onChange={handleChange}
-              placeholder="Enter Address"
+              name="teamEmail"
+              value={teamEmail}
+              size="lg"
+              placeholder="Enter Email Address"
             />
           </Stack>
         </WrapItem>
-
         <WrapItem>
           <Stack w={278}>
             <Text>Phone Number</Text>
             <Input
               w="full"
               type="tel"
-              size="lg"
               onChange={handleChange}
-              name="phone"
-              value={phone}
+              name="teamPhone"
+              value={teamPhone}
+              size="lg"
               placeholder="Enter Phone Number"
             />
           </Stack>
