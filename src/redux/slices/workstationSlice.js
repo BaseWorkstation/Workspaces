@@ -134,6 +134,24 @@ export const editWorkstation = createAsyncThunk(
   }
 );
 
+export const uploadWorkstationLogo = createAsyncThunk(
+  "workstations/uploadWorkstationLogo",
+  async (formData, thunkAPI) => {
+    try {
+      const { data } = await Axios.post(`${BASE_API_URL}/files`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const uploadWorkstationImage = createAsyncThunk(
   "workstations/uploadWorkstationImage",
   async (formData, thunkAPI) => {
@@ -339,6 +357,25 @@ const workstationSlice = createSlice({
       delete state.loading;
     },
 
+    [uploadWorkstationLogo.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "UPLOAD_WORKSTATION_LOGO";
+    },
+    [uploadWorkstationLogo.fulfilled]: (state, action) => {
+      state.success = "UPLOAD_WORKSTATION_LOGO";
+      state.workstation.logo = action.payload;
+      delete state.loading;
+      delete state.error;
+    },
+    [uploadWorkstationLogo.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "UPLOAD_WORKSTATION_LOGO",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
     [uploadWorkstationImage.pending]: (state) => {
       delete state.error;
       delete state.success;
@@ -346,7 +383,7 @@ const workstationSlice = createSlice({
     },
     [uploadWorkstationImage.fulfilled]: (state, action) => {
       state.success = "UPLOAD_WORKSTATION_IMAGE";
-      state.workstation.logo = action.payload;
+      state.workstation.images.push(action.payload);
       delete state.loading;
       delete state.error;
     },

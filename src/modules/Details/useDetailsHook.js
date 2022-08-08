@@ -6,13 +6,14 @@ import {
   editWorkstation,
   fetchWorkstation,
   uploadWorkstationImage,
+  uploadWorkstationLogo,
 } from "redux/slices/workstationSlice";
 
 export default function useDetailsHook() {
   const { userDetails } = useSelector((state) => state.user);
   const { workstation, loading } = useSelector((state) => state.workstations);
 
-  const currentWorkspaceId = userDetails.workstations?.[0];
+  const currentWorkspaceId = userDetails?.workstations?.[0];
 
   const [infoDetails, setInfoDetails] = useState({});
   const dispatch = useDispatch();
@@ -64,6 +65,29 @@ export default function useDetailsHook() {
     }
   };
 
+  const handleUploadWorkstationLogo = async (event, owner) => {
+    const imageFile = event.target.files[0];
+    if (!imageFile) {
+      return;
+    }
+    const formData = new FormData();
+    // append the details of the form data
+    formData.append("upload_category", "workstation_logo");
+    formData.append("workstation_id", currentWorkspaceId);
+    // append the file
+    formData.append("file", imageFile);
+
+    const { payload, error } = await dispatch(uploadWorkstationLogo(formData));
+
+    if (payload) {
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
+
+    event.target.value = "";
+  };
+
   const handleUploadWorkstationImage = async (event, owner) => {
     const imageFile = event.target.files[0];
     if (!imageFile) {
@@ -92,6 +116,7 @@ export default function useDetailsHook() {
     handleChange,
     handleWorkstationInfoSubmit,
     isLoading: loading === "FETCH_WORKSTATION",
+    handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
   };
 }

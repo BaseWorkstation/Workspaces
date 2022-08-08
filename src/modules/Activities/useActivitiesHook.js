@@ -14,7 +14,7 @@ export default function useActivitiesHook() {
   );
   const dispatch = useDispatch();
 
-  const currentWorkspaceId = userDetails.workstations?.[0];
+  const currentWorkspaceId = userDetails?.workstations?.[0];
 
   useEffect(() => {
     if (!workstation) {

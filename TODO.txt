@@ -1,0 +1,1 @@
+Make about and other policy fields as rich text
