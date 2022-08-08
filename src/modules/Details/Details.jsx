@@ -14,11 +14,22 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
+import PageLoadingAnimation from "components/PageLoadingAnimation/PageLoadingAnimation";
 import AccountLayout from "layout/AccountLayout/AccountLayout";
 import useDetailsHook from "./useDetailsHook";
 
 export default function WorkspaceDetails() {
-  const { handleChange } = useDetailsHook();
+  const {
+    infoDetails,
+    setInfoDetails,
+    isLoadingWorkstation,
+    isCreatingWorkstation,
+    isEditingWorkstation,
+    handleWorkstationInfoSubmit,
+    handleChange,
+  } = useDetailsHook();
+
+  if (isLoadingWorkstation) return <PageLoadingAnimation />;
 
   return (
     <AccountLayout>
@@ -28,6 +39,7 @@ export default function WorkspaceDetails() {
         borderColor="gray.200"
         rounded={16}
         as="form"
+        onSubmit={handleWorkstationInfoSubmit}
         pos="relative"
         minH="lg"
         px={[4, 4, 10]}
@@ -37,8 +49,8 @@ export default function WorkspaceDetails() {
         <Input
           w="full"
           onChange={handleChange}
-          // name="teamName"
-          // value={teamName}
+          name="name"
+          value={infoDetails.name}
           size="lg"
           fontSize={32}
           fontWeight="bold"
@@ -50,7 +62,7 @@ export default function WorkspaceDetails() {
 
         <Stack>
           <Text fontWeight="bold" color="blue.800">
-            ADDRESS
+            CONTACT & ADDRESS
           </Text>
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
@@ -59,8 +71,8 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamName"
-                  // value={teamName}
+                  name="street"
+                  value={infoDetails.street}
                   size="lg"
                   isRequired
                   placeholder="eg. Floor 1, Adeniran Ogunsanya mall"
@@ -73,8 +85,9 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamAddress"
-                  // value={teamAddress}
+                  name="city"
+                  isRequired
+                  value={infoDetails.city}
                   size="lg"
                   placeholder="eg. Surulere"
                 />
@@ -86,10 +99,41 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamEmail"
-                  // value={teamEmail}
+                  name="state"
+                  value={infoDetails.state}
                   size="lg"
+                  isRequired
                   placeholder="eg. Lagos"
+                />
+              </Stack>
+            </WrapItem>
+            <WrapItem>
+              <Stack spacing={0} w={278}>
+                <Text color="gray.500">Contact Email</Text>
+                <Input
+                  w="full"
+                  type="email"
+                  onChange={handleChange}
+                  name="email"
+                  value={infoDetails.email}
+                  size="lg"
+                  isRequired
+                  placeholder="eg. support@newbase.com"
+                />
+              </Stack>
+            </WrapItem>
+            <WrapItem>
+              <Stack spacing={0} w={278}>
+                <Text color="gray.500">Contact Phone number</Text>
+                <Input
+                  w="full"
+                  type="tel"
+                  onChange={handleChange}
+                  name="phone"
+                  value={infoDetails.phone}
+                  size="lg"
+                  isRequired
+                  placeholder="eg. 08012345678"
                 />
               </Stack>
             </WrapItem>
@@ -105,8 +149,8 @@ export default function WorkspaceDetails() {
             <Textarea
               w="full"
               onChange={handleChange}
-              // name="teamName"
-              // value={teamName}
+              name="about"
+              value={infoDetails.about}
               size="lg"
               minH={32}
               isRequired
@@ -119,11 +163,10 @@ export default function WorkspaceDetails() {
             <Textarea
               w="full"
               onChange={handleChange}
-              // name="teamName"
-              // value={teamName}
+              name="otherPolicies"
+              value={infoDetails.otherPolicies}
               size="lg"
               minH={28}
-              isRequired
               placeholder="Enter Other Policies here..."
             />
           </Stack>
@@ -138,10 +181,9 @@ export default function WorkspaceDetails() {
             <Select
               w="full"
               onChange={handleChange}
-              // name="teamName"
-              // value={teamName}
+              name="amenities"
+              value={infoDetails.amenities}
               size="lg"
-              isRequired
               placeholder="Choose..."
             />
           </Stack>
@@ -158,8 +200,8 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamName"
-                  // value={teamName}
+                  name="openTime"
+                  value={infoDetails.openTime}
                   type="time"
                   size="lg"
                   isRequired
@@ -172,8 +214,8 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamAddress"
-                  // value={teamAddress}
+                  name="closeTime"
+                  value={infoDetails.closeTime}
                   type="time"
                   size="lg"
                   isRequired
@@ -181,21 +223,25 @@ export default function WorkspaceDetails() {
               </Stack>
             </WrapItem>
 
-            <WrapItem>
+            {/* <WrapItem>
               <Stack spacing={0} w={278}>
                 <Text color="gray.500">Closed?</Text>
                 <Flex>
                   <Switch
-                    onChange={handleChange}
-                    // name="teamAddress"
-                    // value={teamAddress}
+                    onChange={(event) =>
+                      setInfoDetails((prev) => ({
+                        ...prev,
+                        isClosed: event.target.checked,
+                      }))
+                    }
+                    isChecked={infoDetails.isClosed}
                     type="time"
                     size="lg"
                     isRequired
                   />
                 </Flex>
               </Stack>
-            </WrapItem>
+            </WrapItem> */}
           </Wrap>
 
           <Wrap spacingX={7} spacingY={30}>
@@ -205,8 +251,9 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamName"
-                  // value={teamName}
+                  name="weekdayOpenTime"
+                  isDisabled={infoDetails.isWeekdayClosed}
+                  value={infoDetails.weekdayOpenTime}
                   type="time"
                   size="lg"
                   isRequired
@@ -219,8 +266,9 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamAddress"
-                  // value={teamAddress}
+                  name="weekdayCloseTime"
+                  isDisabled={infoDetails.isWeekdayClosed}
+                  value={infoDetails.weekdayCloseTime}
                   type="time"
                   size="lg"
                   isRequired
@@ -232,9 +280,13 @@ export default function WorkspaceDetails() {
                 <Text color="gray.500">Not available on weekdays?</Text>
                 <Flex>
                   <Switch
-                    onChange={handleChange}
-                    // name="teamAddress"
-                    // value={teamAddress}
+                    onChange={(event) =>
+                      setInfoDetails((prev) => ({
+                        ...prev,
+                        isWeekdayClosed: event.target.checked,
+                      }))
+                    }
+                    isChecked={infoDetails.isWeekdayClosed}
                     type="time"
                     size="lg"
                     isRequired
@@ -251,8 +303,9 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamName"
-                  // value={teamName}
+                  name="weekendOpenTime"
+                  isDisabled={infoDetails.isWeekendClosed}
+                  value={infoDetails.weekendOpenTime}
                   type="time"
                   size="lg"
                   isRequired
@@ -265,8 +318,9 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamAddress"
-                  // value={teamAddress}
+                  name="weekendCloseTime"
+                  isDisabled={infoDetails.isWeekendClosed}
+                  value={infoDetails.weekendCloseTime}
                   type="time"
                   size="lg"
                   isRequired
@@ -278,9 +332,13 @@ export default function WorkspaceDetails() {
                 <Text color="gray.500">Not available on weekends?</Text>
                 <Flex>
                   <Switch
-                    onChange={handleChange}
-                    // name="teamAddress"
-                    // value={teamAddress}
+                    onChange={(event) =>
+                      setInfoDetails((prev) => ({
+                        ...prev,
+                        isWeekendClosed: event.target.checked,
+                      }))
+                    }
+                    isChecked={infoDetails.isWeekendClosed}
                     type="time"
                     size="lg"
                     isRequired
@@ -291,7 +349,7 @@ export default function WorkspaceDetails() {
           </Wrap>
         </Stack>
 
-        <Stack spacing={4}>
+        {/* <Stack spacing={4}>
           <Text fontWeight="bold" color="blue.800">
             BILLING RATE
           </Text>
@@ -424,7 +482,7 @@ export default function WorkspaceDetails() {
               </Stack>
             </WrapItem>
           </Wrap>
-        </Stack>
+        </Stack> */}
 
         <Stack>
           <Text fontWeight="bold" color="blue.800">
@@ -437,8 +495,8 @@ export default function WorkspaceDetails() {
                 <Input
                   w="full"
                   onChange={handleChange}
-                  // name="teamName"
-                  // value={teamName}
+                  name="coordinates"
+                  value={infoDetails.coordinates}
                   size="lg"
                   isRequired
                   placeholder="eg. 12.2324343, 90.4343434"
@@ -459,7 +517,14 @@ export default function WorkspaceDetails() {
           left={0}
           boxShadow="0 -4px 10px -5px rgba(0, 0, 0, 0.1)"
         >
-          <Button type="submit" colorScheme="primary" w="full" size="lg" h={57}>
+          <Button
+            isLoading={isCreatingWorkstation || isEditingWorkstation}
+            type="submit"
+            colorScheme="primary"
+            w="full"
+            size="lg"
+            h={57}
+          >
             Save
           </Button>
         </HStack>

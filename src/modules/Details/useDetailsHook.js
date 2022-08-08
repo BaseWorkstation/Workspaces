@@ -20,13 +20,32 @@ export default function useDetailsHook() {
 
   useEffect(() => {
     (async () => {
-      if (!workstation) {
-        const { payload } = await dispatch(
+      let data = workstation;
+
+      if (!data) {
+        const { payload, error } = await dispatch(
           fetchWorkstation({ id: currentWorkspaceId })
         );
 
+        data = payload;
+      }
+
+      if (data?.id) {
         setInfoDetails((prev) => ({
-          ...prev,
+          ...data,
+          openTime: data.open_time,
+          closeTime: data.close_time,
+          otherPolicies: data.other_policies,
+          isWeekdayClosed:
+            !data.schedule?.weekdays?.open_time &&
+            !data.schedule?.weekdays?.close_time,
+          weekdayOpenTime: data.schedule?.weekdays?.open_time,
+          weekdayCloseTime: data.schedule?.weekdays?.close_time,
+          isWeekendClosed:
+            !data.schedule?.weekends?.open_time &&
+            !data.schedule?.weekends?.close_time,
+          weekendOpenTime: data.schedule?.weekends?.open_time,
+          weekendCloseTime: data.schedule?.weekends?.close_time,
         }));
       }
     })();
@@ -45,14 +64,39 @@ export default function useDetailsHook() {
 
     let data;
 
+    const workspacePayload = {
+      ...infoDetails,
+      country_iso: "NG",
+      country_name: "Nigeria",
+      // phone: "08033353444444",
+      // email: "oyes1msslpjqqq.scom",
+      // price_per_minute: 55,
+      currency_code: "NGN",
+      open_time: infoDetails.openTime,
+      close_time: infoDetails.closeTime,
+      other_policies: infoDetails.otherPolicies,
+      amenities: [],
+      schedule: {
+        weekdays: {
+          open_time: infoDetails.weekdayOpenTime,
+          close_time: infoDetails.weekdayCloseTime,
+        },
+        weekends: {
+          open_time: infoDetails.weekendOpenTime,
+          close_time: infoDetails.weekendCloseTime,
+        },
+      },
+    };
+
     if (currentWorkspaceId) {
       data = await dispatch(
         editWorkstation({
           id: currentWorkspaceId,
+          ...workspacePayload,
         })
       );
     } else {
-      data = await dispatch(createWorkstation({}));
+      data = await dispatch(createWorkstation(workspacePayload));
     }
 
     const { payload, error } = data;
@@ -114,8 +158,11 @@ export default function useDetailsHook() {
   return {
     infoDetails,
     handleChange,
+    setInfoDetails,
     handleWorkstationInfoSubmit,
-    isLoading: loading === "FETCH_WORKSTATION",
+    isLoadingWorkstation: loading === "FETCH_WORKSTATION",
+    isCreatingWorkstation: loading === "CREATE_WORKSTATION",
+    isEditingWorkstation: loading === "EDIT_WORKSTATION",
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
   };
