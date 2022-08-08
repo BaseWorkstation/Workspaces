@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Flex,
   HStack,
@@ -16,16 +17,23 @@ import {
 } from "@chakra-ui/react";
 import PageLoadingAnimation from "components/PageLoadingAnimation/PageLoadingAnimation";
 import AccountLayout from "layout/AccountLayout/AccountLayout";
+import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import UploadImage from "./components/UploadImage";
 import useDetailsHook from "./useDetailsHook";
 
 export default function WorkspaceDetails() {
   const {
+    workstation,
     infoDetails,
     setInfoDetails,
     isLoadingWorkstation,
     isCreatingWorkstation,
     isEditingWorkstation,
+    isUploadingLogo,
+    isUploadingImage,
     handleWorkstationInfoSubmit,
+    handleUploadWorkstationLogo,
+    handleUploadWorkstationImage,
     handleChange,
   } = useDetailsHook();
 
@@ -504,6 +512,32 @@ export default function WorkspaceDetails() {
               </Stack>
             </WrapItem>
           </Wrap>
+        </Stack>
+
+        <Stack>
+          <Text fontWeight="bold" color="blue.800">
+            PICTURES
+          </Text>
+          <Stack spacing={4} w="full">
+            <Text color="gray.500">Upload workspace logo</Text>
+            <Avatar
+              src={workstation?.logo?.file_path}
+              icon={<HiOutlineOfficeBuilding fontSize={60} color="white" />}
+              rounded="full"
+              boxSize={109}
+            />
+            <Flex w="fit-content" pos="relative">
+              <UploadImage uploadImageFile={handleUploadWorkstationLogo} />
+              <Button
+                isLoading={isUploadingLogo}
+                loadingText="Updating..."
+                variant="link"
+                fontWeight={500}
+              >
+                Upload
+              </Button>
+            </Flex>
+          </Stack>
         </Stack>
 
         <HStack

@@ -110,6 +110,15 @@ export default function useDetailsHook() {
   };
 
   const handleUploadWorkstationLogo = async (event, owner) => {
+    if (!currentWorkspaceId) {
+      toastError(
+        "You need to create an organization first...",
+        null,
+        "First save the organization, then try to upload again"
+      );
+      return;
+    }
+
     const imageFile = event.target.files[0];
     if (!imageFile) {
       return;
@@ -133,6 +142,11 @@ export default function useDetailsHook() {
   };
 
   const handleUploadWorkstationImage = async (event, owner) => {
+    if (!currentWorkspaceId) {
+      toastError("You need to create an organization first...");
+      return;
+    }
+
     const imageFile = event.target.files[0];
     if (!imageFile) {
       return;
@@ -156,6 +170,7 @@ export default function useDetailsHook() {
   };
 
   return {
+    workstation,
     infoDetails,
     handleChange,
     setInfoDetails,
@@ -163,6 +178,8 @@ export default function useDetailsHook() {
     isLoadingWorkstation: loading === "FETCH_WORKSTATION",
     isCreatingWorkstation: loading === "CREATE_WORKSTATION",
     isEditingWorkstation: loading === "EDIT_WORKSTATION",
+    isUploadingLogo: loading === "UPLOAD_WORKSTATION_LOGO",
+    isUploadingImage: loading === "UPLOAD_WORKSTATION_IMAGE",
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
   };
