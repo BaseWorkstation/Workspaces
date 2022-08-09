@@ -1,0 +1,103 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toastError, toastSuccess } from "utils/helpers";
+import {
+  createWorkstation,
+  editWorkstation,
+  fetchWorkstation,
+  uploadWorkstationImage,
+  uploadWorkstationLogo,
+} from "redux/slices/workstationSlice";
+import {
+  createService,
+  editService,
+  fetchServices,
+} from "redux/slices/serviceSlice";
+
+export default function useServicesHook() {
+  const { userDetails } = useSelector((state) => state.user);
+  const { workstation } = useSelector((state) => state.workstations);
+  const { services, loading } = useSelector((state) => state.services);
+
+  const currentWorkspaceId = userDetails?.owned_workstations?.[0];
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!workstation) {
+      dispatch(fetchWorkstation({ id: currentWorkspaceId }));
+    }
+    dispatch(fetchServices({ workstation_id: currentWorkspaceId }));
+  }, []);
+
+  const handleSaveService = async (service) => {
+    let data;
+
+    const workspacePayload = {
+      workstation_id: currentWorkspaceId,
+      plan_id: 1,
+      name: service.name,
+      category: service.category,
+      price_per_minute: service.pricePerMinute,
+      price_per_hour: service.pricePerHour,
+    };
+
+    if (service.id) {
+      data = await dispatch(
+        editService({
+          serviceId: service.id,
+          editPayload: { ...workspacePayload, price: service.pricePerMinute },
+        })
+      );
+    } else {
+      data = await dispatch(createService(workspacePayload));
+    }
+
+    const { payload, error } = data;
+
+    if (payload?.id) {
+      toastSuccess("Saved successfully!");
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
+  };
+
+  const handleUploadServiceImage = async (event, owner) => {
+    const imageFile = event.target.files[0];
+    if (!imageFile) {
+      return;
+    }
+    const formData = new FormData();
+    // append the details of the form data
+    formData.append("upload_category", "workstation_image");
+    formData.append("workstation_id", currentWorkspaceId);
+    // append the file
+    formData.append("file", imageFile);
+
+    const { payload, error } = await dispatch(uploadWorkstationImage(formData));
+
+    if (payload) {
+    } else {
+      console.log(error);
+      toastError(null, error);
+    }
+
+    event.target.value = "";
+  };
+
+  return {
+    workstation,
+    services: services.map(({ price_per_minute, price_per_hour, ...rest }) => ({
+      ...rest,
+      pricePerMinute: price_per_minute?.amount,
+      pricePerHour: price_per_hour?.amount,
+    })),
+    isLoadingServices: loading === "FETCH_SERVICES",
+    isCreatingService: loading === "CREATE_SERVICE",
+    isEditingService: loading === "EDIT_SERVICE",
+    isUploadingImage: loading === "UPLOAD_SERVICE_IMAGE",
+    handleSaveService,
+    handleUploadServiceImage,
+  };
+}

@@ -1,8 +1,12 @@
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Button,
+  Center,
   Flex,
   HStack,
+  IconButton,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -16,6 +20,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import PageLoadingAnimation from "components/PageLoadingAnimation/PageLoadingAnimation";
+import Spinner from "components/Spinner/Spinner";
 import AccountLayout from "layout/AccountLayout/AccountLayout";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import UploadImage from "./components/UploadImage";
@@ -357,7 +362,7 @@ export default function WorkspaceDetails() {
           </Wrap>
         </Stack>
 
-        {/* <Stack spacing={4}>
+        <Stack spacing={4}>
           <Text fontWeight="bold" color="blue.800">
             BILLING RATE
           </Text>
@@ -378,8 +383,8 @@ export default function WorkspaceDetails() {
                     step={0.01}
                     w="full"
                     onChange={handleChange}
-                    // name="teamName"
-                    // value={teamName}
+                    name="pricePerMinute"
+                    value={infoDetails.pricePerMinute}
                     isRequired
                     placeholder="Minute Charge"
                   />
@@ -393,7 +398,7 @@ export default function WorkspaceDetails() {
                 </InputGroup>
               </Stack>
             </WrapItem>
-            <WrapItem>
+            {/* <WrapItem>
               <Stack spacing={0} w={278}>
                 <Text color="gray.500">Minimum minute Charge</Text>
                 <InputGroup size="lg">
@@ -423,10 +428,10 @@ export default function WorkspaceDetails() {
                   />
                 </InputGroup>
               </Stack>
-            </WrapItem>
+            </WrapItem> */}
           </Wrap>
 
-          <Wrap spacingX={7} spacingY={30}>
+          {/* <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={278}>
                 <Text color="gray.500">Hourly Charge</Text>
@@ -489,8 +494,8 @@ export default function WorkspaceDetails() {
                 </InputGroup>
               </Stack>
             </WrapItem>
-          </Wrap>
-        </Stack> */}
+          </Wrap> */}
+        </Stack>
 
         <Stack>
           <Text fontWeight="bold" color="blue.800">
@@ -514,7 +519,7 @@ export default function WorkspaceDetails() {
           </Wrap>
         </Stack>
 
-        <Stack>
+        <Stack spacing={4}>
           <Text fontWeight="bold" color="blue.800">
             PICTURES
           </Text>
@@ -538,6 +543,65 @@ export default function WorkspaceDetails() {
               </Button>
             </Flex>
           </Stack>
+
+          <Stack w="full">
+            <Text color="gray.500">Upload workspace images</Text>
+            <Wrap spacingX={7} spacingY={30}>
+              {workstation?.images?.map((image) => (
+                <WrapItem key={image.id}>
+                  <Stack pt={4} pos="relative">
+                    <Image
+                      w={[300, 200]}
+                      h={150}
+                      objectFit="cover"
+                      src={image?.file_path}
+                    />
+                    {/* <IconButton
+                      pos="absolute"
+                      top={0}
+                      rounded="full"
+                      w={6}
+                      fontSize="xs"
+                      size="sm"
+                      h={7}
+                      right={-2}
+                      colorScheme="red"
+                      icon={<CloseIcon />}
+                    /> */}
+                  </Stack>
+                </WrapItem>
+              ))}
+
+              <WrapItem>
+                <Stack pt={4} pos="relative">
+                  <Center
+                    border="1px solid"
+                    borderColor="primary.500"
+                    bg="cyan.50"
+                    w={[300, 200]}
+                    rounded={12}
+                    h={150}
+                    objectFit="cover"
+                  >
+                    {isUploadingImage ? (
+                      <Spinner />
+                    ) : (
+                      <IconButton
+                        rounded="full"
+                        w={6}
+                        fontSize="xs"
+                        size="sm"
+                        h={7}
+                        colorScheme="primary"
+                        icon={<AddIcon />}
+                      />
+                    )}
+                  </Center>
+                  <UploadImage uploadImageFile={handleUploadWorkstationImage} />
+                </Stack>
+              </WrapItem>
+            </Wrap>
+          </Stack>
         </Stack>
 
         <HStack
@@ -547,7 +611,7 @@ export default function WorkspaceDetails() {
           bottom={[20, 20, 20, 0]}
           bg="white"
           py={4}
-          zIndex={4}
+          zIndex={20}
           left={0}
           boxShadow="0 -4px 10px -5px rgba(0, 0, 0, 0.1)"
         >

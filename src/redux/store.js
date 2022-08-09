@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import paymentReducer from "./slices/paymentSlice.js";
 import roleReducer from "./slices/roleSlice.js";
-import spaceReducer from "./slices/spaceSlice.js";
+import serviceReducer from "./slices/serviceSlice.js";
 import workstationReducer from "./slices/workstationSlice.js";
 import userReducer from "./slices/userSlice";
 
@@ -10,7 +10,7 @@ import userReducer from "./slices/userSlice";
 const combinedReducer = combineReducers({
   payments: paymentReducer,
   roles: roleReducer,
-  spaces: spaceReducer,
+  services: serviceReducer,
   workstations: workstationReducer,
   user: userReducer,
 });

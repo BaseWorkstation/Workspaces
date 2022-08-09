@@ -12,8 +12,8 @@ import {
 import Router from "next/router";
 
 export default function ShowPin({ basePin }) {
-  const goToPaymentMethod = () => {
-    Router.push("/settings/payment/add");
+  const goToDashboard = () => {
+    Router.push("/");
   };
 
   return (
@@ -42,7 +42,7 @@ export default function ShowPin({ basePin }) {
         </VStack>
         <Box w="full" pt={9}>
           <Button
-            onClick={goToPaymentMethod}
+            onClick={goToDashboard}
             width="full"
             size="lg"
             variant="solid"

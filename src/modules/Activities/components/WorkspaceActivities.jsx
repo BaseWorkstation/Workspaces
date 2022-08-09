@@ -13,8 +13,8 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import NoWorkspaceView from "components/NoWorkspaceView/NoWorkspaceView";
 import Spinner from "components/Spinner/Spinner";
-import Link from "next/link";
 
 export default function WorkspaceActivities({
   workspaceLoading,
@@ -23,7 +23,10 @@ export default function WorkspaceActivities({
 }) {
   if (workspaceLoading) return <Spinner />;
 
-  if (!workspace) return <NoWorkspaceView />;
+  if (!workspace)
+    return (
+      <NoWorkspaceView caption="Create a workspace to check its activities here" />
+    );
 
   if (!workspaceActivities.data.length)
     return (
@@ -84,17 +87,3 @@ export default function WorkspaceActivities({
     </Box>
   );
 }
-
-const NoWorkspaceView = () => (
-  <VStack my={20} spacing={8}>
-    <Image src="/images/spaceholder.png" objectFit="cover" boxSize={126} />
-    <Text fontWeight={500} textAlign="center">
-      Create a workspace to check its activities here
-    </Text>
-    <Link href="/details">
-      <Button colorScheme="primary" w={250} size="lg" h="56px">
-        Create workspace
-      </Button>
-    </Link>
-  </VStack>
-);

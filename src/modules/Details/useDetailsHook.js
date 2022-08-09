@@ -13,7 +13,7 @@ export default function useDetailsHook() {
   const { userDetails } = useSelector((state) => state.user);
   const { workstation, loading } = useSelector((state) => state.workstations);
 
-  const currentWorkspaceId = userDetails?.workstations?.[0];
+  const currentWorkspaceId = userDetails?.owned_workstations?.[0];
 
   const [infoDetails, setInfoDetails] = useState({});
   const dispatch = useDispatch();
@@ -46,6 +46,7 @@ export default function useDetailsHook() {
             !data.schedule?.weekends?.close_time,
           weekendOpenTime: data.schedule?.weekends?.open_time,
           weekendCloseTime: data.schedule?.weekends?.close_time,
+          pricePerMinute: data?.default_service?.price_per_minute?.amount,
         }));
       }
     })();
@@ -68,14 +69,12 @@ export default function useDetailsHook() {
       ...infoDetails,
       country_iso: "NG",
       country_name: "Nigeria",
-      // phone: "08033353444444",
-      // email: "oyes1msslpjqqq.scom",
-      // price_per_minute: 55,
+      price_per_minute: infoDetails.pricePerMinute,
       currency_code: "NGN",
       open_time: infoDetails.openTime,
       close_time: infoDetails.closeTime,
       other_policies: infoDetails.otherPolicies,
-      amenities: [],
+      // amenities: [],
       schedule: {
         weekdays: {
           open_time: infoDetails.weekdayOpenTime,
@@ -143,7 +142,11 @@ export default function useDetailsHook() {
 
   const handleUploadWorkstationImage = async (event, owner) => {
     if (!currentWorkspaceId) {
-      toastError("You need to create an organization first...");
+      toastError(
+        "You need to create an organization first...",
+        null,
+        "First save the organization, then try to upload again"
+      );
       return;
     }
 

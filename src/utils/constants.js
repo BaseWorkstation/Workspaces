@@ -1,6 +1,7 @@
 import { FiActivity } from "react-icons/fi";
 import { HiOfficeBuilding, HiOutlineOfficeBuilding } from "react-icons/hi";
 import { IoHeadsetOutline, IoHeadsetSharp } from "react-icons/io5";
+import { MdMeetingRoom, MdOutlineMeetingRoom } from "react-icons/md";
 import { RiSettings4Fill, RiSettings4Line } from "react-icons/ri";
 
 export const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
@@ -17,6 +18,12 @@ export const accountMenuOptions = [
     href: "/details",
     lineIcon: HiOutlineOfficeBuilding,
     filledIcon: HiOfficeBuilding,
+  },
+  {
+    name: "Services",
+    href: "/services",
+    lineIcon: MdOutlineMeetingRoom,
+    filledIcon: MdMeetingRoom,
   },
   {
     name: "Settings",

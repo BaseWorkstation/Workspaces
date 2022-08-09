@@ -302,7 +302,7 @@ const workstationSlice = createSlice({
     },
     [createWorkstation.fulfilled]: (state, action) => {
       state.success = "CREATE_WORKSTATION";
-      state.workstations.push(action.payload?.data);
+      state.workstation = action.payload?.data;
       delete state.loading;
       delete state.error;
     },
