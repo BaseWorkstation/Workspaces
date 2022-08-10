@@ -8,6 +8,7 @@ import {
   uploadWorkstationImage,
   uploadWorkstationLogo,
 } from "redux/slices/workstationSlice";
+import { addToOwnedWorkstations } from "redux/slices/userSlice";
 
 export default function useDetailsHook() {
   const { userDetails } = useSelector((state) => state.user);
@@ -102,6 +103,9 @@ export default function useDetailsHook() {
 
     if (payload?.id) {
       toastSuccess("Saved successfully!");
+      if (!currentWorkspaceId) {
+        dispatch(addToOwnedWorkstations(payload.id));
+      }
     } else {
       console.log(error);
       toastError(null, error);

@@ -155,6 +155,10 @@ const userSlice = createSlice({
       state.userDetails = action.payload;
     },
 
+    addToOwnedWorkstations: (state, action) => {
+      state.userDetails?.owned_workstations.push(action.payload);
+    },
+
     clearStates: (state, { payload }) => {
       delete state.loading;
       delete state.error;
@@ -289,5 +293,10 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearStates, setUserDetails, logoutUser } = userSlice.actions;
+export const {
+  clearStates,
+  setUserDetails,
+  addToOwnedWorkstations,
+  logoutUser,
+} = userSlice.actions;
 export default userSlice.reducer;
