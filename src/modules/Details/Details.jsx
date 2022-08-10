@@ -302,7 +302,6 @@ export default function WorkspaceDetails() {
                     isChecked={infoDetails.isWeekdayClosed}
                     type="time"
                     size="lg"
-                    isRequired
                   />
                 </Flex>
               </Stack>
@@ -354,7 +353,6 @@ export default function WorkspaceDetails() {
                     isChecked={infoDetails.isWeekendClosed}
                     type="time"
                     size="lg"
-                    isRequired
                   />
                 </Flex>
               </Stack>

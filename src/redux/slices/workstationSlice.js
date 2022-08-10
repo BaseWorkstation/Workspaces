@@ -67,17 +67,13 @@ export const createWorkstation = createAsyncThunk(
   "workstations/createWorkstation",
   async (createPayload, thunkAPI) => {
     try {
-      const { data } = await Axios.post(
-        `${BASE_API_URL}/workstations`,
-        createPayload,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "base_acccess_token"
-            )}`,
-          },
-        }
-      );
+      const {
+        data: { data },
+      } = await Axios.post(`${BASE_API_URL}/workstations`, createPayload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
       return data;
     } catch ({ response }) {
       console.log(response);
@@ -302,7 +298,7 @@ const workstationSlice = createSlice({
     },
     [createWorkstation.fulfilled]: (state, action) => {
       state.success = "CREATE_WORKSTATION";
-      state.workstation = action.payload?.data;
+      state.workstation = action.payload;
       delete state.loading;
       delete state.error;
     },
