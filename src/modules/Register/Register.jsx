@@ -1,20 +1,17 @@
 import {
   Center,
-  Heading,
   Link as ChakraLink,
   Stack,
-  StackDivider,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { Logo } from "components/Logo";
 import Link from "next/link";
 import InputDetails from "./components/InputDetails";
-import ShowPin from "./components/ShowPin";
 import useRegisterHook from "./useRegisterHook";
 
 export default function Register() {
-  const { handleSubmit, basePin, stage, ...rest } = useRegisterHook();
+  const { handleSubmit, ...rest } = useRegisterHook();
 
   return (
     <Center bg="gray.50" minH="100vh" py={[12, 20]}>
@@ -34,9 +31,7 @@ export default function Register() {
             pt={9}
             pb={6}
           >
-            {stage === "INPUT_DETAILS" && <InputDetails {...rest} />}
-
-            {stage === "SHOW_PIN" && <ShowPin basePin={basePin} />}
+            <InputDetails {...rest} />
           </Stack>
 
           <Text fontSize="sm" textAlign="center">

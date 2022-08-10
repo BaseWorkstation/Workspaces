@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Router from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "redux/slices/userSlice";
@@ -20,8 +21,6 @@ export default function useRegisterHook() {
     initialRegisterDetails
   );
   // Initial signup stage where the user can input his/her details
-  const [stage, setStage] = useState("INPUT_DETAILS");
-  const [basePin, setBasePin] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
@@ -49,8 +48,7 @@ export default function useRegisterHook() {
       .then(({ data }) => {
         localStorage.setItem("base_acccess_token", data?.token);
         dispatch(setUserDetails(data.user));
-        setBasePin(data.user.unique_pin); // Save user base pin
-        setStage("SHOW_PIN"); // Show the user his/her base pin
+        Router.push("/");
       })
       .catch(({ response }) => {
         toastError("Unable to sign up", { errorMessage: response?.data });
@@ -62,12 +60,10 @@ export default function useRegisterHook() {
   return {
     registerDetails,
     setRegisterDetails,
-    stage,
     isLoading,
     handleSubmit,
     handleChange,
     showPassword,
     setShowPassword,
-    basePin,
   };
 }
