@@ -340,12 +340,7 @@ const workstationSlice = createSlice({
     },
     [editWorkstation.fulfilled]: (state, action) => {
       state.success = "EDIT_WORKSTATION";
-      const workstation = state.workstations.find(
-        (workstation) => workstation.id === action.payload.id
-      );
-      // delete state.tempNote;
-      Object.assign(workstation, action.payload);
-      // state.workstations = action.payload;
+      state.workstation = action.payload;
       delete state.loading;
       delete state.error;
     },

@@ -29,6 +29,7 @@ export default function ListServices({
   workstation,
   services,
   handleSaveService,
+  handleUploadServiceImage,
 }) {
   if (isLoading) return <Spinner />;
 
@@ -48,9 +49,13 @@ export default function ListServices({
             key={service.id}
             service={service}
             handleSaveService={handleSaveService}
+            handleUploadServiceImage={handleUploadServiceImage}
           />
         ))}
-        <NewService handleSaveService={handleSaveService} />
+        <NewService
+          handleSaveService={handleSaveService}
+          handleUploadServiceImage={handleUploadServiceImage}
+        />
       </Accordion>
     </Box>
   );

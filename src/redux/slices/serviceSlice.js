@@ -89,6 +89,24 @@ export const editService = createAsyncThunk(
   }
 );
 
+export const uploadServiceImage = createAsyncThunk(
+  "services/uploadServiceImage",
+  async (formData, thunkAPI) => {
+    try {
+      const { data } = await Axios.post(`${BASE_API_URL}/files`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("base_acccess_token")}`,
+        },
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue({ error: response.data });
+    }
+  }
+);
+
 export const deleteService = createAsyncThunk(
   "services/deleteService",
   async (serviceId, thunkAPI) => {
@@ -133,7 +151,7 @@ const serviceSlice = createSlice({
     },
     [fetchServices.fulfilled]: (state, action) => {
       state.success = "FETCH_SERVICES";
-      state.services = action.payload;
+      state.services = [...action.payload].reverse();
       delete state.loading;
       delete state.error;
     },
@@ -204,6 +222,28 @@ const serviceSlice = createSlice({
     [editService.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "EDIT_SERVICE",
+        errorMessage: payload?.error,
+      };
+      delete state.loading;
+    },
+
+    [uploadServiceImage.pending]: (state) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "UPLOAD_SERVICE_IMAGE";
+    },
+    [uploadServiceImage.fulfilled]: (state, action) => {
+      state.success = "UPLOAD_SERVICE_IMAGE";
+      const service = state.services.find(
+        (service) => service.id === action.payload.fileable_id
+      );
+      service.images.push(action?.payload);
+      delete state.loading;
+      delete state.error;
+    },
+    [uploadServiceImage.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "UPLOAD_SERVICE_IMAGE",
         errorMessage: payload?.error,
       };
       delete state.loading;

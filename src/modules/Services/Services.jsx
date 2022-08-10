@@ -8,9 +8,9 @@ export default function WorkspaceServices() {
   const {
     workstation,
     services,
-    setServices,
     isLoadingServices,
     handleSaveService,
+    handleUploadServiceImage,
   } = useServicesHook();
 
   return (
@@ -31,6 +31,7 @@ export default function WorkspaceServices() {
           services={services}
           isLoading={isLoadingServices}
           handleSaveService={handleSaveService}
+          handleUploadServiceImage={handleUploadServiceImage}
         />
       </Stack>
     </AccountLayout>
