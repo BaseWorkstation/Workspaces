@@ -48,6 +48,7 @@ export default function useDetailsHook() {
           weekendOpenTime: data.schedule?.weekends?.open_time,
           weekendCloseTime: data.schedule?.weekends?.close_time,
           pricePerMinute: data?.default_service?.price_per_minute?.amount,
+          bankDetails: data?.bank_details,
         }));
       }
     })();
@@ -75,6 +76,7 @@ export default function useDetailsHook() {
       open_time: infoDetails.openTime,
       close_time: infoDetails.closeTime,
       other_policies: infoDetails.otherPolicies,
+      bank_details: infoDetails.bankDetails,
       // amenities: [],
       schedule: {
         weekdays: {

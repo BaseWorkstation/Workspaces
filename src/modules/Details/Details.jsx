@@ -535,6 +535,28 @@ export default function WorkspaceDetails() {
           </Wrap>
         </Stack>
 
+        <Stack>
+          <Text fontWeight="bold" color="blue.800">
+            PAYMENT METHOD
+          </Text>
+          <Wrap spacingX={7} spacingY={30}>
+            <WrapItem>
+              <Stack spacing={0} w={[300, 350]} maxW="6xl">
+                <Text color="gray.500">Bank Details</Text>
+                <Input
+                  w="full"
+                  onChange={handleChange}
+                  name="bankDetails"
+                  value={infoDetails.bankDetails}
+                  size="lg"
+                  isRequired
+                  placeholder="eg. Sterling bank 0012222323"
+                />
+              </Stack>
+            </WrapItem>
+          </Wrap>
+        </Stack>
+
         <Stack spacing={4}>
           <Text fontWeight="bold" color="blue.800">
             PICTURES
