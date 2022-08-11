@@ -23,6 +23,7 @@ import PageLoadingAnimation from "components/PageLoadingAnimation/PageLoadingAni
 import Spinner from "components/Spinner/Spinner";
 import AccountLayout from "layout/AccountLayout/AccountLayout";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
+import { MdQrCode2 } from "react-icons/md";
 import UploadImage from "./components/UploadImage";
 import useDetailsHook from "./useDetailsHook";
 
@@ -36,6 +37,7 @@ export default function WorkspaceDetails() {
     isEditingWorkstation,
     isUploadingLogo,
     isUploadingImage,
+    downloadQRCode,
     handleWorkstationInfoSubmit,
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
@@ -59,19 +61,35 @@ export default function WorkspaceDetails() {
         py={8}
         spacing={12}
       >
-        <Input
-          w="full"
-          onChange={handleChange}
-          name="name"
-          value={infoDetails.name}
-          size="lg"
-          fontSize={32}
-          fontWeight="bold"
-          _placeholder={{ color: "gray.400" }}
-          variant="flushed"
-          isRequired
-          placeholder="What's the name of your workspace?"
-        />
+        <Stack
+          align="flex-end"
+          spacing={[8, 8, 8, 20]}
+          direction={["column", "column", "column", "row"]}
+        >
+          <Input
+            w="full"
+            onChange={handleChange}
+            name="name"
+            value={infoDetails.name}
+            size="lg"
+            fontSize={32}
+            fontWeight="bold"
+            _placeholder={{ color: "gray.400" }}
+            variant="flushed"
+            isRequired
+            placeholder="What's the name of your workspace?"
+          />
+          {workstation && (
+            <Button
+              leftIcon={<MdQrCode2 />}
+              onClick={downloadQRCode}
+              variant="link"
+              colorScheme="primary"
+            >
+              Download QR Code
+            </Button>
+          )}
+        </Stack>
 
         <Stack>
           <Text fontWeight="bold" color="blue.800">
@@ -185,7 +203,7 @@ export default function WorkspaceDetails() {
           </Stack>
         </Stack>
 
-        <Stack>
+        {/* <Stack>
           <Text fontWeight="bold" color="blue.800">
             AMENITIES
           </Text>
@@ -200,7 +218,7 @@ export default function WorkspaceDetails() {
               placeholder="Choose..."
             />
           </Stack>
-        </Stack>
+        </Stack> */}
 
         <Stack spacing={4}>
           <Text fontWeight="bold" color="blue.800">
