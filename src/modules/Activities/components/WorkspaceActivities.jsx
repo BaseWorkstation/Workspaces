@@ -38,6 +38,10 @@ export default function WorkspaceActivities({
       </Text>
     );
 
+  const totalAmount = workspaceActivities.data.reduce((accumulator, object) => {
+    return accumulator + object.total_value_of_minutes_spent_in_naira;
+  }, 0);
+
   return (
     <Box>
       <TableContainer>
@@ -104,14 +108,14 @@ export default function WorkspaceActivities({
           </Tbody>
         </Table>
       </TableContainer>
-      {/* <HStack spacing={16} pt={12} justify="flex-end">
+      <HStack spacing={16} pt={12} justify="flex-end">
         <Text fontWeight="bold" color="primary.500" fontSize="lg">
           TOTAL SPENT
         </Text>
         <Text fontWeight="bold" color="primary.500" fontSize="lg">
-          N10,000
+          N{separateWithComma(totalAmount)}
         </Text>
-      </HStack> */}
+      </HStack>
     </Box>
   );
 }
