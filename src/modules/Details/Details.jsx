@@ -378,43 +378,44 @@ export default function WorkspaceDetails() {
           </Wrap>
         </Stack>
 
-        <Stack spacing={4}>
-          <Text fontWeight="bold" color="blue.800">
-            BILLING RATE
-          </Text>
-          <Wrap spacingX={7} spacingY={30}>
-            <WrapItem>
-              <Stack spacing={0} w={278}>
-                <Text color="gray.500">Minute Charge</Text>
-                <InputGroup size="lg">
-                  <InputLeftElement
-                    pointerEvents="none"
-                    color="gray.300"
-                    fontSize="1.2em"
-                    children="₦"
-                  />
+        {!workstation && (
+          <Stack spacing={4}>
+            <Text fontWeight="bold" color="blue.800">
+              BILLING RATE
+            </Text>
+            <Wrap spacingX={7} spacingY={30}>
+              <WrapItem>
+                <Stack spacing={0} w={278}>
+                  <Text color="gray.500">Minute Charge</Text>
+                  <InputGroup size="lg">
+                    <InputLeftElement
+                      pointerEvents="none"
+                      color="gray.300"
+                      fontSize="1.2em"
+                      children="₦"
+                    />
 
-                  <Input
-                    type="number"
-                    step={0.01}
-                    w="full"
-                    onChange={handleChange}
-                    name="pricePerMinute"
-                    value={infoDetails.pricePerMinute}
-                    isRequired
-                    placeholder="Minute Charge"
-                  />
-                  <InputRightElement
-                    pr={4}
-                    pointerEvents="none"
-                    color="gray.300"
-                    fontSize="1.2em"
-                    children="/min"
-                  />
-                </InputGroup>
-              </Stack>
-            </WrapItem>
-            {/* <WrapItem>
+                    <Input
+                      type="number"
+                      step={0.01}
+                      w="full"
+                      onChange={handleChange}
+                      name="pricePerMinute"
+                      value={infoDetails.pricePerMinute}
+                      isRequired
+                      placeholder="Minute Charge"
+                    />
+                    <InputRightElement
+                      pr={4}
+                      pointerEvents="none"
+                      color="gray.300"
+                      fontSize="1.2em"
+                      children="/min"
+                    />
+                  </InputGroup>
+                </Stack>
+              </WrapItem>
+              {/* <WrapItem>
               <Stack spacing={0} w={278}>
                 <Text color="gray.500">Minimum minute Charge</Text>
                 <InputGroup size="lg">
@@ -445,9 +446,9 @@ export default function WorkspaceDetails() {
                 </InputGroup>
               </Stack>
             </WrapItem> */}
-          </Wrap>
+            </Wrap>
 
-          {/* <Wrap spacingX={7} spacingY={30}>
+            {/* <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={278}>
                 <Text color="gray.500">Hourly Charge</Text>
@@ -511,7 +512,8 @@ export default function WorkspaceDetails() {
               </Stack>
             </WrapItem>
           </Wrap> */}
-        </Stack>
+          </Stack>
+        )}
 
         <Stack>
           <Text fontWeight="bold" color="blue.800">

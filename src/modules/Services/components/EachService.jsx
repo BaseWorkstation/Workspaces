@@ -179,6 +179,9 @@ export default function EachService({
                     type="number"
                     step={0.01}
                     w="full"
+                    readOnly
+                    isDisabled
+                    variant="flushed"
                     name="pricePerHour"
                     onChange={handleChange}
                     value={service.pricePerHour}
