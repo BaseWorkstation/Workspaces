@@ -178,16 +178,11 @@ export default function useDetailsHook() {
     event.target.value = "";
   };
 
-  const downloadQRCode = () => {
-    window.open(workstation?.qr_code_path);
-  };
-
   return {
     workstation,
     infoDetails,
     handleChange,
     setInfoDetails,
-    downloadQRCode,
     handleWorkstationInfoSubmit,
     isLoadingWorkstation: loading === "FETCH_WORKSTATION",
     isCreatingWorkstation: loading === "CREATE_WORKSTATION",

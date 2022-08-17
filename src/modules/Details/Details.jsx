@@ -11,6 +11,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Link,
   Select,
   Stack,
   Switch,
@@ -37,7 +38,6 @@ export default function WorkspaceDetails() {
     isEditingWorkstation,
     isUploadingLogo,
     isUploadingImage,
-    downloadQRCode,
     handleWorkstationInfoSubmit,
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
@@ -80,14 +80,15 @@ export default function WorkspaceDetails() {
             placeholder="What's the name of your workspace?"
           />
           {workstation && (
-            <Button
-              leftIcon={<MdQrCode2 />}
-              onClick={downloadQRCode}
-              variant="link"
-              colorScheme="primary"
-            >
-              Download QR Code
-            </Button>
+            <Link download href={workstation?.qr_code_path}>
+              <Button
+                leftIcon={<MdQrCode2 />}
+                variant="link"
+                colorScheme="primary"
+              >
+                Download QR Code
+              </Button>
+            </Link>
           )}
         </Stack>
 
