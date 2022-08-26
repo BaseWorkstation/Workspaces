@@ -9,6 +9,7 @@ import {
   uploadWorkstationLogo,
 } from "redux/slices/workstationSlice";
 import { addToOwnedWorkstations } from "redux/slices/userSlice";
+import Router from "next/router";
 
 export default function useDetailsHook() {
   const { userDetails } = useSelector((state) => state.user);
@@ -107,6 +108,7 @@ export default function useDetailsHook() {
       toastSuccess("Saved successfully!");
       if (!currentWorkspaceId) {
         dispatch(addToOwnedWorkstations(payload.id));
+        Router.reload();
       }
     } else {
       console.log(error);
