@@ -26,7 +26,8 @@ export default function useActivitiesHook() {
     if (currentWorkspaceId) {
       dispatch(
         fetchWorkstationActivities({
-          date: formatDateToYYYYMMDD(selectedDay),
+          from_date: formatDateToYYYYMMDD(selectedDay),
+          to_date: formatDateToYYYYMMDD(selectedDay),
           workstation_id: currentWorkspaceId,
         })
       );
