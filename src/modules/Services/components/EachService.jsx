@@ -164,7 +164,7 @@ export default function EachService({
               </Stack>
             </WrapItem>
 
-            <WrapItem>
+            {/* <WrapItem>
               <Stack spacing={0} w={278}>
                 <Text color="gray.500">Price per hour</Text>
                 <InputGroup>
@@ -197,7 +197,7 @@ export default function EachService({
                   />
                 </InputGroup>
               </Stack>
-            </WrapItem>
+            </WrapItem> */}
           </Wrap>
         </Stack>
 

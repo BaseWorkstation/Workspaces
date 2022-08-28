@@ -99,7 +99,7 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Street</Text>
+                <Text color="gray.500">Street *</Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -113,7 +113,7 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">City</Text>
+                <Text color="gray.500">City *</Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -127,7 +127,7 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">State</Text>
+                <Text color="gray.500">State *</Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -141,7 +141,7 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Contact Email</Text>
+                <Text color="gray.500">Contact Email *</Text>
                 <Input
                   w="full"
                   type="email"
@@ -156,7 +156,7 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Contact Phone number</Text>
+                <Text color="gray.500">Contact Phone number *</Text>
                 <Input
                   w="full"
                   type="tel"
@@ -177,7 +177,7 @@ export default function WorkspaceDetails() {
             INFO
           </Text>
           <Stack spacing={0}>
-            <Text color="gray.500">About</Text>
+            <Text color="gray.500">About *</Text>
             <Textarea
               w="full"
               onChange={handleChange}
@@ -228,7 +228,7 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Default Opening time</Text>
+                <Text color="gray.500">Default Opening time *</Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -242,7 +242,7 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Default Closing time</Text>
+                <Text color="gray.500">Default Closing time *</Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -387,7 +387,7 @@ export default function WorkspaceDetails() {
             <Wrap spacingX={7} spacingY={30}>
               <WrapItem>
                 <Stack spacing={0} w={278}>
-                  <Text color="gray.500">Minute Charge</Text>
+                  <Text color="gray.500">Minute Charge *</Text>
                   <InputGroup size="lg">
                     <InputLeftElement
                       pointerEvents="none"
@@ -523,7 +523,7 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={[300, 350]} maxW="6xl">
-                <Text color="gray.500">Coordinates (Lat, Lng)</Text>
+                <Text color="gray.500">Coordinates (Lat, Lng) *</Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -545,7 +545,7 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={[300, 350]} maxW="6xl">
-                <Text color="gray.500">Bank Details</Text>
+                <Text color="gray.500">Bank Details *</Text>
                 <Input
                   w="full"
                   onChange={handleChange}
