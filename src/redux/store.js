@@ -4,6 +4,7 @@ import roleReducer from "./slices/roleSlice.js";
 import serviceReducer from "./slices/serviceSlice.js";
 import workstationReducer from "./slices/workstationSlice.js";
 import userReducer from "./slices/userSlice";
+import commonReducer from "./slices/commonSlice";
 
 //Import individual slices and configure store
 
@@ -13,6 +14,7 @@ const combinedReducer = combineReducers({
   services: serviceReducer,
   workstations: workstationReducer,
   user: userReducer,
+  common: commonReducer,
 });
 
 const rootReducer = (state, action) => {

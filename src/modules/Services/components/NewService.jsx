@@ -21,9 +21,11 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
+import { separateWithComma } from "utils/helpers";
 
 export default function NewService({ handleSaveService }) {
   const { loading } = useSelector((state) => state.services);
+  const { enums } = useSelector((state) => state.common);
 
   const [service, setService] = useState({
     name: "",
@@ -39,6 +41,10 @@ export default function NewService({ handleSaveService }) {
       [name]: value,
     }); // onChange handler
   };
+
+  const amountUserPays =
+    Number(service.pricePerMinute) +
+    Number(enums?.base_share_details?.base_markup);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -95,7 +101,12 @@ export default function NewService({ handleSaveService }) {
 
           <WrapItem>
             <Stack spacing={0} w={278}>
-              <Text color="gray.500">Price per minute</Text>
+              <Text color="gray.500">
+                Price per minute{" "}
+                {service.pricePerMinute
+                  ? `(User will pay N${separateWithComma(amountUserPays)})`
+                  : ""}
+              </Text>
               <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"

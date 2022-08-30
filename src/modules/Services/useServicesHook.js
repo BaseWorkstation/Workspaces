@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getEnums } from "redux/slices/commonSlice";
 import {
   createService,
   editService,
@@ -11,9 +12,9 @@ import { toastError, toastSuccess } from "utils/helpers";
 
 export default function useServicesHook() {
   const { userDetails } = useSelector((state) => state.user);
+  const { enums } = useSelector((state) => state.common);
   const { workstation } = useSelector((state) => state.workstations);
   const { services, loading } = useSelector((state) => state.services);
-
   const currentWorkspaceId = userDetails?.owned_workstations?.[0];
 
   const dispatch = useDispatch();
@@ -22,6 +23,11 @@ export default function useServicesHook() {
     if (!workstation) {
       dispatch(fetchWorkstation({ id: currentWorkspaceId }));
     }
+
+    if (!enums) {
+      dispatch(getEnums());
+    }
+
     dispatch(fetchServices({ workstation_id: currentWorkspaceId }));
   }, []);
 

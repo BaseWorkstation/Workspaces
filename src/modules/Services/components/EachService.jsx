@@ -26,6 +26,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import Spinner from "components/Spinner/Spinner";
 import UploadImage from "modules/Details/components/UploadImage";
 import { HiUpload } from "react-icons/hi";
+import { separateWithComma } from "utils/helpers";
 
 export default function EachService({
   service: initialService,
@@ -33,6 +34,7 @@ export default function EachService({
   handleUploadServiceImage,
 }) {
   const { loading } = useSelector((state) => state.services);
+  const { enums } = useSelector((state) => state.common);
 
   const [service, setService] = useState(initialService);
 
@@ -50,6 +52,10 @@ export default function EachService({
   };
 
   const currentServiceImage = initialService.images?.[0];
+
+  const amountUserPays =
+    Number(service.pricePerMinute) +
+    Number(enums?.base_share_details?.base_markup);
 
   return (
     <AccordionItem>
@@ -134,7 +140,12 @@ export default function EachService({
 
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Price per minute</Text>
+                <Text color="gray.500">
+                  Price per minute{" "}
+                  {service.pricePerMinute
+                    ? `(User will pay N${separateWithComma(amountUserPays)})`
+                    : ""}
+                </Text>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
