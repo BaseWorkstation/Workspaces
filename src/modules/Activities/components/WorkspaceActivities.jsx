@@ -39,7 +39,7 @@ export default function WorkspaceActivities({
     );
 
   const totalAmount = workspaceActivities.data.reduce((accumulator, object) => {
-    return accumulator + Number(object.total_value_of_minutes_spent_in_naira);
+    return accumulator + Number(object.workspace_share_for_duration);
   }, 0);
 
   return (
@@ -63,7 +63,7 @@ export default function WorkspaceActivities({
                 color="primary.500"
                 isNumeric
               >
-                Amount spent
+                Amount earned
               </Th>
             </Tr>
           </Thead>
@@ -74,7 +74,7 @@ export default function WorkspaceActivities({
                 user,
                 check_in_time,
                 check_out_time,
-                total_value_of_minutes_spent_in_naira,
+                workspace_share_for_duration,
                 workstation,
               }) => (
                 <Tr key={id}>
@@ -96,11 +96,11 @@ export default function WorkspaceActivities({
                         {new Date(check_out_time)}
                       </Moment>
                     ) : (
-                      ""
+                      "Still checked in"
                     )}
                   </Td>
                   <Td py={8} isNumeric>
-                    N{separateWithComma(total_value_of_minutes_spent_in_naira)}
+                    N{separateWithComma(workspace_share_for_duration)}
                   </Td>
                 </Tr>
               )

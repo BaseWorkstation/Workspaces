@@ -108,7 +108,7 @@ export default function useDetailsHook() {
       toastSuccess("Saved successfully!");
       if (!currentWorkspaceId) {
         dispatch(addToOwnedWorkstations(payload.id));
-        Router.reload();
+        window.location.reload();
       }
     } else {
       console.log(error);
