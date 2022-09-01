@@ -10,10 +10,12 @@ import {
 } from "redux/slices/workstationSlice";
 import { addToOwnedWorkstations } from "redux/slices/userSlice";
 import Router from "next/router";
+import { getEnums } from "redux/slices/commonSlice";
 
 export default function useDetailsHook() {
   const { userDetails } = useSelector((state) => state.user);
   const { workstation, loading } = useSelector((state) => state.workstations);
+  const { enums } = useSelector((state) => state.common);
 
   const currentWorkspaceId = userDetails?.owned_workstations?.[0];
 
@@ -21,15 +23,21 @@ export default function useDetailsHook() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!enums) {
+      dispatch(getEnums());
+    }
+  }, []);
+
+  useEffect(() => {
     (async () => {
       let data = workstation;
 
       if (!data) {
-        const { payload, error } = await dispatch(
+        const response = await dispatch(
           fetchWorkstation({ id: currentWorkspaceId })
-        );
+        ).unwrap();
 
-        data = payload;
+        data = response;
       }
 
       if (data?.id) {
@@ -91,26 +99,24 @@ export default function useDetailsHook() {
       },
     };
 
-    if (currentWorkspaceId) {
-      data = await dispatch(
-        editWorkstation({
-          id: currentWorkspaceId,
-          ...workspacePayload,
-        })
-      );
-    } else {
-      data = await dispatch(createWorkstation(workspacePayload));
-    }
+    try {
+      if (currentWorkspaceId) {
+        data = await dispatch(
+          editWorkstation({
+            id: currentWorkspaceId,
+            ...workspacePayload,
+          })
+        ).unwrap();
+      } else {
+        data = await dispatch(createWorkstation(workspacePayload)).unwrap();
+      }
 
-    const { payload, error } = data;
-
-    if (payload?.id) {
       toastSuccess("Saved successfully!");
       if (!currentWorkspaceId) {
-        dispatch(addToOwnedWorkstations(payload.id));
+        dispatch(addToOwnedWorkstations(data.id));
         window.location.reload();
       }
-    } else {
+    } catch (error) {
       console.log(error);
       toastError(null, error);
     }
@@ -137,10 +143,9 @@ export default function useDetailsHook() {
     // append the file
     formData.append("file", imageFile);
 
-    const { payload, error } = await dispatch(uploadWorkstationLogo(formData));
-
-    if (payload) {
-    } else {
+    try {
+      await dispatch(uploadWorkstationLogo(formData)).unwrap();
+    } catch (error) {
       console.log(error);
       toastError(null, error);
     }
@@ -169,10 +174,9 @@ export default function useDetailsHook() {
     // append the file
     formData.append("file", imageFile);
 
-    const { payload, error } = await dispatch(uploadWorkstationImage(formData));
-
-    if (payload) {
-    } else {
+    try {
+      await dispatch(uploadWorkstationImage(formData)).unwrap();
+    } catch (error) {
       console.log(error);
       toastError(null, error);
     }
@@ -193,5 +197,8 @@ export default function useDetailsHook() {
     isUploadingImage: loading === "UPLOAD_WORKSTATION_IMAGE",
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
+    amountUserPays:
+      Number(infoDetails.pricePerMinute) +
+      Number(enums?.base_share_details?.base_markup),
   };
 }

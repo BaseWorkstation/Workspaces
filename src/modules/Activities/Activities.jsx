@@ -46,7 +46,7 @@ export default function AccountActivities() {
           <TabList
             border="1px solid"
             borderColor="gray.200"
-            w={["full", "full", "fit-content"]}
+            w={["fit-content"]}
             rounded={8}
           >
             <Flex

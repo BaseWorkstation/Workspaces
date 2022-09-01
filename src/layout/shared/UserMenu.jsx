@@ -43,7 +43,9 @@ export default function UserMenu() {
         </Link>
         <MenuDivider m={0} />
         <MenuItem
-          onClick={() => Router.push("/login")}
+          onClick={() => {
+            location.href = "/login";
+          }}
           fontWeight={500}
           color="red.400"
         >

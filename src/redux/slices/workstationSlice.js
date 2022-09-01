@@ -17,7 +17,7 @@ export const fetchWorkstation = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -35,7 +35,7 @@ export const fetchWorkstationActivities = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -58,7 +58,7 @@ export const fetchWorkstationMembers = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -77,7 +77,7 @@ export const createWorkstation = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -100,7 +100,7 @@ export const addMemberToWorkstation = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -125,7 +125,7 @@ export const editWorkstation = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -143,7 +143,7 @@ export const uploadWorkstationLogo = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -161,7 +161,7 @@ export const uploadWorkstationImage = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -185,7 +185,7 @@ export const deleteWorkstation = createAsyncThunk(
       return workstationId;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -208,7 +208,7 @@ export const deleteWorkstationMember = createAsyncThunk(
       return deletePayload.user_id;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -246,7 +246,6 @@ const workstationSlice = createSlice({
     [fetchWorkstation.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_WORKSTATION",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -266,7 +265,6 @@ const workstationSlice = createSlice({
     [fetchWorkstationActivities.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_WORKSTATION_ACTIVITIES",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -286,7 +284,6 @@ const workstationSlice = createSlice({
     [fetchWorkstationMembers.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_WORKSTATION_MEMBERS",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -305,7 +302,6 @@ const workstationSlice = createSlice({
     [createWorkstation.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "CREATE_WORKSTATION",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -324,7 +320,6 @@ const workstationSlice = createSlice({
     [addMemberToWorkstation.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "ADD_WORKSTATION_MEMBER",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -343,7 +338,6 @@ const workstationSlice = createSlice({
     [editWorkstation.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "EDIT_WORKSTATION",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -362,7 +356,6 @@ const workstationSlice = createSlice({
     [uploadWorkstationLogo.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "UPLOAD_WORKSTATION_LOGO",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -381,7 +374,6 @@ const workstationSlice = createSlice({
     [uploadWorkstationImage.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "UPLOAD_WORKSTATION_IMAGE",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -407,7 +399,6 @@ const workstationSlice = createSlice({
     [deleteWorkstation.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "DELETE_WORKSTATION",
-        errorMessage: payload?.error,
       };
       delete state.backupPosition;
       delete state.backupWorkstation;
@@ -435,7 +426,6 @@ const workstationSlice = createSlice({
     [deleteWorkstationMember.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "DELETE_WORKSTATION_MEMBER",
-        errorMessage: payload?.error,
       };
       // delete state.backupPosition;
       // delete state.backupWorkstation;

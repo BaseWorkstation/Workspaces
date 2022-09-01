@@ -70,7 +70,9 @@ export default function DesktopAccountNav() {
           </Link>
 
           <HStack
-            onClick={() => Router.push("/login")}
+            onClick={() => {
+              location.href = "/login";
+            }}
             cursor="pointer"
             spacing={6}
           >

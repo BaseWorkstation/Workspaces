@@ -25,6 +25,7 @@ import Spinner from "components/Spinner/Spinner";
 import AccountLayout from "layout/AccountLayout/AccountLayout";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { MdQrCode2 } from "react-icons/md";
+import { separateWithComma } from "utils/helpers";
 import UploadImage from "./components/UploadImage";
 import useDetailsHook from "./useDetailsHook";
 
@@ -42,6 +43,7 @@ export default function WorkspaceDetails() {
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
     handleChange,
+    amountUserPays,
   } = useDetailsHook();
 
   if (isLoadingWorkstation) return <PageLoadingAnimation />;
@@ -387,7 +389,12 @@ export default function WorkspaceDetails() {
             <Wrap spacingX={7} spacingY={30}>
               <WrapItem>
                 <Stack spacing={0} w={278}>
-                  <Text color="gray.500">Minute Charge *</Text>
+                  <Text color="gray.500">
+                    Minute Charge *{" "}
+                    {infoDetails.pricePerMinute
+                      ? `(User will pay N${separateWithComma(amountUserPays)})`
+                      : ""}
+                  </Text>
                   <InputGroup size="lg">
                     <InputLeftElement
                       pointerEvents="none"
@@ -400,6 +407,7 @@ export default function WorkspaceDetails() {
                       type="number"
                       step={0.01}
                       w="full"
+                      min={0.01}
                       onChange={handleChange}
                       name="pricePerMinute"
                       value={infoDetails.pricePerMinute}

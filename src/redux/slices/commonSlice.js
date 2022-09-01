@@ -18,7 +18,7 @@ export const getEnums = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -72,7 +72,6 @@ const commonSlice = createSlice({
     [getEnums.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_ENUMS",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },

@@ -17,7 +17,7 @@ export const fetchServices = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -40,7 +40,7 @@ export const fetchMoreServices = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -59,7 +59,7 @@ export const createService = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -84,7 +84,7 @@ export const editService = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -102,7 +102,7 @@ export const uploadServiceImage = createAsyncThunk(
       return data;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -121,7 +121,7 @@ export const deleteService = createAsyncThunk(
       return serviceId;
     } catch ({ response }) {
       console.log(response);
-      return thunkAPI.rejectWithValue({ error: response.data });
+      return thunkAPI.rejectWithValue(response);
     }
   }
 );
@@ -158,7 +158,6 @@ const serviceSlice = createSlice({
     [fetchServices.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_SERVICES",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -179,7 +178,6 @@ const serviceSlice = createSlice({
     [fetchMoreServices.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "FETCH_SERVICES",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -198,7 +196,6 @@ const serviceSlice = createSlice({
     [createService.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "CREATE_SERVICE",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -222,7 +219,6 @@ const serviceSlice = createSlice({
     [editService.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "EDIT_SERVICE",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -244,7 +240,6 @@ const serviceSlice = createSlice({
     [uploadServiceImage.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "UPLOAD_SERVICE_IMAGE",
-        errorMessage: payload?.error,
       };
       delete state.loading;
     },
@@ -270,7 +265,6 @@ const serviceSlice = createSlice({
     [deleteService.rejected]: (state, { payload }) => {
       state.error = {
         errorType: "DELETE_SERVICE",
-        errorMessage: payload?.error,
       };
       delete state.backupPosition;
       delete state.backupService;

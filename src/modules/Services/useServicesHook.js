@@ -43,22 +43,19 @@ export default function useServicesHook() {
       price_per_hour: service.pricePerHour,
     };
 
-    if (service.id) {
-      data = await dispatch(
-        editService({
-          serviceId: service.id,
-          editPayload: { ...workspacePayload, price: service.pricePerMinute },
-        })
-      );
-    } else {
-      data = await dispatch(createService(workspacePayload));
-    }
-
-    const { payload, error } = data;
-
-    if (payload?.id) {
+    try {
+      if (service.id) {
+        await dispatch(
+          editService({
+            serviceId: service.id,
+            editPayload: { ...workspacePayload, price: service.pricePerMinute },
+          })
+        ).unwrap();
+      } else {
+        await dispatch(createService(workspacePayload)).unwrap();
+      }
       toastSuccess("Saved successfully!");
-    } else {
+    } catch (error) {
       console.log(error);
       toastError(null, error);
     }
@@ -77,10 +74,9 @@ export default function useServicesHook() {
     // append the file
     formData.append("file", imageFile);
 
-    const { payload, error } = await dispatch(uploadServiceImage(formData));
-
-    if (payload) {
-    } else {
+    try {
+      await dispatch(uploadServiceImage(formData)).unwrap();
+    } catch (error) {
       console.log(error);
       toastError(null, error);
     }

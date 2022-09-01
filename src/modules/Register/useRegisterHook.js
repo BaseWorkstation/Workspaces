@@ -51,9 +51,9 @@ export default function useRegisterHook() {
         Router.push("/");
       })
       .catch(({ response }) => {
-        toastError("Unable to sign up", { errorMessage: response?.data });
         setIsLoading(false);
         console.log(response);
+        toastError("Unable to sign up", response);
       });
   };
 
