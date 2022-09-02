@@ -190,6 +190,29 @@ export const deleteWorkstation = createAsyncThunk(
   }
 );
 
+export const deleteWorkstationImage = createAsyncThunk(
+  "workstations/deleteWorkstationImage",
+  async (deletePayload, thunkAPI) => {
+    try {
+      const { data } = await Axios.delete(
+        `${BASE_API_URL}/files/${deletePayload?.image_id}`,
+        {
+          params: deletePayload,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "base_acccess_token"
+            )}`,
+          },
+        }
+      );
+      return deletePayload?.image_id;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue(response);
+    }
+  }
+);
+
 export const deleteWorkstationMember = createAsyncThunk(
   "workstations/deleteWorkstationMember",
   async (deletePayload, thunkAPI) => {
@@ -402,6 +425,33 @@ const workstationSlice = createSlice({
       };
       delete state.backupPosition;
       delete state.backupWorkstation;
+      delete state.loading;
+    },
+
+    [deleteWorkstationImage.pending]: (state, action) => {
+      delete state.error;
+      delete state.success;
+      state.loading = "DELETE_WORKSTATION_IMAGE";
+      const position = state.workstation.images.findIndex(
+        (image) => image.id === action.meta.arg
+      );
+      state.backupImage = Object.assign({}, state.workstation.images[position]);
+      state.backupPosition = position;
+    },
+    [deleteWorkstationImage.fulfilled]: (state) => {
+      state.success = "DELETE_WORKSTATION_IMAGE";
+      state.workstation.images.splice(state.backupPosition, 1);
+      delete state.backupImage;
+      delete state.backupPosition;
+      delete state.loading;
+      delete state.error;
+    },
+    [deleteWorkstationImage.rejected]: (state, { payload }) => {
+      state.error = {
+        errorType: "DELETE_WORKSTATION_IMAGE",
+      };
+      delete state.backupPosition;
+      delete state.backupImage;
       delete state.loading;
     },
 

@@ -42,6 +42,8 @@ export default function WorkspaceDetails() {
     handleWorkstationInfoSubmit,
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
+    handleDeleteImage,
+    isDeletingImage,
     handleChange,
     amountUserPays,
   } = useDetailsHook();
@@ -580,12 +582,12 @@ export default function WorkspaceDetails() {
               rounded="full"
               boxSize={109}
             />
-            <Flex w="fit-content" pos="relative">
+            <Flex w="fit-content" cursor="pointer" pos="relative">
               <UploadImage uploadImageFile={handleUploadWorkstationLogo} />
               <Button
                 isLoading={isUploadingLogo}
                 loadingText="Updating..."
-                variant="link"
+                size="sm"
                 fontWeight={500}
               >
                 Upload
@@ -605,7 +607,9 @@ export default function WorkspaceDetails() {
                       objectFit="cover"
                       src={image?.file_path}
                     />
-                    {/* <IconButton
+                    <IconButton
+                      isLoading={isDeletingImage}
+                      onClick={() => handleDeleteImage(image.id)}
                       pos="absolute"
                       top={0}
                       rounded="full"
@@ -616,7 +620,7 @@ export default function WorkspaceDetails() {
                       right={-2}
                       colorScheme="red"
                       icon={<CloseIcon />}
-                    /> */}
+                    />
                   </Stack>
                 </WrapItem>
               ))}

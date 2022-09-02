@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toastError, toastSuccess } from "utils/helpers";
 import {
   createWorkstation,
+  deleteWorkstationImage,
   editWorkstation,
   fetchWorkstation,
   uploadWorkstationImage,
@@ -184,6 +185,16 @@ export default function useDetailsHook() {
     event.target.value = "";
   };
 
+  const handleDeleteImage = async (imageId) => {
+    try {
+      await dispatch(deleteWorkstationImage({ image_id: imageId })).unwrap();
+      toastSuccess("Removed!");
+    } catch (error) {
+      console.log(error);
+      toastError(null, error);
+    }
+  };
+
   return {
     workstation,
     infoDetails,
@@ -195,8 +206,10 @@ export default function useDetailsHook() {
     isEditingWorkstation: loading === "EDIT_WORKSTATION",
     isUploadingLogo: loading === "UPLOAD_WORKSTATION_LOGO",
     isUploadingImage: loading === "UPLOAD_WORKSTATION_IMAGE",
+    isDeletingImage: loading === "DELETE_WORKSTATION_IMAGE",
     handleUploadWorkstationLogo,
     handleUploadWorkstationImage,
+    handleDeleteImage,
     amountUserPays:
       Number(infoDetails.pricePerMinute) +
       Number(enums?.base_share_details?.base_markup),
