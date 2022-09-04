@@ -34,11 +34,8 @@ export default function UserMenu() {
         </HStack>
       </MenuButton>
       <MenuList color="blue.800">
-        <Link href="/account">
-          <MenuItem fontWeight={500}>Account</MenuItem>
-        </Link>
         <MenuDivider m={0} />
-        <Link href="/account/settings">
+        <Link href="/settings/password">
           <MenuItem fontWeight={500}>Settings</MenuItem>
         </Link>
         <MenuDivider m={0} />

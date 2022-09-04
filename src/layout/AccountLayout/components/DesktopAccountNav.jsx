@@ -9,7 +9,7 @@ import { accountMenuOptions } from "utils/constants";
 export default function DesktopAccountNav() {
   const { asPath } = useRouter();
 
-  const onSupportPath = asPath === "/account/support";
+  const onSupportPath = asPath === "/support";
 
   return (
     <Show above="lg">
@@ -53,7 +53,7 @@ export default function DesktopAccountNav() {
         </Stack>
 
         <Stack spacing={8}>
-          <Link href="/account/support">
+          <Link href="/support">
             <HStack cursor="pointer" spacing={6}>
               <Icon
                 fontSize={22}

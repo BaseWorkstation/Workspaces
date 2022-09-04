@@ -34,18 +34,13 @@ export const accountMenuOptions = [
 
   {
     name: "Support",
-    href: "/account/support",
+    href: "/support",
     lineIcon: IoHeadsetOutline,
     filledIcon: IoHeadsetSharp,
   },
 ];
 
 export const exploreMenuOptions = [
-  {
-    name: "Account",
-    href: "/account",
-    isProtected: true,
-  },
   {
     name: "Explore spaces",
     href: "/",
@@ -64,7 +59,7 @@ export const exploreMenuOptions = [
 
   {
     name: "Support",
-    href: "/account/support",
+    href: "/support",
     isProtected: true,
   },
 ];
