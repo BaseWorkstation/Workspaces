@@ -83,7 +83,7 @@ export default function WorkspaceActivities({
                   </Td>
                   <Td py={8}>
                     {check_in_time ? (
-                      <Moment format="hh:mm a">
+                      <Moment format="DD MMM YYYY, hh:mm a">
                         {new Date(check_in_time)}
                       </Moment>
                     ) : (
@@ -92,11 +92,11 @@ export default function WorkspaceActivities({
                   </Td>
                   <Td py={8}>
                     {check_out_time ? (
-                      <Moment format="hh:mm a">
+                      <Moment format="DD MMM YYYY, hh:mm a">
                         {new Date(check_out_time)}
                       </Moment>
                     ) : (
-                      "Still checked in"
+                      <Text color="gray">Still checked in</Text>
                     )}
                   </Td>
                   <Td py={8} isNumeric>

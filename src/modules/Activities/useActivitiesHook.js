@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,7 +8,8 @@ import {
 import { formatDateToYYYYMMDD } from "utils/helpers";
 
 export default function useActivitiesHook() {
-  const [selectedDay, setSelectedDay] = useState(new Date());
+  const currentMonth = moment().format("yyyy-MM");
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const { userDetails } = useSelector((state) => state.user);
   const { workstation, workstationActivities, loading } = useSelector(
     (state) => state.workstations
@@ -26,17 +28,18 @@ export default function useActivitiesHook() {
     if (currentWorkspaceId) {
       dispatch(
         fetchWorkstationActivities({
-          from_date: formatDateToYYYYMMDD(selectedDay),
-          to_date: formatDateToYYYYMMDD(selectedDay),
+          from_date: `${selectedMonth}-01`,
+          to_date: `${selectedMonth}-${moment(selectedMonth).daysInMonth()}`,
           workstation_id: currentWorkspaceId,
         })
       );
     }
-  }, [!!workstation, selectedDay]);
+  }, [!!workstation, selectedMonth]);
 
   return {
-    selectedDay,
-    setSelectedDay,
+    currentMonth,
+    selectedMonth,
+    setSelectedMonth,
     workstationLoading:
       loading === "FETCH_WORKSTATION" ||
       loading === "FETCH_WORKSTATION_ACTIVITIES",
