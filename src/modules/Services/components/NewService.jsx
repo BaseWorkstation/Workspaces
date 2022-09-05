@@ -103,9 +103,9 @@ export default function NewService({ handleSaveService }) {
             <Stack spacing={0} w={278}>
               <Text color="gray.500">
                 Price per minute{" "}
-                {service.pricePerMinute
+                {/* {service.pricePerMinute
                   ? `(User will pay N${separateWithComma(amountUserPays)})`
-                  : ""}
+                  : ""} */}
               </Text>
               <InputGroup>
                 <InputLeftElement

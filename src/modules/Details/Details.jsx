@@ -393,9 +393,9 @@ export default function WorkspaceDetails() {
                 <Stack spacing={0} w={278}>
                   <Text color="gray.500">
                     Minute Charge *{" "}
-                    {infoDetails.pricePerMinute
+                    {/* {infoDetails.pricePerMinute
                       ? `(User will pay N${separateWithComma(amountUserPays)})`
-                      : ""}
+                      : ""} */}
                   </Text>
                   <InputGroup size="lg">
                     <InputLeftElement
