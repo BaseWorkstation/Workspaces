@@ -1,6 +1,7 @@
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Avatar,
+  Box,
   Button,
   Center,
   Flex,
@@ -49,6 +50,12 @@ export default function WorkspaceDetails() {
   } = useDetailsHook();
 
   if (isLoadingWorkstation) return <PageLoadingAnimation />;
+
+  const Asterisk = () => (
+    <Box color="red.500" fontWeight="bold" as="span">
+      *
+    </Box>
+  );
 
   return (
     <AccountLayout>
@@ -103,7 +110,9 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Street *</Text>
+                <Text color="gray.500">
+                  Street <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -117,7 +126,9 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">City *</Text>
+                <Text color="gray.500">
+                  City <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -131,7 +142,9 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">State *</Text>
+                <Text color="gray.500">
+                  State <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -145,7 +158,9 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Contact Email *</Text>
+                <Text color="gray.500">
+                  Contact Email <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   type="email"
@@ -160,7 +175,9 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Contact Phone number *</Text>
+                <Text color="gray.500">
+                  Contact Phone number <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   type="tel"
@@ -181,7 +198,9 @@ export default function WorkspaceDetails() {
             INFO
           </Text>
           <Stack spacing={0}>
-            <Text color="gray.500">About *</Text>
+            <Text color="gray.500">
+              About <Asterisk />
+            </Text>
             <Textarea
               w="full"
               onChange={handleChange}
@@ -232,7 +251,9 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Default Opening time *</Text>
+                <Text color="gray.500">
+                  Default Opening time <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -246,7 +267,9 @@ export default function WorkspaceDetails() {
             </WrapItem>
             <WrapItem>
               <Stack spacing={0} w={278}>
-                <Text color="gray.500">Default Closing time *</Text>
+                <Text color="gray.500">
+                  Default Closing time <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -392,7 +415,7 @@ export default function WorkspaceDetails() {
               <WrapItem>
                 <Stack spacing={0} w={278}>
                   <Text color="gray.500">
-                    Minute Charge *{" "}
+                    Minute Charge <Asterisk />{" "}
                     {/* {infoDetails.pricePerMinute
                       ? `(User will pay N${separateWithComma(amountUserPays)})`
                       : ""} */}
@@ -533,7 +556,9 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={[300, 350]} maxW="6xl">
-                <Text color="gray.500">Coordinates (Lat, Lng) *</Text>
+                <Text color="gray.500">
+                  Coordinates (Lat, Lng) <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   onChange={handleChange}
@@ -555,7 +580,9 @@ export default function WorkspaceDetails() {
           <Wrap spacingX={7} spacingY={30}>
             <WrapItem>
               <Stack spacing={0} w={[300, 350]} maxW="6xl">
-                <Text color="gray.500">Bank Details *</Text>
+                <Text color="gray.500">
+                  Bank Details <Asterisk />
+                </Text>
                 <Input
                   w="full"
                   onChange={handleChange}
