@@ -137,6 +137,14 @@ export default function useDetailsHook() {
     if (!imageFile) {
       return;
     }
+
+    const imageSizeInMB = imageFile.size / 1024 / 1024;
+
+    if (imageSizeInMB > 5) {
+      toastError("Please upload an image that is less than 5MB", null, " ");
+      return;
+    }
+
     const formData = new FormData();
     // append the details of the form data
     formData.append("upload_category", "workstation_logo");
@@ -168,6 +176,14 @@ export default function useDetailsHook() {
     if (!imageFile) {
       return;
     }
+
+    const imageSizeInMB = imageFile.size / 1024 / 1024;
+
+    if (imageSizeInMB > 5) {
+      toastError("Please upload an image that is less than 5MB", null, " ");
+      return;
+    }
+
     const formData = new FormData();
     // append the details of the form data
     formData.append("upload_category", "workstation_image");

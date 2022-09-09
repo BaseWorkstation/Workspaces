@@ -51,7 +51,7 @@ export default function EachService({
     handleSaveService(service);
   };
 
-  const currentServiceImage = initialService.images?.[0];
+  const currentServiceImage = [...initialService.images]?.reverse()?.[0];
 
   const amountUserPays =
     Number(service.pricePerMinute) +
