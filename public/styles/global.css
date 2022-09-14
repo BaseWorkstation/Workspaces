@@ -22,9 +22,15 @@
   font-display: swap;
 }
 
+html {
+  /* background-color: rgba(0, 0, 0, 0.04); */
+}
+
 body {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  font-size: 14px;
+  /* zoom: 90%; */
 }
 /* ::-webkit-scrollbar {
   width: 0px;

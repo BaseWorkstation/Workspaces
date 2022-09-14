@@ -15,7 +15,7 @@ export default function DesktopAccountNav() {
     <Show above="lg">
       <Stack
         pos="fixed"
-        h="100vh"
+        h="100%"
         flexShrink={0}
         justify="space-between"
         bg="white"

@@ -57,6 +57,9 @@ export default function WorkspaceActivities({
               <Th textTransform="capitalize" fontSize="md" color="primary.500">
                 Check Out
               </Th>
+              <Th textTransform="capitalize" fontSize="md" color="primary.500">
+                Time spent
+              </Th>
               <Th
                 textTransform="capitalize"
                 fontSize="md"
@@ -75,6 +78,7 @@ export default function WorkspaceActivities({
                 check_in_time,
                 check_out_time,
                 workspace_share_for_duration,
+                total_minutes_spent,
                 workstation,
               }) => (
                 <Tr key={id}>
@@ -95,9 +99,10 @@ export default function WorkspaceActivities({
                       <Moment format="DD MMM YYYY, hh:mm a">
                         {
                           new Date(
-                            check_out_time.replace("-", "/")
-                            // .split(" ")
-                            // .join("T")
+                            check_out_time
+                              // .replace("-", "/")
+                              .split(" ")
+                              .join("T")
                           )
                         }
                       </Moment>
@@ -105,8 +110,9 @@ export default function WorkspaceActivities({
                       <Text color="gray">Still checked in</Text>
                     )}
                   </Td>
+                  <Td py={8}>{total_minutes_spent} minutes</Td>
                   <Td py={8} isNumeric>
-                    N{separateWithComma(workspace_share_for_duration)}
+                    ₦{separateWithComma(workspace_share_for_duration)}
                   </Td>
                 </Tr>
               )
@@ -116,10 +122,10 @@ export default function WorkspaceActivities({
       </TableContainer>
       <HStack spacing={16} pt={12} justify="flex-end">
         <Text fontWeight="bold" color="primary.500" fontSize="lg">
-          TOTAL SPENT
+          TOTAL EARNED
         </Text>
         <Text fontWeight="bold" color="primary.500" fontSize="lg">
-          N{separateWithComma(totalAmount)}
+          ₦{separateWithComma(totalAmount)}
         </Text>
       </HStack>
     </Box>

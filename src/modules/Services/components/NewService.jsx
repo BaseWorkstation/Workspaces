@@ -104,7 +104,7 @@ export default function NewService({ handleSaveService }) {
               <Text color="gray.500">
                 Price per minute{" "}
                 {/* {service.pricePerMinute
-                  ? `(User will pay N${separateWithComma(amountUserPays)})`
+                  ? `(User will pay ₦${separateWithComma(amountUserPays)})`
                   : ""} */}
               </Text>
               <InputGroup>

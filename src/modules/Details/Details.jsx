@@ -417,7 +417,7 @@ export default function WorkspaceDetails() {
                   <Text color="gray.500">
                     Minute Charge <Asterisk />{" "}
                     {/* {infoDetails.pricePerMinute
-                      ? `(User will pay N${separateWithComma(amountUserPays)})`
+                      ? `(User will pay ₦${separateWithComma(amountUserPays)})`
                       : ""} */}
                   </Text>
                   <InputGroup size="lg">
